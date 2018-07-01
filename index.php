@@ -1,6 +1,6 @@
 <?php
 ?>
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -11,6 +11,9 @@
         <script src="main.js"></script>
     </head>
 <body>
-    
+    <div id="DivLogin">
+        <label>Usuario</label><input type="text">
+        <label>Contraseña</label><input type="password">
+    </div>
 </body>
 </html>

@@ -1,0 +1,26 @@
+/* Especificacion de texto para el documento */
+
+
+#DivLogin{
+    border: solid 2px;
+    border-color: blue;
+    height:120px;
+    width: 350px;
+    background-color: aqua;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.5em;
+    margin:0px auto;
+}
+
+#DivLogin label{
+    margin:12px;
+    width: 45%;
+    float: left;
+}
+#DivLogin input{
+    margin:12px;
+    margin-top: 18px;
+    width: 38%;
+    float:right;
+
+}
