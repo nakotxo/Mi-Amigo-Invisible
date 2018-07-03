@@ -1,60 +1,44 @@
 <?php
+	/**
+	* Subtarea 1: Creación del controlador frontal
+	*
+	*	index.php será la página que hará las veces de controlador.
+	*
+	*    Inclulle al principio del documento modelo.php
+	*    Inclulle al principio del documento controlador.php.
+	* 	 Fijándonos en el controlador frontal de la unidad 5 desarrolla las condiciones necesarias para enrutar:
+	* 	/index.php para controlador_index()
+	* 	/Controlador.php/registro para controlador_registro()
+	* 	/Controlador.php/login para controlador_login()
+	* 	/admin_usuarios.php/admin_usuarios para controlador_admin_usuarios()
+	* 	/admin_libros.php/admin_libros para controlador_admin_libros()
+	*
+	* @file index.php
+	* @author Jose Ignacio Hidalgo Perez
+	* 
+	*/
+session_start();
+	
+	
+	require_once "modelo.php";
+	require_once "controlador.php";
+
+	$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+	$segments = explode('/', $path);
+	$URL = $segments[count($segments)-1];
+
+	if ($URL == 'home'){
+		controlador_index();
+	}elseif ($URL == 'registro'){
+		controlador_registro(); 
+	}elseif ($URL == 'login'){
+		controlador_login();
+	}elseif ($URL == 'admin_usuarios'){
+		controlador_admin_usuarios(); 
+	}elseif ($URL == 'controlador_admin_libros'){
+		controlador_admin_libros(); 
+	}else{ //Podemos gestionar errores de URL de esta forma
+		header('Status: 404 Not Found');
+		echo "Error, página inexistente";
+	}
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Mi Amigo Invisible</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-        <script src="main.js"></script>
-    </head>
-<body>
-    <header>
-        <div id="DivHeader">
-
-        </div>
-    </header>
-
-    <div id="DivNavSup">
-        <nav id="menu_cabecera">
-			<ul>
-				<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/8">HOME</a></li>
-				<li><a href="#">CATEGORIAS</a>
-					<ul>
-						<li><a href="#">AUTORES</a></li>
-						<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/autores/a/8">TITULOS</a></li>
-						<li><a href="http://novalibros.com/novedad-editorial/">NOVEDADES</a></li>
-					</ul>
-				</li>
-			    <li><a href="https://es-es.facebook.com/">AMIGOS</a></li>
-			 </ul>
-		</nav>
-    </div>
-    <!--seccion de navegación lateral-->
-	<div id="capitulos">
-		<nav>
-			<ul>
-				<li><a href="NoAmigable.html">TITULO LIBRO</a></li>
-				<li><a href="Capitulo1.html">Capitulo 1</a></li>
-				<li><a href="Capitulo2.html">Capitulo 2</a></li>
-				<li><a href="Capitulo3.html">Capitulo 3</a></li>
-				<li><a href="Capitulo4.html">Capitulo 4</a></li>
-			</ul>
-		</nav>	
-	</div>
-	<!-- ---------------------------- -->
-    <section>
-        <div id="DivLogin">
-            <label>Usuario</label><input type="text">
-            <label>Contraseña</label><input type="password">
-            <div id="login"><input type="button" value="Login" ></div>
-        </div>
-    </section>
-
-
-
-    <footer></footer>
-</body>
-</html>
