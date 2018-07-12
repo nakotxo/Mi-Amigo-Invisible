@@ -26,44 +26,85 @@ function controlador_index(){
 	$datos['titulo']="Mi Amigo Invisible";
 	require_once 'home.php';
 }
-		
 
 /**
-* Función controlador_registro()
+* Funcion controlador_login()
 *
-* Definine una variable array y se le llama datos
-* $datos['titulo] asígnada el título 'Página de registro'
-* Si la página de registro.php ha enviado una petición POST la procesamos: (como en la tarea de la unidad 6)
-* Comprobamos que el usuario insertado no existe con la función existe_usuario($usuario) del modelo.
-* Ingresamos los datos del nuevo usuario con la función registrar_usuario($datos_usuario) donde:
-* $datos_usuario contiene la información de todos los campos del formulario
-* la contraseña debe incluirse encriptada en el array $datos_usuario.
-* deben incluirse los valores Rol=usuario Ban=false
-* como último paso incluye registro.php
+* Define una variable array y se le llama datos.
+* $datos['titulo'] = 'Página de login'.
+* Si la página de login.php ha enviado una petición POST la procesamos:
+* Comprobamos que el usuario insertado existe con la función existe_usuario($usuario) del modelo.
+* Comprobamos que la contraseña insertada coincide con la del usuario de la base de datos con la función comprueba_usuario($usuario, $contrasena) del modelo.
+* Si la función anterior retorna true:
+* Crear una Cookie cuyo nombre = login y valor = true y tenga caducidad = 1 día.
+* Crear una sesión.
+* Añadir a la sesión una [clave, valor] clave=Usuario y valor=[valor del usuario del formulario]
+* Añadir a la sesión una [clave,valor] clave=Rol y valor=[valor del rol del usuario del formulario]
+* Para saber el rol ejecutamos la función get_rol($usuario) del modelo.
+* Como último paso incluye login.php
 * @file controlador.php
 * @author Jose Ignacio Hidalgo Perez
-* @title Subtarea 2 Creacion del Controlador, controlador_registro
+* @title Subtarea 2 Creacion del Controlador, controlador_login
 */
-function controlador_registro(){
+function controlador_login(){
+	
 	$datos[]=array();
-	$datos['titulo']="Página de registro";
-	if (isset($_POST['registrar'])){
-		$usuario=$_POST['usuario'];
-		if (existe_usuario($usuario)==false){
-			// $datos_usuario contiene la información de todos los campos del formulario
-			$datos_usuario=array(
-							'usuario' => $_POST['usuario'], 
-							'nombre' => $_POST['nombre'],
-							'apellidos' => $_POST['apellidos'],
-							'email' => $_POST['email'],
-							'contrasena' => md5($_POST['contrasena']),
-							'rol' => 'usuario',
-							'ban' => 'false');
-		//Ingresamos los datos del nuevo usuario con la función registrar_usuario($datos_usuario)
-		registrar_usuario($datos_usuario);
+	$datos['titulo']="Página de Logeo";
+
+	if(isset($_POST['login'])){
+		
+		
+		$usuario = $_POST['usuario'];
+		$contrasenaCifrada = md5($_POST['contrasena']);
+		$contrasena=($_POST['contrasena']);
+		
+		if (existe_usuario($usuario)){
+					
+			if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada)){
+				
+				setcookie('login','true',time()+ 3600*24);
+				$_SESSION['Usuario']=$usuario;
+				$_SESSION['Rol']=get_rol($usuario);
+				echo "usuario y contraseña correcto he hecho login";
+				echo "<script>window.location.href='http://localhost/dwes/tareaG/index.php/home'</script>";
+			}
+		
 		}else{
-			echo "El usuario ya existe, prueba con otros datos";
+			
+			echo "Error en usuario y contraseña";
+		
 		}
+	}else{
+			
 	}
-	require 'registro.php';
+	
+	require 'login.php';
+	
+}
+
+/**
+* Función get_Conexion()
+* 
+* Establece conexión con la base de datos
+* 
+* @file controlador.php
+* @author Jose Ignacio Hidalgo Perez
+* @title Subtarea 2 Creacion del Controlador, get_Conexion
+* @return variable $conexion
+*/
+
+function get_Conexion(){
+	$servidor= "localhost";
+	$usuario= "id3972968_joseignaciohidalgo";
+	$psw= "AmigoInvisible";
+	$bd= "id3972968_amigoinvisible";
+	
+	$conexion= new mysqli($servidor,$usuario,$psw,$bd);
+	
+	if ($conexion->connect_error ){
+		die("Connection failed: " . $conexion->connect_error);
+	}else{
+		$conexion->set_charset ("utf8");
+		return $conexion;
+	}
 }
