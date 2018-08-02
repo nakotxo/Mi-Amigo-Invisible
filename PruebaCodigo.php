@@ -23,7 +23,6 @@
 			echo ($fila["UsuId"]);
 			echo ($fila["UsuNom"]);
 		} 
-		print_r($resultado);
 	}else{
 		echo "error en la SELECT";
 	}

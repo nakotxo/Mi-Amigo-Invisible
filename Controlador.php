@@ -1,26 +1,5 @@
 <?php
-/**
-* Subtarea 2: 
-*
-* Creación del controlador
-* controlador.php 
-* definirá las funciones del controlador frontal, es decir, definirá el comportamiento de nuestra aplicación:
-* @file controlador.php
-* @author Jose Ignacio Hidalgo Perez
-* @title Subtarea 2 Creacion del Controlador
-*/
 
-/** 
-* Función controlador_index()
-*
-* Define una variable array y llámada datos
-* $datos['titulo'] asígnada un título (Ej: Todo libros)
-* $datos['libros'] asígnada el retorno de la función get_libros_autores() del modelo (Las funciones del modelo las definiremos en el próximo punto)
-* como último paso incluye home.php
-* @file controlador.php
-* @author Jose Ignacio Hidalgo Perez
-* @title Subtarea 2 Creacion del Controlador, controlador_index
-*/
 function controlador_index(){	
 	$datos[]=array();
 	$datos['titulo']="Mi Amigo Invisible";
@@ -50,31 +29,30 @@ function controlador_login(){
 	
 	$datos[]=array();
 	$datos['titulo']="Página de Logeo";
-
+	$valor="";
 	if(isset($_POST['login'])){
-		
-		
 		$usuario = $_POST['usuario'];
 		$contrasenaCifrada = md5($_POST['contrasena']);
 		$contrasena=($_POST['contrasena']);
-		
 		if (existe_usuario($usuario)){
-					
 			if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada)){
-				
 				setcookie('login','true',time()+ 3600*24);
 				$_SESSION['Usuario']=$usuario;
 				$_SESSION['Rol']=get_rol($usuario);
-				echo "usuario y contraseña correcto he hecho login";
-				echo "<script>window.location.href='http://localhost/dwes/tareaG/index.php/home'</script>";
+				echo $_SESSION['Usuario'];
+				$direccion= "<script>window.location.href='http://localhost/Proyecto/index.php/adminusuarios'</script>";
+				echo $direccion;
+				
+			}else{
+				echo "Contraseña No RECONOCIDA intentelo otra vez";
 			}
+			
 		
 		}else{
 			
-			echo "Error en usuario y contraseña";
+			$valor= "Error en usuario y contraseña";
 		
 		}
-	}else{
 			
 	}
 	
@@ -82,6 +60,16 @@ function controlador_login(){
 	
 }
 
+function controlador_admin_usuarios(){
+	
+	$datos[]=array();
+	$datos['titulo']="Home Usuario";
+	$valor="";
+	
+	
+	require 'HomeUsuarios.php';
+	
+}
 /**
 * Función get_Conexion()
 * 
@@ -95,16 +83,17 @@ function controlador_login(){
 
 function get_Conexion(){
 	$servidor= "localhost";
-	$usuario= "id3972968_joseignaciohidalgo";
-	$psw= "AmigoInvisible";
-	$bd= "id3972968_amigoinvisible";
-	
-	$conexion= new mysqli($servidor,$usuario,$psw,$bd);
-	
+	$usuario= "root";   //"id3972968_joseignaciohidalgo";
+	$psw= "";   //"AmigoInvisible";
+	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
+
+    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
 	if ($conexion->connect_error ){
+        echo "error conexion";
 		die("Connection failed: " . $conexion->connect_error);
 	}else{
-		$conexion->set_charset ("utf8");
-		return $conexion;
+        $conexion->set_charset ("utf8");
+        return $conexion;
 	}
 }
+

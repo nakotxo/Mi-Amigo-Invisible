@@ -1,5 +1,4 @@
-<?php
-?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,13 +6,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
         <script src="main.js"></script>
     </head>
 <body>
     <header>
         <div id="DivHeader">
-
+            <div id="Logo"></div>
+            <div id="TituloPagina"></div>
+            <div id="DivLogeado">
+            </div>
         </div>
     </header>
 
@@ -32,27 +34,21 @@
 			 </ul>
 		</nav>
     </div>
-    <!--seccion de navegación lateral-->
-	<div id="capitulos">
-		<nav>
-			<ul>
-				<li><a href="NoAmigable.html">TITULO LIBRO</a></li>
-				<li><a href="Capitulo1.html">Capitulo 1</a></li>
-				<li><a href="Capitulo2.html">Capitulo 2</a></li>
-				<li><a href="Capitulo3.html">Capitulo 3</a></li>
-				<li><a href="Capitulo4.html">Capitulo 4</a></li>
-			</ul>
-		</nav>	
-	</div>
-	<!-- ---------------------------- -->
-    <section>
-        <div id="DivLogin">
-            <label>Usuario</label><input type="text">
-            <label>Contraseña</label><input type="password">
-            <div id="login"><input type="button" value="Login" ></div>
-        </div>
-    </section>
-
+        <h1><?php echo $datos['titulo']; ?></h1><hr/>
+        <section>
+            <form method="POST" action="?">
+                <div id="DivLogin">
+                    <label>Usuario</label><input id="usuario" type="text" name="usuario" placeholder="Nombre">
+                    <label>Contraseña</label><input id="contrasena" type="password" name="contrasena" placeholder="Contraseña">
+                    <div id="log"><input id="login" type="submit" name="login" value="Login" ></div>
+                </div>
+            </form>
+            <h1><?php echo "$valor"; ?></h1>
+        </section>
+        
     <footer></footer>
 </body>
 </html>
+
+
+
