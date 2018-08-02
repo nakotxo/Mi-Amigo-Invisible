@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 function existe_usuario($usuario){
 
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
@@ -107,6 +105,48 @@ function get_rol($usuario){
 }
 
 /**
+* Función NuevoUsuario() 
+** Función encargada de obtener el primer id de usuario vacio
+*/
+function NuevoUsuario($UsuarioId){
+	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
+		$sql="SELECT UsuId FROM usuarios";		//Select para ejecutar, donde, seleccionará los Id delos usuario de la BD
+		
+		if ($resultado=$mysqli->query($sql)){
+			$UsuarioId=0;
+			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
+
+				if ($fila['UsuId']>=$UsuarioId){
+					$UsuarioId++;	//incremento la variable para obtener el primer Id vacio
+				}  
+			}
+			return $UsuarioId;
+		}else{
+			
+			echo "Error en la consulta de Id de Usuario";
+		}
+	}else{
+		
+		echo "<h3>Error conexión con la base de datos</h3>";
+	
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
 * Función get_ban(true/false) 
 *
 * Función quw devuelve un array de usuarios cuyo Ban sea el parámetro booleano. 
@@ -188,75 +228,7 @@ function set_ban($Usuario, $Ban){
 }
 
 
-/**
-* Función set_libro($datos_libro)
-*
-* Función que incluye una nueva entrada en la tabla Libro.
-*
-* @file controlador.php
-* @author Jose Ignacio Hidalgo Perez
-* @title Subtarea 3: Creación del modelo.php, set_libro
-* @param Array $datos_lib
-*/
-function set_libro($datos_lib){
-	
-	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 
-		//Insertar datos iniciales
-		$sql = "INSERT INTO libro (id, titulo, fecha_public, id_autor) 
-				VALUES ('$datos_lib[id]','$datos_lib[titulo]','$datos_lib[fecha_public]','$datos_lib[id_autor]')";
-		
-		if ($mysqli->query($sql)){
-			
-			echo "Inserción en tabla Libro realizada con éxito<br>";
-		
-		}else{
-			
-			echo "Error insertando datos<br>".$mysqli->error."<br>";
-			$error=$mysqli->error;
-
-		}
-	}else{
-		
-		echo "<h3>Error conexión con la base de datos</h3>";
-		
-	}
-}
-
-
-/**
-* Función set_autor($datos_autor) 
-* Función que incluye una nueva entrada en la tabla Autor.
-*
-* @file controlador.php
-* @author Jose Ignacio Hidalgo Perez
-* @title Subtarea 3: Creación del modelo.php, set_autor
-* @param Array $datos_autor
-*/
-function set_autor($datos_autor){
-
-	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		
-		//Insertar datos iniciales
-		$sql = "INSERT INTO autor (id, nombre, apellidos, fecha_nac) 
-				VALUES ('$datos_autor[id]','$datos_autor[nombre]','$datos_autor[apellidos]','$datos_autor[fecha_nac]')";
-			
-		if ($mysqli->query($sql)){
-			
-			echo "Inserción en tabla Autor realizada con éxito<br>";
-		
-		}else{
-			
-			echo "Error insertando datos<br>".$mysqli->error."<br>";
-			$error=$mysqli->error;
-		
-		}
-	}else{
-		
-		echo "<h3>Error conexión con la base de datos</h3>";
-		
-	}
-}
 
 /**
 * Función registrar_usuario
@@ -268,20 +240,23 @@ function set_autor($datos_autor){
 * @title Subtarea 3: Creación del modelo.php, registrar_usuario
 * @param Array $datos_usuario
 */
-function registrar_usuario($datos_usuario){
+function registrar_usuario($datos_usuario, $mensaje){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 
 		//Insertar datos 
-		$sql = "INSERT INTO usuarios (Usuario, Nombre, Apellidos, Email, Contrasena, Rol, Ban) 
-				VALUES ('$datos_usuario[usuario]','$datos_usuario[nombre]','$datos_usuario[apellidos]','$datos_usuario[email]','$datos_usuario[contrasena]','Usuario','False')";
+		$sql = "INSERT INTO usuarios (UsuId, UsuNom, UsuPwd, UsuRol, UsuEma) 
+				VALUES ('$datos_usuario[id]','$datos_usuario[usuario]','$datos_usuario[contrasena]','Usu','$datos_usuario[email]')";
 		if ($mysqli-> query($sql)){
-			echo "Inserción en tabla usuarios realizada con éxito<br>";
+			$mensaje= "Inserción en tabla usuarios realizada con éxito<br>";
 		}else{
-			echo "error insert registro";
+			$mensaje= "Error insert registro";
 		}
 	}else{
-		echo "Error conexion";
+		$mensaje= "Error conexion registro";
 	}
+	return $mensaje;
 }
 
+
 ?>
+

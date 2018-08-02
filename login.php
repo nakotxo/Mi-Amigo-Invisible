@@ -22,8 +22,9 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/8">HOME</a></li>
-				<li><a href="#">CATEGORIAS</a>
+				<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Registro">NUEVO USUARIO</a></li>
+                <li><a href="#">CATEGORIAS</a>
 					<ul>
 						<li><a href="#">AUTORES</a></li>
 						<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/autores/a/8">TITULOS</a></li>
@@ -43,7 +44,6 @@
                     <div id="log"><input id="login" type="submit" name="login" value="Login" ></div>
                 </div>
             </form>
-            <h1><?php echo "$valor"; ?></h1>
         </section>
         
     <footer></footer>

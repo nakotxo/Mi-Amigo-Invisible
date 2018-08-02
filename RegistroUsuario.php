@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,11 +9,26 @@
         <script src="main.js"></script>
     </head>
 <body>
-    <header>
+<header>
         <div id="DivHeader">
             <div id="Logo"></div>
             <div id="TituloPagina"></div>
-            <div id="DivLogeado">
+            
+                <?php 
+                    if (isset($_POST['Usuario'])){ ?>
+                        <div id="DivLogeado">
+                            <label>Bienvenido Usuario<br/></label>
+                            <label>".$_SESSION['Usuario']."</label>
+                            <form method='POST' action='?'>
+                                <input type='submit' name='logout' value='LogOut' >
+                            </form> 
+                        </div><?php
+                    }else{?>
+                        <div id="DivLogeado">
+                            <input type="button" value="LogIn" onclick="location.href='http://localhost/proyecto/index.php/login'">
+                        </div><?php
+                    }
+                ?>
             </div>
         </div>
     </header>
@@ -22,7 +36,7 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/8">HOME</a></li>
+				<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
 				<li><a href="#">CATEGORIAS</a>
 					<ul>
 						<li><a href="#">AUTORES</a></li>
@@ -37,21 +51,18 @@
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
             <form method="POST" action="?">
-                <div id="DivLogin">
-                    <lavel>Usuario id</lavel><input id="usuarioId" type="text" name="UsuId">
+                <div id="DivRegistro">
+                    <input id="usuarioId" type="hidden" name="UsuId" value=" <?php echo $UsuarioId ?>">    
                     <label>Usuario</label><input id="usuario" type="text" name="UsuNom" placeholder="Nombre">
                     <label>Contraseña</label><input id="contrasena" type="password" name="UsuPwd" placeholder="Contraseña">
-					<label>Rol</label><input id="rol" type="text" name="UsuRol" placeholder="Usuario">
+					<input id="rol" type="hidden" name="UsuRol" placeholder="Usuario" value="Usu" >
 					<label>E-mail</label><input id="text" type="text" name="UsuEma" placeholder="Email@mail.com">
-					<div id="log"><input id="login" type="submit" name="login" value="Login" ></div>
+                    <div id="log"><input id="login" type="submit" name="login" value="Login" ></div>
                 </div>
             </form>
-            <h1><?php echo "$valor"; ?></h1>
+            <h1><?php echo "$mensaje"; ?></h1>
 </section>
         
     <footer></footer>
 </body>
 </html>
-
-
-

@@ -27,9 +27,9 @@ session_start();
 	$segments = explode('/', $path);
 	$URL = $segments[count($segments)-1];
 
-	if ($URL == 'home'){
+	if ($URL == 'Home'){
 		controlador_index();
-	}elseif ($URL == 'registro'){
+	}elseif ($URL == 'Registro'){
 		controlador_registro(); 
 	}elseif ($URL == 'adminusuarios'){
 		controlador_admin_usuarios(); 
