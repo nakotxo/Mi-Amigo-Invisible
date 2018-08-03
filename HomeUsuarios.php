@@ -1,12 +1,4 @@
-<?php
 
-if(isset($_POST['logout'])){
-	setcookie('login','',time()-100);
-    $_SESSION['Rol']="";
-    $_SESSION['Usuario']="";
-	//echo "<script>window.location.href='http://localhost/proyecto/index.php/Home'</script>";
-}
-?>
 <!DOCTYPE html>
 <html>
     <head>

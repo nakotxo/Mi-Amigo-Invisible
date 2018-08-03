@@ -15,16 +15,33 @@
         <div id="DivHeader">
             <div id="Logo"></div>
             <div id="TituloPagina"></div>
-            <div id="DivLogeado">
-                <input type="button" value="LogIn" onclick="location.href='http://localhost/proyecto/index.php/login'">
-            </div>
+            <?php 
+            if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
+                ?>
+                <div id="DivLogOut">
+                    <label>Bienvenido Usuario<br/></label>
+                    <label> <?php echo $_SESSION['Usuario'] ?> </label>
+                    <form method="POST" action="?">
+                        <input type="submit" name="logout" value="LogOut" >
+                    </form>
+                </div>
+                <?php    
+            }else{
+                ?>
+                <div id="DivLogeado">
+                    <input type="button" value="LogIn" onclick="location.href='http://localhost/proyecto/index.php/login'">
+                </div>
+                <?php
+            }
+            ?>
+
         </div>
     </header>
 
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/8">HOME</a></li>
+				<li><a href="location.href='http://localhost/proyecto/index.php/login'">HOME</a></li>
 				<li><a href="#">CATEGORIAS</a>
 					<ul>
 						<li><a href="#">AUTORES</a></li>

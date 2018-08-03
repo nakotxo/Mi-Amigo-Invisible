@@ -13,8 +13,8 @@ function controlador_login(){
 	
 	$datos[]=array();
 	$datos['titulo']="Página de Logeo";
-	$valor="";
-	if(isset($_POST['login'])){
+	//$valor="";
+	if(isset($_POST['Login'])){
 		$usuario = $_POST['usuario'];
 		$contrasenaCifrada = md5($_POST['contrasena']);
 		$contrasena=($_POST['contrasena']);
@@ -25,7 +25,7 @@ function controlador_login(){
 				$_SESSION['Rol']=get_rol($usuario);
 				//echo $_SESSION['Usuario'];
 				$direccion= "<script>window.location.href='http://localhost/Proyecto/index.php/adminusuarios'</script>";
-				//echo $direccion;
+				echo $direccion;
 				
 			}else{
 				echo "Contraseña No RECONOCIDA intentelo otra vez";
