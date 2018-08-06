@@ -67,7 +67,6 @@ function controlador_Registro(){
 		}
 	}
 
-
 	require 'RegistroUsuario.php';		//imprimo RegistroUsuario.php
 
 }
@@ -103,4 +102,7 @@ function get_Conexion(){
         return $conexion;
 	}
 }
+
+
+
 

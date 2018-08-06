@@ -36,10 +36,9 @@ session_start();
 	}elseif ($URL == 'controlador_admin_libros'){
 		controlador_admin_libros(); 
 	}elseif ($URL == 'login'){
-			controlador_login();
+		controlador_login();
+	}else{ //Podemos gestionar errores de URL de esta forma
+		header('Status: 404 Not Found');
+		echo "Error, página inexistente";
 	}
-	//else{ //Podemos gestionar errores de URL de esta forma
-	//	header('Status: 404 Not Found');
-	//	echo "Error, página inexistente";
-	//}
 ?>

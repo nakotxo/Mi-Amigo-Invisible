@@ -41,7 +41,7 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="location.href='http://localhost/proyecto/index.php/login'">HOME</a></li>
+            <li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
 				<li><a href="#">CATEGORIAS</a>
 					<ul>
 						<li><a href="#">AUTORES</a></li>
@@ -53,6 +53,35 @@
 			 </ul>
 		</nav>
     </div>
+    <?php 
+        if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
+            ?>
+            <!--seccion de navegación lateral-->
+            <div id="capitulos">
+                <form method="POST" action="?">
+                  <nav>
+                    <ul>
+                        <li><input type=submit name="MisDatos" value="Mis Datos"></li>
+                        <li><a href="Capitulo1.html">Capitulo 1</a></li>
+                        <li><a href="Capitulo2.html">Capitulo 2</a></li>
+                        <li><a href="Capitulo3.html">Capitulo 3</a></li>
+                        <li><a href="Capitulo4.html">Capitulo 4</a></li>
+                        <li><input type=submit name="Listado" value="Listado"></li>
+                    </ul>
+                  </nav>	
+                </form>
+            </div>
+	        <!-- ---------------------------- -->
+            <h1><?php echo $datos['titulo']; ?></h1><hr/>  
+            <section>
+                <?php
+                    if (isset($_POST['Listado'])){
+                        Listado();
+                    }
+                ?>
+            </section><?php
+        }
+    ?>
     <footer></footer>
 </body>
 </html>

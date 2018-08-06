@@ -66,10 +66,11 @@ function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada){
 
 
 
+
 function get_rol($usuario){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		
-		$sql="select UsuNom,UsuRol from usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
+		$sql="select UsuNom,UsuRol,UsuId from usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
 		
 		if ($resultado=$mysqli->query($sql)){
 			
@@ -196,6 +197,163 @@ function registrar_usuario($datos_usuario, $mensaje){
 	}
 	return $mensaje;
 }
+
+function Listado(){
+	$conexion=get_Conexion();
+	if (isset($_POST['Listado'])){
+		if ($mysqli=get_Conexion()){
+			$sqlUsuarios="SELECT * FROM USUARIOS";
+			if ($resultado=$mysqli->query($sqlUsuarios)){
+				$datosUsuarios['titulo']="Listado Usuarios";
+				while ($fila=$resultado->fetch_assoc()){
+					$datosUsuarios[]=$fila;
+				}
+				ListarUsuarios($datosUsuarios);
+			//print_r($datos);
+			}
+
+			$sqlDeseos="SELECT * FROM DESEOS";
+			if ($resultado=$mysqli->query($sqlDeseos)){
+				$datosDeseos['titulo']="Listado DESEOS";
+				while ($fila=$resultado->fetch_assoc()){
+					$datosDeseos[]=$fila;
+				}
+				ListarDeseos($datosDeseos);
+			//print_r($datosDeseos);
+			}
+
+			$sqlSorteos="SELECT * FROM SORTEOS";
+			if ($resultado=$mysqli->query($sqlSorteos)){
+				$datosSorteos['titulo']="Listado SORTEOS";
+				while ($fila=$resultado->fetch_assoc()){
+					$datosSorteos[]=$fila;
+				}
+				ListarSorteos($datosSorteos);
+			//print_r($datosSorteos);
+			}
+
+			
+			
+
+
+		}
+	}
+}
+
+function ListarUsuarios($datosUsuarios){
+	echo "<h1>".$datosUsuarios['titulo']."</h1>";
+	?>	
+		<table border='solid 1px' align='center'>
+			<tr>
+				<td COLSPAN='8'>Usuarios Baneados</td>
+			</tr>
+			<tr>
+				<td>ID</td>
+				<td>Nombre</td>
+				<td>Pasword</td>
+				<td>Rol</td>
+				<td>E-mail</td>
+				<td>ID Sorteos</td>
+				<td>ID Deseos</td>
+				<td>Administrador de sorteo</td>
+			</tr>
+			
+				<?php
+					for ($i=0;$i<count($datosUsuarios)-1;$i++){
+						echo "<tr>";
+						echo "<td>".$datosUsuarios[$i]['UsuId']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuNom']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuPwd']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuRol']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuEma']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuSorId']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuDesId']."</td>";
+						echo "<td>".$datosUsuarios[$i]['UsuAdminSorId']."</td>";
+						echo "</tr>";
+					} 
+				?>
+		</table>
+	<?php
+}
+function ListarDeseos($datosDeseos){
+	echo "<h1>".$datosDeseos['titulo']."</h1>";
+	?>	
+		<table border='solid 1px' align='center'>
+			<tr>
+				<td COLSPAN='3'>Listado de deseos</td>
+			</tr>
+			<tr>
+				<td>ID</td>
+				<td>Deseo</td>
+				<td>Caracteristicas</td>
+			</tr>
+				
+				<?php
+					for ($i=0;$i<count($datosDeseos)-1;$i++){
+						echo "<tr>";
+						echo "<td>".$datosDeseos[$i]['DesId']."</td>";
+						echo "<td>".$datosDeseos[$i]['DesNom']."</td>";
+						echo "<td>".$datosDeseos[$i]['DesCar']."</td>";
+						echo "</tr>";
+					} 
+				?>
+		</table>
+	<?php
+}
+
+function ListarSorteos($datosSorteos){
+	echo "<h1>".$datosSorteos['titulo']."</h1>";
+	?>	
+		<table border='solid 1px' align='center'>
+			<tr>
+				<td COLSPAN='4'>Listado de Sorteos</td>
+			</tr>
+			<tr>
+				<td>ID</td>
+				<td>Nombre Sorteo</td>
+				<td>Caracteristicas</td>
+				<td>Fecha sorteo</td>
+			</tr>
+				<?php
+					for ($i=0;$i<count($datosSorteos)-1;$i++){
+						echo "<tr>";
+						echo "<td>".$datosSorteos[$i]['SorId']."</td>";
+						echo "<td>".$datosSorteos[$i]['SorNom']."</td>";
+						echo "<td>".$datosSorteos[$i]['SorPar']."</td>";
+						echo "<td>".$datosSorteos[$i]['SorFec']."</td>";
+						echo "</tr>";
+					} 
+				?>
+		</table>
+	<?php
+}
+
+function MisSorteos(){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		$sql="SELECT UsuNom,UsuSorId FROM USUARIOS WHERE UsuNom='".$_SESSION['Usuario']."'";
+			echo $sql;
+		if ($resultado=$mysqli->query($sql)){
+			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
+				$Sorteo=$fila['UsuSorId'];
+				echo $Sorteo;
+				echo "hola";
+			}
+			if ($Sorteo==""){
+				echo "Aun no esta incluido en ningún sorteo";
+			}else{
+				echo "hola";
+				echo $Sorteo;
+			}
+			
+		}
+
+	}
+
+}
+
+
+
 
 
 ?>

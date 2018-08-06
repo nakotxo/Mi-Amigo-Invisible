@@ -45,14 +45,14 @@
     </div>
     <!--seccion de navegación lateral-->
 	<div id="capitulos">
-        <form method="GET" action="?">
+        <form method="POST" action="?">
 		<nav>
 			<ul>
 				<li><input type=submit name="MisDatos" value="Mis Datos"></li>
 				<li><a href="Capitulo1.html">Capitulo 1</a></li>
 				<li><a href="Capitulo2.html">Capitulo 2</a></li>
 				<li><a href="Capitulo3.html">Capitulo 3</a></li>
-                <li><a href="Capitulo4.html">Capitulo 4</a></li>
+                <li><input type=submit name="LisUsu" value="Mis Sorteos"></li>
                 <li><input type=submit name="Listado" value="Listado"></li>
 			</ul>
         </nav>	
@@ -62,8 +62,10 @@
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
             <?php
-                if(isset($_GET['Listado'])){
-                    echo "hola pollo";
+                if (isset($_POST['Listado'])){
+                    Listado();
+                }elseif (isset($_POST['LisUsu'])){
+                    MisSorteos();
                 }
             ?>
         </section>
