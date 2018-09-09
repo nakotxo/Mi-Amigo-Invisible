@@ -238,7 +238,7 @@ function Listado(){
 function ListarUsuarios($datosUsuarios){
 	echo "<h1>".$datosUsuarios['titulo']."</h1>";
 	?>	
-		<table border='solid 1px' align='center'>
+		<table border-style='solid 1px' aling='center'>
 			<tr>
 				<td COLSPAN='8'>Usuarios Baneados</td>
 			</tr>
@@ -273,7 +273,7 @@ function ListarUsuarios($datosUsuarios){
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
-		<table border='solid 1px' align='center'>
+		<table border-style='solid 1px' aling='center'>
 			<tr>
 				<td COLSPAN='3'>Listado de deseos</td>
 			</tr>
@@ -299,7 +299,7 @@ function ListarDeseos($datosDeseos){
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
 	?>	
-		<table border='solid 1px' align='center'>
+		<table border-style='solid 1px' aling='center'>
 			<tr>
 				<td COLSPAN='4'>Listado de Sorteos</td>
 			</tr>
@@ -381,8 +381,4 @@ function BuscaSorteo($sqlSorteo){
 	}
 	return $LosSorteos; //devuelve el array o de variable
 }
-
-
-
-
 ?>
