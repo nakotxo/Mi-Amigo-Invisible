@@ -334,6 +334,9 @@ function MisSorteos(){
 				$ResultadoSqlSorteo=$fila['UsuSorId'];
 			}
 			$datosSorteos=BuscaSorteo($ResultadoSqlSorteo);
+
+			TratarDatosSorteos($datosSorteos);
+
 			print_r ($datosSorteos);
 		}
 		/* -----------------------FIN------------------------- */
@@ -366,7 +369,7 @@ function BuscaSorteo($sqlSorteo){
 			$totalCarateresDeseo= ($finalDeseo-$inicioDeseo)-1; // varible del total de caracteres que ocupa el Id del Deseo
 			
 			if (substr($sqlSorteo,$inicioDeseo,1)!=")"){ //si hay deseos
-				$cuantosDeseos=(substr_count ( $sqlSorteo , ",", $inicioDeseo,$totalCarateresDeseo))+1; //Variable cuntos Deseos hay en el sorteo
+				$cuantosDeseos=(substr_count ( $sqlSorteo , ",", $inicioDeseo,$totalCarateresDeseo))+1; //Variable cuantos Deseos hay en el sorteo
 				$LosDeseos= $cuantosDeseos." ".(substr($sqlSorteo,$inicioDeseo+1,$totalCarateresDeseo)); //Variable con cuantos y cuales son los deseos
 			}
 	
@@ -381,4 +384,52 @@ function BuscaSorteo($sqlSorteo){
 	}
 	return $LosSorteos; //devuelve el array o de variable
 }
+
+function TratarDatosSorteos($losSorteos){
+	
+	echo "Usuario ".$_SESSION['Usuario'].", tienes $losSorteos[0] Sorteos <br>";
+	$finalSorteo=strpos ($losSorteos[1]," ",0);
+	$totalCarateresSorteo= ($finalSorteo); // varible del total de caracteres que ocupa el Id del Sorteo
+	$ElSorteo=substr ($losSorteos[1], 0, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
+	$fila=DatosSorteo($ElSorteo);
+
+	echo "<table border='1px' align='center'>";
+		echo "<tr>";
+			echo "<td>SORTEO</td>";
+			echo "<td>PARTICIPANTES</td>";
+			echo "<td>FECHA SORTEO</td>";
+		echo "</tr>";
+		echo "<tr>";
+			echo "<td>".$fila['SorNom']."</td>";
+			echo "<td>".$fila['SorPar']."</td>";
+			echo "<td>".$fila['SorFec']."</td>";
+		echo "</tr>";
+	echo "</table>";
+
+	$inicioSorteo= strpos ($losSorteos[1]," ",0);	//busqueda posicion del Id del Sorteo
+	$finalSorteo=strpos ($losSorteos[1]," ",$inicioSorteo+1); // busqueda del fin del Id del Sorteo
+	$ElSorteo= substr ($losSorteos[1], $inicioSorteo+1, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
+	
+	
+
+
+
+
+}
+function DatosSorteo($IdSorteo){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		/* ------------ Inicio busqueda sorteos -------------- */
+		$sqlSorteo="SELECT SorId,SorNom,SorPar,SorFec  FROM SORTEOS WHERE SorId='".$IdSorteo."'";
+			echo $sqlSorteo;
+		if ($resultado=$mysqli->query($sqlSorteo)){
+			$fila=$resultado->fetch_assoc();
+			
+			return($fila);
+		}
+		/* -----------------------FIN------------------------- */
+	}
+
+}
+
 ?>
