@@ -391,7 +391,44 @@ function TratarDatosSorteos($losSorteos){
 	$finalSorteo=strpos ($losSorteos[1]," ",0);
 	$totalCarateresSorteo= ($finalSorteo); // varible del total de caracteres que ocupa el Id del Sorteo
 	$ElSorteo=substr ($losSorteos[1], 0, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
-	$fila=DatosSorteo($ElSorteo);
+	$filaSorteo=DatosSorteo($ElSorteo); //llamada a la funcion para optener todos los datos del sorte $ElSorteo el cual posee el id del sorteo
+
+	//tratamiento de los participantes para sacar sus datos
+	$IdsPar=$filaSorteo['SorPar']; //identificadores de los participantes separados por comas 
+	$TotalParticipantes =(substr_count($IdsPar,',')+1);//contando las comas puedo obtener el numero de participantes, sumando 1 mas.
+	echo "numero de participantes".$TotalParticipantes;
+	
+	for($i=0;$i<$TotalParticipantes;$i++){
+		
+		if ($i==0){
+			$IniPar= strpos($IdsPar,",",0); //inicio participante
+			$CanCarPar=$IniPar;
+			$ElParticipante=substr($IdsPar,0,$CanCarPar); //Cantidad caracteres participante
+			echo "el primero es:".$ElParticipante;
+			$filaParticipante=DatosParticipante($ElParticipante); //llamada a la funcion para obtener todos los datos del participante
+			$Participantes=$filaParticipante['UsuNom']." ".$filaParticipante['UsuEma']."<br>";
+		}
+		$IniPar= strpos($IdsPar,",",$IniPar+$CanCarPar); //inicio participante
+		$FinPar=strpos ($IdsPar,",",$IniPar+1);
+		
+		$CanCarPar=$FinPar-$IniPar;
+		$ElParticipante=substr($IdsPar,$IniPar,$CanCarPar); //Cantidad caracteres participante
+		echo "otro".$ElParticipante;
+
+		
+	}
+
+
+	
+		
+		
+		
+	
+
+
+
+
+
 
 	echo "<table border='1px' align='center'>";
 		echo "<tr>";
@@ -400,11 +437,17 @@ function TratarDatosSorteos($losSorteos){
 			echo "<td>FECHA SORTEO</td>";
 		echo "</tr>";
 		echo "<tr>";
-			echo "<td>".$fila['SorNom']."</td>";
-			echo "<td>".$fila['SorPar']."</td>";
-			echo "<td>".$fila['SorFec']."</td>";
+			echo "<td>".$filaSorteo['SorNom']."</td>";
+			echo "<td>".$filaSorteo['SorPar']."</td>";
+			echo "<td>".$filaSorteo['SorFec']."</td>";
+			echo "<td>".$Participantes."</td>";
 		echo "</tr>";
 	echo "</table>";
+
+
+
+
+
 
 	$inicioSorteo= strpos ($losSorteos[1]," ",0);	//busqueda posicion del Id del Sorteo
 	$finalSorteo=strpos ($losSorteos[1]," ",$inicioSorteo+1); // busqueda del fin del Id del Sorteo
@@ -416,6 +459,7 @@ function TratarDatosSorteos($losSorteos){
 
 
 }
+//función para sacar toda la información del sorteo 
 function DatosSorteo($IdSorteo){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
@@ -429,7 +473,21 @@ function DatosSorteo($IdSorteo){
 		}
 		/* -----------------------FIN------------------------- */
 	}
+}
 
+//función para sacar toda la información del Participante
+function DatosParticipante($IdParticipante){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		/* ------------ Inicio busqueda Participantes -------------- */
+		$sqlParticipante="SELECT *  FROM USUARIOS WHERE UsuId='".$IdParticipante."'";
+			echo $sqlParticipante;
+		if ($resultado=$mysqli->query($sqlParticipante)){
+			$fila=$resultado->fetch_assoc();
+			return($fila);
+		}
+		/* -----------------------FIN------------------------- */
+	}
 }
 
 ?>
