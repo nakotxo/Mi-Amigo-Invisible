@@ -324,36 +324,99 @@ function ListarSorteos($datosSorteos){
 }
 
 function MisSorteos(){
+	//MisDatos --> Creacion de array con todos los datos del Usuario
+	$UsuNom=$_SESSION['Usuario'];
+	$MisDatos=DatosUsuario($UsuNom);
+	
+
+	//Asignacion de datos de Usuario a Variables	
+	$UsuId=$MisDatos['UsuId'];
+	$UsuRol=$MisDatos['UsuRol'];
+	$UsuPwd=$MisDatos['UsuPwd'];
+	$UsuEma=$MisDatos['UsuEma'];
+	$UsuSorId=$MisDatos['UsuSorId'];
+	$UsuDesId=$MisDatos['UsuDesId'];
+	$UsuAdminSorId=$MisDatos['UsuAdminSorId'];
+	//COMPROBACION ok
+	//print_r ($MisDatos);
+	//echo "<br>".$UsuId.	$UsuRol.$UsuNom.$UsuPwd.$UsuEma.$UsuSorId.$UsuDesId.$UsuAdminSorId;
+
+	//MisSorteos --> Creacion de array con todos los sorteos del Usuario
+	$MisSorteos=BuscaSorteo($UsuSorId);
+	$NumSorteos=$MisSorteos[0];
+	/*Aclaracion del contenido:
+		si el Usuario tiene sorteos, en el array nos encontraremos:
+		[0]=> numero de sorteos (n)
+		[1]=> Id del Sorteo Nº x
+		[2]=> Id del Amigo del Sorteo x
+		[3]=> Id del Deseo1 del Amigo del Sorteo x
+		[4]=> Id del Deseo2 del Amigo del Sorteo x
+		[5]=> Id del Deseo3 del Amigo del Sorteo x
+		[6]=> Id del Deseo4 del Amigo del Sorteo x
+		[7]=> Id del Deseo5 del Amigo del Sorteo x
+		...vuelta a empezar con el sorteo x+1
+		[8]=> Id del Sorteo Nº x+1 (si lo hubiera)
+		[9]=>Id del Amigo del Sorteo x+1 (si lo hubiera)
+		...así sucesivamente hasta (n) */
+	//COMPROBACION ok
+	//echo "cantidad sorteos:".$NumSorteos;
+	//print_r ($MisSorteos);
+
+
+	TratarDatosSorteos($MisSorteos);
+
+		
+
+
+	/* -----------------------FIN------------------------- */
+	
+
+}
+
+// Funcion que devuelve los datos del usuario
+function DatosUsuario($UsuNom){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda sorteos -------------- */
-		$sqlSorteo="SELECT UsuNom,UsuSorId FROM USUARIOS WHERE UsuNom='".$_SESSION['Usuario']."'";
-			echo $sqlSorteo;
-		if ($resultado=$mysqli->query($sqlSorteo)){
-			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-				$ResultadoSqlSorteo=$fila['UsuSorId'];
-			}
-			$datosSorteos=BuscaSorteo($ResultadoSqlSorteo);
-
-			TratarDatosSorteos($datosSorteos);
-
-			print_r ($datosSorteos);
+		$sql="SELECT *  FROM USUARIOS WHERE UsuNom='".$UsuNom."'";
+		
+		if ($resultado=$mysqli->query($sql)){
+			$fila=$resultado->fetch_assoc();
+			return($fila);
 		}
 		/* -----------------------FIN------------------------- */
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function BuscaSorteo($sqlSorteo){
 	$LosSorteos=array(); 		// declaracion de array
 	if ($sqlSorteo==""){	//Si el resultado de la consulta esta vacio, $sqlSorteo-> sorteos del usuario 
 		$LosSorteos[0]="<br/>Aun no esta incluido en ningún sorteo";
 	}else{
-		echo $sqlSorteo."<br/>";
+		//echo $sqlSorteo."<br/>";
 		$i=0;	//variable para controlar entrada y salida bucle	
-		$Longitud= strlen($sqlSorteo);	//variable que contiene longitud de la 
+		$Longitud= strlen($sqlSorteo);	//variable que contiene longitud del valor 
 		$cuantos=substr_count ( $sqlSorteo , "S", $offset = 0, $Longitud); //Variable cuntos sorteos hay
 		$LosSorteos[$i]=$cuantos;	// Primera posición del array guardamos cantidad de sorteos de la persona
-
+		$cont=1;
 		while ($i!=$cuantos){
 			$inicioSorteo= strpos ($sqlSorteo,"S",$i);	//busqueda posicion del Id del Sorteo
 			$finalSorteo=strpos ($sqlSorteo,"(",$inicioSorteo+1); // busqueda del fin del Id del Sorteo
@@ -364,22 +427,28 @@ function BuscaSorteo($sqlSorteo){
 			$totalCarateresAmigo= ($finalAmigo-$inicioAmigo)-1; // varible del total de caracteres que ocupa el Id del Amigo
 			
 
-			$inicioDeseo= strpos ($sqlSorteo,"-",$inicioAmigo);	//busqueda posicion del Id del Deseo
-			$finalDeseo=strpos ($sqlSorteo,")",$inicioDeseo+1); // busqueda del fin del Id del Deseo
-			$totalCarateresDeseo= ($finalDeseo-$inicioDeseo)-1; // varible del total de caracteres que ocupa el Id del Deseo
+			//$inicioDeseo= strpos ($sqlSorteo,"-",$inicioAmigo);	//busqueda posicion del Id del Deseo
+			//$finalDeseo=strpos ($sqlSorteo,")",$inicioDeseo+1); // busqueda del fin del Id del Deseo
+			//$totalCarateresDeseo= ($finalDeseo-$inicioDeseo)-1; // varible del total de caracteres que ocupa el Id del Deseo
 			
-			if (substr($sqlSorteo,$inicioDeseo,1)!=")"){ //si hay deseos
-				$cuantosDeseos=(substr_count ( $sqlSorteo , ",", $inicioDeseo,$totalCarateresDeseo))+1; //Variable cuantos Deseos hay en el sorteo
-				$LosDeseos= $cuantosDeseos." ".(substr($sqlSorteo,$inicioDeseo+1,$totalCarateresDeseo)); //Variable con cuantos y cuales son los deseos
-			}
+			//if (substr($sqlSorteo,$inicioDeseo,1)!=")"){ //si hay deseos
+			//	$cuantosDeseos=(substr_count ( $sqlSorteo , ",", $inicioDeseo,$totalCarateresDeseo))+1; //Variable cuantos Deseos hay en el sorteo
+			//	$LosDeseos= $cuantosDeseos." ".(substr($sqlSorteo,$inicioDeseo+1,$totalCarateresDeseo)); //Variable con cuantos y cuales son los deseos
+			//}
 	
-			$i++; 
+			 
 
 			$ElSorteo= substr ($sqlSorteo, $inicioSorteo+1, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
 			$ElAmigo= substr ($sqlSorteo, $inicioAmigo+1, $totalCarateresAmigo); // Extrae el dato Id del Amigo
 			
 			//echo "El sorteo $ElSorteo, tiene como a amigo a $ElAmigo con los deseos $LosDeseos<br/>";
-			$LosSorteos[$i]= $ElSorteo." ".$ElAmigo." ".$LosDeseos;
+			
+			$LosSorteos[$cont]= $ElSorteo;
+			
+			$cont++;
+			$LosSorteos[$cont]= $ElAmigo;    //." ".$LosDeseos;
+			$cont++;
+			$i++;
 		}
 	}
 	return $LosSorteos; //devuelve el array o de variable
@@ -396,51 +465,44 @@ function TratarDatosSorteos($losSorteos){
 	//tratamiento de los participantes para sacar sus datos
 	$IdsPar=$filaSorteo['SorPar']; //identificadores de los participantes separados por comas 
 	$TotalParticipantes =(substr_count($IdsPar,',')+1);//contando las comas puedo obtener el numero de participantes, sumando 1 mas.
-	echo "numero de participantes".$TotalParticipantes;
-	
+	echo "numero de participantes:".$TotalParticipantes."<br>";
+	echo "Participantes:".$IdsPar."<br>";
+
+	$Participantes="";
 	for($i=0;$i<$TotalParticipantes;$i++){
 		
-		if ($i==0){
-			$IniPar= strpos($IdsPar,",",0); //inicio participante
-			$CanCarPar=$IniPar;
-			$ElParticipante=substr($IdsPar,0,$CanCarPar); //Cantidad caracteres participante
-			echo "el primero es:".$ElParticipante;
+			if ($i==0){
+				$IniPar=$i;
+				$FinPar= strpos ($IdsPar,",",$IniPar+1);
+				$CanCarPar=$FinPar-$IniPar;
+				$ElParticipante=substr($IdsPar,$i,$CanCarPar); //Cantidad caracteres participante
+				$IniPar=$i;
+			}else{
+				$IniPar=strpos ($IdsPar,",",$FinPar);
+				$FinPar= $IniPar+$CanCarPar;
+				$CanCarPar=$FinPar-$IniPar;
+				$ElParticipante=substr($IdsPar,$IniPar+1,$CanCarPar); //Cantidad caracteres participante
+			}
+			
 			$filaParticipante=DatosParticipante($ElParticipante); //llamada a la funcion para obtener todos los datos del participante
-			$Participantes=$filaParticipante['UsuNom']." ".$filaParticipante['UsuEma']."<br>";
-		}
-		$IniPar= strpos($IdsPar,",",$IniPar+$CanCarPar); //inicio participante
-		$FinPar=strpos ($IdsPar,",",$IniPar+1);
-		
-		$CanCarPar=$FinPar-$IniPar;
-		$ElParticipante=substr($IdsPar,$IniPar,$CanCarPar); //Cantidad caracteres participante
-		echo "otro".$ElParticipante;
+			$Participantes=$Participantes.$filaParticipante['UsuNom']." - ".$filaParticipante['UsuEma']."<br>";
 
+			echo "<br>inicio:".$IniPar." fin:".$FinPar." Cantidad:".$CanCarPar." El usuario es:".$ElParticipante;
 		
 	}
-
-
-	
-		
-		
-		
-	
-
-
-
-
-
 
 	echo "<table border='1px' align='center'>";
 		echo "<tr>";
 			echo "<td>SORTEO</td>";
 			echo "<td>PARTICIPANTES</td>";
 			echo "<td>FECHA SORTEO</td>";
+			echo "<td>TU AMIGO INVISIBLE</td>";
 		echo "</tr>";
 		echo "<tr>";
 			echo "<td>".$filaSorteo['SorNom']."</td>";
-			echo "<td>".$filaSorteo['SorPar']."</td>";
-			echo "<td>".$filaSorteo['SorFec']."</td>";
 			echo "<td>".$Participantes."</td>";
+			echo "<td>".$filaSorteo['SorFec']."</td>";
+			
 		echo "</tr>";
 	echo "</table>";
 
@@ -481,7 +543,7 @@ function DatosParticipante($IdParticipante){
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda Participantes -------------- */
 		$sqlParticipante="SELECT *  FROM USUARIOS WHERE UsuId='".$IdParticipante."'";
-			echo $sqlParticipante;
+			//echo $sqlParticipante;
 		if ($resultado=$mysqli->query($sqlParticipante)){
 			$fila=$resultado->fetch_assoc();
 			return($fila);
