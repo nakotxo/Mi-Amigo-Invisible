@@ -426,17 +426,40 @@ function BuscaSorteo($sqlSorteo){
 			$finalAmigo=strpos ($sqlSorteo,"-",$inicioAmigo+1); // busqueda del fin del Id del Amigo
 			$totalCarateresAmigo= ($finalAmigo-$inicioAmigo)-1; // varible del total de caracteres que ocupa el Id del Amigo
 			
-
-			//$inicioDeseo= strpos ($sqlSorteo,"-",$inicioAmigo);	//busqueda posicion del Id del Deseo
-			//$finalDeseo=strpos ($sqlSorteo,")",$inicioDeseo+1); // busqueda del fin del Id del Deseo
-			//$totalCarateresDeseo= ($finalDeseo-$inicioDeseo)-1; // varible del total de caracteres que ocupa el Id del Deseo
 			
-			//if (substr($sqlSorteo,$inicioDeseo,1)!=")"){ //si hay deseos
-			//	$cuantosDeseos=(substr_count ( $sqlSorteo , ",", $inicioDeseo,$totalCarateresDeseo))+1; //Variable cuantos Deseos hay en el sorteo
-			//	$LosDeseos= $cuantosDeseos." ".(substr($sqlSorteo,$inicioDeseo+1,$totalCarateresDeseo)); //Variable con cuantos y cuales son los deseos
-			//}
-	
-			 
+			$j=0;
+			$inicioDeseo= strpos ($sqlSorteo,"-",$inicioAmigo)+1;	//busqueda posicion del Id del Deseo
+			$finalDeseo=strpos ($sqlSorteo,",",$inicioDeseo); // busqueda del fin del Id del Deseo
+			$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
+			$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
+				echo "<br> inicio deseo: ".$inicioDeseo;
+				echo ", final deseo: ".$finalDeseo;
+				echo ", total caracteres deseo: ".$totalCarateresDeseo;
+				echo ",el deseo: ".$ElDeseo;
+			
+			while ($j<4){
+				echo $j;
+				if ($j<3){
+						$inicioDeseo= ($inicioDeseo+$totalCarateresDeseo+1);	//busqueda posicion del Id del Deseo
+						$finalDeseo=strpos ($sqlSorteo,",",$inicioDeseo); // busqueda del fin del Id del Deseo
+						$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
+						$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
+				}else{
+						$inicioDeseo= ($inicioDeseo+$totalCarateresDeseo+1);	//busqueda posicion del Id del Deseo
+						$finalDeseo=strpos ($sqlSorteo,")",$inicioDeseo-$totalCarateresDeseo-2); // busqueda del fin del Id del Deseo
+						$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
+						$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
+				}
+				
+				
+				echo "<br> inicio deseo: ".$inicioDeseo;
+				echo ", final deseo: ".$finalDeseo;
+				echo ", total caracteres deseo: ".$totalCarateresDeseo;
+				echo ",el deseo: ".$ElDeseo;
+				$j++;
+			}
+			
+			echo "<br>";
 
 			$ElSorteo= substr ($sqlSorteo, $inicioSorteo+1, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
 			$ElAmigo= substr ($sqlSorteo, $inicioAmigo+1, $totalCarateresAmigo); // Extrae el dato Id del Amigo
