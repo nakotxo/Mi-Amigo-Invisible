@@ -427,18 +427,29 @@ function BuscaSorteo($sqlSorteo){
 			$totalCarateresAmigo= ($finalAmigo-$inicioAmigo)-1; // varible del total de caracteres que ocupa el Id del Amigo
 			
 			
+			$ElSorteo= substr ($sqlSorteo, $inicioSorteo+1, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
+			$ElAmigo= substr ($sqlSorteo, $inicioAmigo+1, $totalCarateresAmigo); // Extrae el dato Id del Amigo
+			
+			
+			
+			$LosSorteos[$cont]= $ElSorteo;
+			$cont++;
+
+			$LosSorteos[$cont]= $ElAmigo;    //." ".$LosDeseos;
+			$cont++;
+
+			//tratamiento de los deseos del amigo del sorteo
 			$j=0;
 			$inicioDeseo= strpos ($sqlSorteo,"-",$inicioAmigo)+1;	//busqueda posicion del Id del Deseo
 			$finalDeseo=strpos ($sqlSorteo,",",$inicioDeseo); // busqueda del fin del Id del Deseo
 			$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
 			$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
-				echo "<br> inicio deseo: ".$inicioDeseo;
-				echo ", final deseo: ".$finalDeseo;
-				echo ", total caracteres deseo: ".$totalCarateresDeseo;
-				echo ",el deseo: ".$ElDeseo;
+			
+			$LosSorteos[$cont]=$ElDeseo;
+			$cont++;
+
 			
 			while ($j<4){
-				echo $j;
 				if ($j<3){
 						$inicioDeseo= ($inicioDeseo+$totalCarateresDeseo+1);	//busqueda posicion del Id del Deseo
 						$finalDeseo=strpos ($sqlSorteo,",",$inicioDeseo); // busqueda del fin del Id del Deseo
@@ -450,31 +461,24 @@ function BuscaSorteo($sqlSorteo){
 						$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
 						$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
 				}
-				
-				
-				echo "<br> inicio deseo: ".$inicioDeseo;
-				echo ", final deseo: ".$finalDeseo;
-				echo ", total caracteres deseo: ".$totalCarateresDeseo;
-				echo ",el deseo: ".$ElDeseo;
+
+				$LosSorteos[$cont]=$ElDeseo;
+				$cont++;
 				$j++;
 			}
-			
-			echo "<br>";
 
-			$ElSorteo= substr ($sqlSorteo, $inicioSorteo+1, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
-			$ElAmigo= substr ($sqlSorteo, $inicioAmigo+1, $totalCarateresAmigo); // Extrae el dato Id del Amigo
-			
-			//echo "El sorteo $ElSorteo, tiene como a amigo a $ElAmigo con los deseos $LosDeseos<br/>";
-			
-			$LosSorteos[$cont]= $ElSorteo;
-			
-			$cont++;
-			$LosSorteos[$cont]= $ElAmigo;    //." ".$LosDeseos;
-			$cont++;
 			$i++;
 		}
 	}
+	
+	/*comprobacion de los datos introducidos al array
+	todo ok 
+	echo "<br>";
+	print_r ($LosSorteos);
+	echo "<br>";
+	*/
 	return $LosSorteos; //devuelve el array o de variable
+	
 }
 
 function TratarDatosSorteos($losSorteos){
