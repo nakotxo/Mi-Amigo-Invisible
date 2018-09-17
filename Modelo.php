@@ -359,9 +359,13 @@ function MisSorteos(){
 		[10]=>Id de mi Deseo3 para el sorteo x
 		[11]=>Id de mi Deseo4 para el sorteo x
 		[12]=>Id de mi Deseo5 para el sorteo x
+		[13]=> número de participantes (n)
+		[14]=> Participante 1 de n
+		[15]=> Participante 2 de n
+		[16]=> Participante 3 de n
 		...vuelta a empezar con el sorteo x+1...
-		[13]=> Id del Sorteo Nº x+1 (si lo hubiera)
-		[14]=>Id del Amigo del Sorteo x+1 (si lo hubiera)
+		[n+m+1]=> Id del Sorteo Nº x+1 (si lo hubiera)
+		[n+m+2]=>Id del Amigo del Sorteo x+1 (si lo hubiera)
 		...así sucesivamente hasta (n) */
 	//COMPROBACION ok
 	//echo "cantidad sorteos:".$NumSorteos;
@@ -443,7 +447,6 @@ function BuscaSorteo($sqlSorteo,$sqlMisDeseos){
 			$LosSorteos[$cont]=$ElDeseo; //posición [3],[3+12]... id deseo1 del amigo
 			$cont++;
 
-			
 			while ($j<4){
 				if ($j<3){
 						$inicioDeseo= ($inicioDeseo+$totalCarateresDeseo+1);	//busqueda posicion del Id del Deseo
@@ -475,33 +478,66 @@ function BuscaSorteo($sqlSorteo,$sqlMisDeseos){
 			
 			$LosSorteos[$cont]=$MiDeseo; //posición [8],[8+12] id de Mideseo1 
 			$cont++;
-			echo "hollllaa ".$InicioMiDeseo." ";
-			echo " fin ".$FinalMiDeseo;
-			echo " deseo ".$MiDeseo;
+
 			while ($k<4){
 				if ($k<3){
 						$InicioMiDeseo= ($InicioMiDeseo+$TotalCarateresMiDeseo+1);	//busqueda posicion del Id del Deseo
-						echo " hollllaa ".$InicioMiDeseo;
+
 						$FinalMiDeseo=strpos ($sqlMisDeseos,",",$InicioMiDeseo); // busqueda del fin del Id del Deseo
-						echo " fin ".$FinalMiDeseo;
+
 						$TotalCarateresMiDeseo=($FinalMiDeseo-$InicioMiDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
 						$MiDeseo=substr($sqlMisDeseos,$InicioMiDeseo,$TotalCarateresMiDeseo);
-						echo " deseo ".$MiDeseo;
+
 				}else{
 						$InicioMiDeseo= ($InicioMiDeseo+$TotalCarateresMiDeseo+1);	//busqueda posicion del Id del Deseo
-						echo " hollllaa ".$InicioMiDeseo;
+
 						$FinalMiDeseo=strpos ($sqlMisDeseos,")",$InicioMiDeseo-$TotalCarateresMiDeseo-2); // busqueda del fin del Id del Deseo
-						echo " fin ".$FinalMiDeseo;
+
 						$TotalCarateresMiDeseo=($FinalMiDeseo-$InicioMiDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
 						$MiDeseo=substr($sqlMisDeseos,$InicioMiDeseo,$TotalCarateresMiDeseo);
-						echo " deseo ".$MiDeseo;
+
 				}
 
 				$LosSorteos[$cont]=$MiDeseo; //[9],[10],[11],[12]-[9+12],[10+12],[11+12],[12+12]  id de MiDeseo 2,3,4,5
 				$cont++;
 				$k++;
 			}
+			//tratamiento de los participantes
+			$DatPar=DatosSorteo($ElSorteo); //optencion de los datos del sorteo
+			$LosPar=$DatPar['SorPar'];
+			echo "participantes".$LosPar;
+			$LongPar= strlen($LosPar);	//variable que contiene longitud del valor 
+			$NumPar=substr_count($LosPar,',',$offset=0,$LongPar)+1; //contando las ',' mas 1 nos da el total de participantes
+			echo "son: ".$NumPar;
+			$LosSorteos[$cont]=$NumPar;
+			$cont++;
+			for ($m=0;$m<$NumPar;$m++){
+				if ($m==0){
+					$IniPar=0;
+					$TotalCarateresPar=strpos($LosPar,',',$IniPar);
+					$ElParticipante=substr($LosPar,$IniPar,$TotalCarateresPar);
+					$LosSorteos[$cont]=$ElParticipante;
+					$cont++;
+					echo "El parti es: ".$ElParticipante;
 
+				}else if ($m<$NumPar-1){
+					$IniPar=$IniPar+$TotalCarateresPar+1;
+					$FinPar=strpos($LosPar,',',$IniPar+1);
+					$TotalCarateresPar=$FinPar-$IniPar;
+					$ElParticipante=substr($LosPar,$IniPar,$TotalCarateresPar);
+					$LosSorteos[$cont]=$ElParticipante;
+					$cont++;
+					echo "El parti es: ".$ElParticipante;
+				}else if($m==$NumPar-1){
+					$IniPar=$IniPar+$TotalCarateresPar+1;
+					$FinPar=$LongPar;
+					$TotalCarateresPar=$FinPar-$IniPar;
+					$ElParticipante=substr($LosPar,$IniPar,$TotalCarateresPar);
+					$LosSorteos[$cont]=$ElParticipante;
+					$cont++;
+					echo "El parti es: ".$ElParticipante;
+				}
+			}
 			$i++;
 		}
 	}
@@ -520,7 +556,7 @@ function BuscaSorteo($sqlSorteo,$sqlMisDeseos){
 function TratarDatosSorteos($MisDatos,$MisSorteos){
 	
 	
-
+	print_r ($MisSorteos);
 	$NumSor=$MisSorteos[0]; //numero de sorteos
 	
 	?>
@@ -562,7 +598,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 				}
 			}
 
-			// Carga de todos los mis deseos del Sorteo
+			// Carga de todos mis deseos del Sorteo
 			$NumMisDes=0; //Numero de deseos que tenemos
 			$DatMisDes=array();
 			$DatMisDes[0]=DatosDeseos($MisSorteos[$cont+8]);
@@ -589,16 +625,34 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 			$SorFec=$DatSor['SorFec'];
 			$AmiNom=$DatAmi['UsuNom']."<br>".$DatAmi['UsuEma'];
 			
+			//carga de los Participantes
+			$NumPar=$MisSorteos[$cont+13];
+			$LosPartis="";
+			for ($Partis=0;$Partis<$NumPar;$Partis++){
+				$DatLosPartis=DatosParticipante($MisSorteos[$cont+14+$Partis]);
+				$LosPartis=$LosPartis."<br> ".$DatLosPartis['UsuNom'];
+			}
+			
+			
 
-			$cont=$cont+12;
+
+
+
+
+
+
+
+
+
+			$cont=$cont+$NumPar+13;
 		?>
 		<tr>
 			<td><?php echo $SorNom?></td>
-			<td><?php  echo $SorFec?></td>
+			<td><?php echo $SorFec?></td>
 			<td><?php echo $AmiNom?></td>
 			<td><?php echo $AmiDeseos?></td>
 			<td><?php echo $MisDeseos?></td>
-			<td><?php echo ?></td>
+			<td><?php echo $LosPartis?></td>
 		</tr>
 		<?php
 		}
