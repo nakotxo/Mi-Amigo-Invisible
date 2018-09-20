@@ -101,8 +101,14 @@ function get_Conexion(){
         $conexion->set_charset ("utf8");
         return $conexion;
 	}
+
 }
 
+function Controlador_Sorteo(){
+	$datos[]=array();
+	$datos['titulo']="Creacion Sorteo";
+	require 'Sorteo.php';
+}
 
 
 

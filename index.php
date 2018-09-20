@@ -37,6 +37,8 @@ session_start();
 		controlador_admin_libros(); 
 	}elseif ($URL == 'login'){
 		controlador_login();
+	}elseif ($URL == 'Crear_Sorteo'){
+		Controlador_Sorteo();
 	}else{ //Podemos gestionar errores de URL de esta forma
 		header('Status: 404 Not Found');
 		echo "Error, página inexistente";

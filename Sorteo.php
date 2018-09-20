@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +6,39 @@
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
-        <script src="main.js"></script>
+        <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
+        <script>
+            $(document).ready(function(){
+	            $("li").dblclick(function(){
+                var Valor= $(this).attr("value");
+                var NumHijos=
+    /*-----Creamos un nodo nuevo con su atributo para agregar a la lista definitiva de partiticipantes*/    
+                var nodo = document.createElement("li");
+		        var textoNodo = document.createTextNode($(this).attr("title"));
+		        var hijo= $(this).attr("value");
+                nodo.appendChild(textoNodo);
+		
+		        var ul = document.getElementById("LstUsuFin");
+		
+		        ul.insertBefore(nodo,ul.children[0]);
+    /* ------------------------------fin de la inserción---------------------------------------------- */
+    /*------Eliminación del mismo dato para no crear duplicados en las listas--------- */
+                var ulUsu = document.getElementById("LstUsu");
+                alert("has hecho doble click en el párrafo con id="+hijo);
+                ulUsu.removeChild(ulUsu.children[hijo]);
+    /*-------------------------------fin de eliminacion------------------------------- */
+                //alert("has hecho doble click en el párrafo con id="+Valor);
+                });
+            });
+
+
+        </script>
+        
+
+
+
+
+
     </head>
 <body>
     <header>
@@ -52,7 +83,7 @@
 				<li><a href="Capitulo1.html">Capitulo 1</a></li>
 				<li><a href="Capitulo2.html">Capitulo 2</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
-				<li><input type=submit name="CreSor" value="Crear_Sorteo"></li>
+				<li><input type=submit name="CreSor" value="Crear Sorteo"></li>
                 <li><input type=submit name="LisUsu" value="Mis Sorteos"></li>
                 <li><input type=submit name="Listado" value="Listado"></li>
 			</ul>
@@ -62,13 +93,11 @@
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
-            <?php
-                if (isset($_POST['Listado'])){
-                    Listado();
-                }elseif (isset($_POST['LisUsu'])){
-                    MisSorteos();
-                }
+            <?php 
+            SoloSorteo(); 
+            SoloUsuarios();
             ?>
+            <p id="parrafo">Texto de párrafo <span> Texto dentro de un span</span>.</p>
         </section>
         
     <footer></footer>

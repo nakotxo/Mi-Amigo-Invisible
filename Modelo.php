@@ -34,7 +34,21 @@ function existe_usuario($usuario){
 	
 	}
 }
-	
+
+function DatosUsuario($UsuNom){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		/* ------------ Inicio busqueda sorteos -------------- */
+		$sql="SELECT *  FROM USUARIOS WHERE UsuNom='".$UsuNom."'";
+		
+		if ($resultado=$mysqli->query($sql)){
+			$fila=$resultado->fetch_assoc();
+			return($fila);
+		}
+		/* -----------------------FIN------------------------- */
+	}
+
+}
 
 
 function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada){
@@ -63,8 +77,6 @@ function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada){
 	
 	}
 }
-
-
 
 
 function get_rol($usuario){
@@ -270,6 +282,42 @@ function ListarUsuarios($datosUsuarios){
 		</table>
 	<?php
 }
+
+function SoloUsuarios(){
+	$conexion=get_Conexion();
+		if ($mysqli=get_Conexion()){
+			$sqlUsuarios="SELECT * FROM USUARIOS";
+			if ($resultado=$mysqli->query($sqlUsuarios)){
+				$datosUsuarios['titulo']="Listado Usuarios";
+				while ($fila=$resultado->fetch_assoc()){
+					$datosUsuarios[]=$fila;
+				}
+				ListarUsuariosEnSelect($datosUsuarios);
+			//print_r($datos);
+			}
+		}
+	
+}
+function ListarUsuariosEnSelect($datosUsuarios){
+
+	?>
+	<!--Lista de usuarios para participar-->
+	<ul id="LstUsu" name="Usuarios">
+		<?php 
+		for ($i=0;$i<count($datosUsuarios)-1;$i++){
+			echo "<li title= '".$datosUsuarios[$i]['UsuId']."'value='".$i."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
+		} ?>
+		
+
+	</ul>
+	<!--Lista definitiva de usuarios a participar-->
+	<ul id="LstUsuFin" name="ListaUsuariosFinal">
+	</ul>
+	<?php
+}
+
+
+
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
@@ -295,6 +343,8 @@ function ListarDeseos($datosDeseos){
 		</table>
 	<?php
 }
+
+
 
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
@@ -323,11 +373,44 @@ function ListarSorteos($datosSorteos){
 	<?php
 }
 
+function SoloSorteo(){
+	$conexion=get_Conexion();
+		if ($mysqli=get_Conexion()){
+			$sqlSorteos="SELECT * FROM SORTEOS";
+			if ($resultado=$mysqli->query($sqlSorteos)){
+				$datosSorteos['titulo']="Listado SORTEOS";
+				while ($fila=$resultado->fetch_assoc()){
+					$datosSorteos[]=$fila;
+				}
+				ListarSorteosEnSelect($datosSorteos);
+			}
+		}
+}
+
+function ListarSorteosEnSelect($datosSorteos){
+	?>
+	<select id="LstSor" name="Sorteo">
+		<?php 
+		for ($i=0;$i<count($datosSorteos)-1;$i++){
+			if ($datosSorteos[$i]['SorPar']==""){
+				echo "<option value='".$i."'>".$datosSorteos[$i]['SorId']." - ".$datosSorteos[$i]['SorNom']."</option>";
+			}
+		} ?>
+	</select>
+	<?php
+}
+
+
+
+
+
+
+
+
 function MisSorteos(){
 	//MisDatos --> Creacion de array con todos los datos del Usuario
 	$UsuNom=$_SESSION['Usuario'];
 	$MisDatos=DatosUsuario($UsuNom);
-	
 
 	//Asignacion de datos de Usuario a Variables	
 	$UsuId=$MisDatos['UsuId'];
@@ -383,20 +466,7 @@ function MisSorteos(){
 }
 
 // Funcion que devuelve los datos del usuario
-function DatosUsuario($UsuNom){
-	$conexion=get_Conexion();
-	if ($mysqli=get_Conexion()){
-		/* ------------ Inicio busqueda sorteos -------------- */
-		$sql="SELECT *  FROM USUARIOS WHERE UsuNom='".$UsuNom."'";
-		
-		if ($resultado=$mysqli->query($sql)){
-			$fila=$resultado->fetch_assoc();
-			return($fila);
-		}
-		/* -----------------------FIN------------------------- */
-	}
 
-}
 
 
 
@@ -633,17 +703,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 				$LosPartis=$LosPartis."<br> ".$DatLosPartis['UsuNom'];
 			}
 			
-			
-
-
-
-
-
-
-
-
-
-
+		
 			$cont=$cont+$NumPar+13;
 		?>
 		<tr>
@@ -668,7 +728,7 @@ function DatosSorteo($IdSorteo){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda sorteos -------------- */
-		$sqlSorteo="SELECT SorId,SorNom,SorPar,SorFec  FROM SORTEOS WHERE SorId='".$IdSorteo."'";
+		$sqlSorteo="SELECT *  FROM SORTEOS WHERE SorId='".$IdSorteo."'";
 			echo $sqlSorteo;
 		if ($resultado=$mysqli->query($sqlSorteo)){
 			$fila=$resultado->fetch_assoc();
