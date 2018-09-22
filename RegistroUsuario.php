@@ -60,8 +60,9 @@
                     <div id="log"><input id="login" type="submit" name="login" value="Login" ></div>
                 </div>
             </form>
-            <h1><?php echo "$mensaje"; ?></h1>
-</section>
+            <h1><?php echo $valor?></h1>
+
+        </section>
         
     <footer></footer>
 </body>

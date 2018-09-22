@@ -104,7 +104,7 @@ function get_rol($usuario){
 
 
 
-function NuevoUsuario($UsuarioId){
+function NuevoUsuario(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		$sql="SELECT UsuId FROM usuarios";		//Select para ejecutar, donde, seleccionará los Id delos usuario de la BD
 		
@@ -112,13 +112,14 @@ function NuevoUsuario($UsuarioId){
 			$UsuarioId=0;
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
 
-				if ($fila['UsuId']>=$UsuarioId){
+				if ($fila['UsuId']==$UsuarioId){
 					$UsuarioId++;	//incremento la variable para obtener el primer Id vacio
-				}  
+				} else{
+					break;
+				}
 			}
 			return $UsuarioId;
 		}else{
-			
 			echo "Error en la consulta de Id de Usuario";
 		}
 	}else{
@@ -305,7 +306,7 @@ function ListarUsuariosEnSelect($datosUsuarios){
 	<ul id="LstUsu" name="Usuarios">
 		<?php 
 		for ($i=0;$i<count($datosUsuarios)-1;$i++){
-			echo "<li title= '".$datosUsuarios[$i]['UsuId']."'value='".$i."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
+			echo "<li title= '".$datosUsuarios[$i]['UsuId']."'value='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
 		} ?>
 		
 

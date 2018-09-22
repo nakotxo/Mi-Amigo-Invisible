@@ -49,12 +49,10 @@
 		<nav>
 			<ul>
 				<li><input type=submit name="MisDatos" value="Mis Datos"></li>
-				<li><a href="Capitulo1.html">Capitulo 1</a></li>
-				<li><a href="Capitulo2.html">Capitulo 2</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
-				<li><input type=submit name="CreSor" value="Crear_Sorteo"></li>
                 <li><input type=submit name="LisUsu" value="Mis Sorteos"></li>
                 <li><input type=submit name="Listado" value="Listado"></li>
+                <li><a name="LisUsu" value="MisSorteos" href="http://localhost/proyecto/index.php/adminusuarios">Mis Sorteos</a></li>
 			</ul>
         </nav>	
         </form>

@@ -49,21 +49,21 @@ function controlador_login(){
 function controlador_Registro(){
 	$valor="";
 	$datos['titulo']="Página de Registro";
-	$UsuarioId=0; 						//inicio una variable
-	$UsuarioId=NuevoUsuario($UsuarioId); //llamo a la funcion encargada de buscar la primera Id libre
+						//inicio una variable
+	$UsuarioId=NuevoUsuario(); //llamo a la funcion encargada de buscar la primera Id libre
 	if (isset($_POST['UsuId'])){
 		$usuario=$_POST['UsuNom'];
 		if(existe_usuario($usuario)){
 			$valor="Lo sentimos pero el usuario ya existe.";
 		}else{
 			$datos_usuario=array(
-				'id'=>$_POST['UsuId'],
+				'id'=>$UsuarioId,
 				'usuario' => $_POST['UsuNom'], 
 				'email' => $_POST['UsuEma'],
 				'contrasena' => md5($_POST['UsuPwd']),
 				'rol' => $_POST['UsuRol']);
 			
-			registrar_usuario($datos_usuario, $valor);
+			$valor=registrar_usuario($datos_usuario, $valor);
 		}
 	}
 

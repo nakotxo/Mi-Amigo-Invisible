@@ -10,24 +10,28 @@
         <script>
             $(document).ready(function(){
 	            $("li").dblclick(function(){
-                var Valor= $(this).attr("value");
-                var NumHijos=
+                    //Declaración de variables
+                    var ulUsu = document.getElementById("LstUsu"); // nodo Lista de Usuarios
+                    var ul = document.getElementById("LstUsuFin"); // nodo lista de participantes
+                    var NumHijos= ulUsu.children.length; //numero de hijos que tiene la lista
+                    var NumDelHijo=$(this).index(); // numero del indice del hijo
+                    var Valor= $(this).attr("value"); //valor del attr value del li
+                    var Title = $(this).attr("title"); //valor de attr title del li
+
     /*-----Creamos un nodo nuevo con su atributo para agregar a la lista definitiva de partiticipantes*/    
-                var nodo = document.createElement("li");
-		        var textoNodo = document.createTextNode($(this).attr("title"));
-		        var hijo= $(this).attr("value");
-                nodo.appendChild(textoNodo);
-		
-		        var ul = document.getElementById("LstUsuFin");
-		
-		        ul.insertBefore(nodo,ul.children[0]);
+                    var nodo = document.createElement("li");
+		            var textoNodo = document.createTextNode(Title+" - "+Valor);
+                    nodo.appendChild(textoNodo);
+                    $(nodo).attr("title",Title);
+                    $(nodo).attr("value",Valor);
+		        
+		            ul.insertBefore(nodo,ul.children[0]);
     /* ------------------------------fin de la inserción---------------------------------------------- */
     /*------Eliminación del mismo dato para no crear duplicados en las listas--------- */
-                var ulUsu = document.getElementById("LstUsu");
-                alert("has hecho doble click en el párrafo con id="+hijo);
-                ulUsu.removeChild(ulUsu.children[hijo]);
+                
+                    alert("has hecho doble click en ul con numero hijos "+ NumHijos+", en el li hijo: "+NumDelHijo);
+                    ulUsu.removeChild(ulUsu.children[NumDelHijo]);
     /*-------------------------------fin de eliminacion------------------------------- */
-                //alert("has hecho doble click en el párrafo con id="+Valor);
                 });
             });
 
@@ -79,13 +83,11 @@
         <form method="POST" action="?">
 		<nav>
 			<ul>
-				<li><input type=submit name="MisDatos" value="Mis Datos"></li>
-				<li><a href="Capitulo1.html">Capitulo 1</a></li>
-				<li><a href="Capitulo2.html">Capitulo 2</a></li>
+                <li><input type=submit name="MisDatos" value="Mis Datos"></li>
                 <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
-				<li><input type=submit name="CreSor" value="Crear Sorteo"></li>
                 <li><input type=submit name="LisUsu" value="Mis Sorteos"></li>
                 <li><input type=submit name="Listado" value="Listado"></li>
+                <li><a name="LisUsu" value="MisSorteos" href="http://localhost/proyecto/index.php/adminusuarios">Mis Sorteos</a></li>
 			</ul>
         </nav>	
         </form>
@@ -96,8 +98,13 @@
             <?php 
             SoloSorteo(); 
             SoloUsuarios();
+            if (isset($_POST['Listado'])){
+                Listado();
+            }elseif (isset($_POST['LisUsu'])){
+                MisSorteos();
+            }
             ?>
-            <p id="parrafo">Texto de párrafo <span> Texto dentro de un span</span>.</p>
+            
         </section>
         
     <footer></footer>
