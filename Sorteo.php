@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
         <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
         <script>
+            var Participantes="";
             $(document).ready(function(){
 	            $("li").dblclick(function(){
                     //Declaración de variables
@@ -24,7 +25,7 @@
                     nodo.appendChild(textoNodo);
                     $(nodo).attr("title",Title);
                     $(nodo).attr("value",Valor);
-		        
+                    
 		            ul.insertBefore(nodo,ul.children[0]);
     /* ------------------------------fin de la inserción---------------------------------------------- */
     /*------Eliminación del mismo dato para no crear duplicados en las listas--------- */
@@ -32,8 +33,11 @@
                     alert("has hecho doble click en ul con numero hijos "+ NumHijos+", en el li hijo: "+NumDelHijo);
                     ulUsu.removeChild(ulUsu.children[NumDelHijo]);
     /*-------------------------------fin de eliminacion------------------------------- */
+                    
+                    //for (Cont=0,Cont<ul.children.length,Cont++)
                 });
             });
+            
 
 
         </script>
@@ -95,9 +99,38 @@
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
+            <?php $SorteoId=NuevoSorteo();?>
+            <form method="GET" action="?">
+                <div id="DivSorteo">
+                    <input id="SorteoId" type="hidden" name="SorId" value=" <?php echo $SorteoId ?>">    
+                    <label>Sorteo</label><input id="Sorteo" type="text" name="SorNom" placeholder="Nombre Sorteo">
+                    <label>Fecha</label><input id="Fecha" type="text" name="Sorfec" placeholder="Fecha sorteo dd/mm/aaaa">
+					<?php SoloSorteo(); 
+                          SoloUsuarios(); 
+                          //DameParticipantes();
+                          ?>
+
+                    <input id="Sorteo" type="submit" name="Sorteo" value="Sorteo" >
+                </div>
+            </form>
             <?php 
-            SoloSorteo(); 
-            SoloUsuarios();
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             if (isset($_POST['Listado'])){
                 Listado();
             }elseif (isset($_POST['LisUsu'])){

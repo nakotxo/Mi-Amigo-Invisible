@@ -128,7 +128,30 @@ function NuevoUsuario(){
 	
 	}
 }
+function NuevoSorteo(){
+	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
+		$sql="SELECT SorId FROM SORTEOS";		//Select para ejecutar, donde, seleccionará los Id de los SORTEOS de la BD
+		
+		if ($resultado=$mysqli->query($sql)){
+			$SorteoId=0;
+			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
 
+				if ($fila['SorId']==$SorteoId){
+					$SorteoId++;	//incremento la variable para obtener el primer Id vacio
+				} else{
+					break;
+				}
+			}
+			return $SorteoId;
+		}else{
+			echo "Error en la consulta de Id de Sorteo";
+		}
+	}else{
+		
+		echo "<h3>Error conexión con la base de datos</h3>";
+	
+	}
+}
 
 function get_ban($valor){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
