@@ -9,16 +9,20 @@
         <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
         <script>
             var Participantes="";
+            var arrayParticipantes= new Array() ; //array con el valor de los UsuId
+            var arraySorteo= new Array();  //array con el resultado del random en indices
+            var NumHijos;
+            var NumHijosUlFinal;
             $(document).ready(function(){
 	            $("li").dblclick(function(){
                     //Declaración de variables
                     var ulUsu = document.getElementById("LstUsu"); // nodo Lista de Usuarios
-                    var ul = document.getElementById("LstUsuFin"); // nodo lista de participantes
-                    var NumHijos= ulUsu.children.length; //numero de hijos que tiene la lista
+                    var ulFinal = document.getElementById("LstUsuFin"); // nodo lista de participantes
+                    NumHijos= ulUsu.children.length; //numero de hijos que tiene la lista
                     var NumDelHijo=$(this).index(); // numero del indice del hijo
                     var Valor= $(this).attr("value"); //valor del attr value del li
                     var Title = $(this).attr("title"); //valor de attr title del li
-
+                   
     /*-----Creamos un nodo nuevo con su atributo para agregar a la lista definitiva de partiticipantes*/    
                     var nodo = document.createElement("li");
 		            var textoNodo = document.createTextNode(Title+" - "+Valor);
@@ -26,7 +30,9 @@
                     $(nodo).attr("title",Title);
                     $(nodo).attr("value",Valor);
                     
-		            ul.insertBefore(nodo,ul.children[0]);
+		            ulFinal.insertBefore(nodo,ulFinal.children[0]);
+                    arrayParticipantes.unshift(Valor);
+                    NumHijosUlFinal=ulFinal.children.length;
     /* ------------------------------fin de la inserción---------------------------------------------- */
     /*------Eliminación del mismo dato para no crear duplicados en las listas--------- */
                 
@@ -37,7 +43,43 @@
                     //for (Cont=0,Cont<ul.children.length,Cont++)
                 });
             });
-            
+            function realizarSorteo(){
+                var NumRandom;
+                var coincideUltimo=0;
+                arraySorteo=[];
+              if (NumHijosUlFinal>2){
+                for (i=0;i!=NumHijosUlFinal;i++){
+                    NumRandom= Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
+                    NumRandom=parseInt(NumRandom);
+
+                    for (j=0;j<=i;j++){
+                        while ((NumRandom==arraySorteo[j])){
+                            NumRandom= Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
+                            NumRandom=parseInt(NumRandom);
+                            j=-1;
+                        }
+                        if (j==NumHijosUlFinal-1){
+                            if (NumRandom==j){
+                                i=-1;
+                                coincideUltimo=1;
+                                break;
+                            }
+                        }
+                        if ((i==0)&&(NumRandom==0)){
+                            i=-1;
+                            coincideUltimo=1;
+                            break;
+                        }
+                    }
+                    if (coincideUltimo==0){
+                        arraySorteo[i]=NumRandom;
+                    }
+                    coincideUltimo==0;
+                }
+              }else{
+                  alert("Para realizar el sorteo deben ser más de tres participantes.");
+              }
+            }
 
 
         </script>
@@ -107,10 +149,9 @@
                     <label>Fecha</label><input id="Fecha" type="text" name="Sorfec" placeholder="Fecha sorteo dd/mm/aaaa">
 					<?php SoloSorteo(); 
                           SoloUsuarios(); 
-                          //DameParticipantes();
                           ?>
 
-                    <input id="Sorteo" type="submit" name="Sorteo" value="Sorteo" >
+                    <button type="button" id="Sorteo" onclick="realizarSorteo()">Sorteo</button>
                 </div>
             </form>
             <?php 
@@ -136,6 +177,7 @@
             }elseif (isset($_POST['LisUsu'])){
                 MisSorteos();
             }
+            
             ?>
             
         </section>

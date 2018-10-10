@@ -329,7 +329,7 @@ function ListarUsuariosEnSelect($datosUsuarios){
 	<ul id="LstUsu" name="Usuarios">
 		<?php 
 		for ($i=0;$i<count($datosUsuarios)-1;$i++){
-			echo "<li title= '".$datosUsuarios[$i]['UsuId']."'value='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
+			echo "<li value= '".$datosUsuarios[$i]['UsuId']."'title='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
 		} ?>
 		
 
