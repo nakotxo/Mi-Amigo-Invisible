@@ -1,3 +1,83 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,77 +93,142 @@
             var arraySorteo= new Array();  //array con el resultado del random en indices
             var NumHijos;
             var NumHijosUlFinal;
+            var botonCreado=0;
+            var contInput=0;
             $(document).ready(function(){
 	            $("li").dblclick(function(){
                     //Declaración de variables
                     var ulUsu = document.getElementById("LstUsu"); // nodo Lista de Usuarios
                     var ulFinal = document.getElementById("LstUsuFin"); // nodo lista de participantes
+                    var formularioSorteo = document.getElementById("formularioSorteo");
                     NumHijos= ulUsu.children.length; //numero de hijos que tiene la lista
                     var NumDelHijo=$(this).index(); // numero del indice del hijo
-                    var Valor= $(this).attr("value"); //valor del attr value del li
+                    var valor= $(this).attr("value"); //valor del attr value del li
                     var Title = $(this).attr("title"); //valor de attr title del li
                    
     /*-----Creamos un nodo nuevo con su atributo para agregar a la lista definitiva de partiticipantes*/    
+                    
                     var nodo = document.createElement("li");
-		            var textoNodo = document.createTextNode(Title+" - "+Valor);
+		            var textoNodo = document.createTextNode(Title+" - "+valor);
                     nodo.appendChild(textoNodo);
                     $(nodo).attr("title",Title);
-                    $(nodo).attr("value",Valor);
+                    $(nodo).attr("value",valor);
                     
 		            ulFinal.insertBefore(nodo,ulFinal.children[0]);
-                    arrayParticipantes.unshift(Valor);
+                    arrayParticipantes.unshift(valor);
                     NumHijosUlFinal=ulFinal.children.length;
+
+    /*------ Creamos input para realizar un envio de los datos y enviar por Post -----*/
+                    var nodoInput= document.createElement("input");
+                    $(nodoInput).attr("value",valor);
+                    $(nodoInput).attr("type","text");
+                    $(nodoInput).attr("name","input"+contInput);
+                    
+                    formularioSorteo.appendChild(nodoInput);
+    /* ------------------------------------------------------------------------------ */
+                    if (contInput==0){
+                       var nodoTotalInput=document.createElement("input");
+                       $(nodoTotalInput).attr("value",contInput+1);
+                       $(nodoTotalInput).attr("id","hijos");
+                       $(nodoTotalInput).attr("name","hijos");
+                       formularioSorteo.insertBefore(nodoTotalInput,formularioSorteo.children[0]);
+                    }else{
+                        document.getElementById("hijos").value=contInput+1;
+                    }
+                    contInput++;
+                    if ((NumHijosUlFinal>=3)&&(botonCreado==0)){
+                        var nodoBoton= document.createElement("input");
+                        $(nodoBoton).attr("value","SuperSorteo");
+                        $(nodoBoton).attr("type","submit");
+                        formularioSorteo.appendChild(nodoBoton);
+                        
+                        
+
+                        botonCreado=1;
+                    }
+
     /* ------------------------------fin de la inserción---------------------------------------------- */
     /*------Eliminación del mismo dato para no crear duplicados en las listas--------- */
                 
-                    alert("has hecho doble click en ul con numero hijos "+ NumHijos+", en el li hijo: "+NumDelHijo);
+                    //alert("has hecho doble click en ul con numero hijos "+ NumHijos+", en el li hijo: "+NumDelHijo);
                     ulUsu.removeChild(ulUsu.children[NumDelHijo]);
     /*-------------------------------fin de eliminacion------------------------------- */
-                    
-                    //for (Cont=0,Cont<ul.children.length,Cont++)
                 });
             });
-            function realizarSorteo(){
-                var NumRandom;
+    /*      function realizarSorteo(){
+                var NumRandom =0;
                 var coincideUltimo=0;
+                var LstSorteo = document.getElementById("LstSorteo"); // nodo Lista de Usuarios
+                var nodo;
+                var textoNodo;
+                var hijos= LstSorteo.children.length;
+                var i=0;
+                var j=0;
+                /* borrar LstSorteo para pruebas
+                for (a=0;a<hijos;a++){
+                    LstSorteo.removeChild(LstSorteo.children[0]);
+                }
                 arraySorteo=[];
-              if (NumHijosUlFinal>2){
-                for (i=0;i!=NumHijosUlFinal;i++){
+                
+              if (NumHijosUlFinal>2){  //si no hay mas de tres participantes no hacemos el sorteo
+ 
+                while (NumRandom==0){
                     NumRandom= Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
                     NumRandom=parseInt(NumRandom);
-
-                    for (j=0;j<=i;j++){
-                        while ((NumRandom==arraySorteo[j])){
-                            NumRandom= Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
-                            NumRandom=parseInt(NumRandom);
-                            j=-1;
+                    var primeraVez=true;
+                }
+                
+                while (arraySorteo.length<NumHijosUlFinal){
+                    if (!primeraVez){
+                        /* Creación de un número aleatorio 
+                        NumRandom= Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
+                        NumRandom=parseInt(NumRandom);
+                        /* Fin Número aleatorio 
+                    }
+                    primeraVez=false;
+                    var existe=false;
+                    for (i=0;i<arraySorteo.length;i++){
+                        if (arraySorteo[i]==NumRandom){
+                            existe=true;
+                            break;
                         }
-                        if (j==NumHijosUlFinal-1){
-                            if (NumRandom==j){
-                                i=-1;
-                                coincideUltimo=1;
+                        if (arraySorteo.length==NumRandom){
+                            if (arraySorteo.length==(NumHijosUlFinal-1)){
+                                existe=true;
+                                i=0;
+                                NumRandom=0;
+                                while (NumRandom==0){
+                                    NumRandom= Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
+                                    NumRandom=parseInt(NumRandom);
+                                    primeraVez=true;
+                                }
+                                arraySorteo=[];
                                 break;
                             }
-                        }
-                        if ((i==0)&&(NumRandom==0)){
-                            i=-1;
-                            coincideUltimo=1;
+                            existe=true;
                             break;
                         }
                     }
-                    if (coincideUltimo==0){
-                        arraySorteo[i]=NumRandom;
+                    if (!existe){
+                        arraySorteo[arraySorteo.length]=NumRandom;
                     }
-                    coincideUltimo==0;
                 }
+
               }else{
                   alert("Para realizar el sorteo deben ser más de tres participantes.");
               }
-            }
-
-
+              /* Comprobación de funcionamiento de atgoritmo 
+              hijos= LstSorteo.children.length;
+              for(i=0;i<arraySorteo.length;i++){
+                textoNodo = document.createTextNode(arraySorteo[i]);
+                nodo = document.createElement("li");
+                nodo.appendChild(textoNodo);
+                LstSorteo.appendChild(nodo,LstSorteo.children[i]);
+              }
+    */
+            
         </script>
-        
+
 
 
 
@@ -142,34 +287,26 @@
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
             <?php $SorteoId=NuevoSorteo();?>
-            <form method="GET" action="?">
+            <form id="formularioSorteo" method="POST" action="?">
                 <div id="DivSorteo">
-                    <input id="SorteoId" type="hidden" name="SorId" value=" <?php echo $SorteoId ?>">    
+                    <input id="SorteoId" type="hidden" name="SorId" value="<?php echo $SorteoId ?>">    
                     <label>Sorteo</label><input id="Sorteo" type="text" name="SorNom" placeholder="Nombre Sorteo">
                     <label>Fecha</label><input id="Fecha" type="text" name="Sorfec" placeholder="Fecha sorteo dd/mm/aaaa">
-					<?php SoloSorteo(); 
+                    
+                    <?php 
+                        //SoloSorteo(); 
                           SoloUsuarios(); 
-                          ?>
-
-                    <button type="button" id="Sorteo" onclick="realizarSorteo()">Sorteo</button>
+                    ?>
+                    
+                   
+                    
                 </div>
             </form>
+            
             <?php 
 
 
             
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             if (isset($_POST['Listado'])){
@@ -179,7 +316,87 @@
             }
             
             ?>
-            
+            <?php
+if (isset($_POST['Sorteo'])){
+
+
+    $hijos=$_POST['hijos'];
+    $numMax=$hijos-1;
+    $NumRandom =0;
+
+    $arraySorteo=[];
+    
+    
+        while ($NumRandom==0){
+            $NumRandom= rand ( 0 , $numMax);//Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
+            //$NumRandom=parseInt($NumRandom);
+            $primeraVez=true;
+        }
+    
+        while (sizeof($arraySorteo)<$hijos){
+            if (!$primeraVez){
+                /* Creación de un número aleatorio */
+                $NumRandom= rand ( 0 , $numMax);
+                /* Fin Número aleatorio */
+            }
+            $primeraVez=false;
+            $existe=false;
+            for ($i=0;$i<sizeof($arraySorteo);$i++){
+                if ($arraySorteo[$i]==$NumRandom){
+                    $existe=true;
+                    break;
+                }
+                if (sizeof($arraySorteo)==$NumRandom){
+                    if (sizeof($arraySorteo)==($hijos-1)){
+                        $existe=true;
+                        $i=0;
+                        $NumRandom=0;
+                        while ($NumRandom==0){
+                            $NumRandom= rand ( 0 , $numMax);
+                            $primeraVez=true;
+                        }
+                        $arraySorteo=[];
+                        break;
+                    }
+                    $existe=true;
+                    break;
+                }
+            }
+            if (!$existe){
+                $arraySorteo[sizeof($arraySorteo)]=$NumRandom;
+            }
+        }
+
+    
+    /* Comprobación de funcionamiento de atgoritmo */
+    
+    print_r($arraySorteo);
+    //S0(A3-0,1,2,3,4)S12(A2-3,6,12,56,105).
+    
+    for ($i=0;$i<$hijos;$i++){
+        $inputAmigo=$_POST['input'.$arraySorteo[$i]];
+        $usuarioSorteo=$_POST['input'.$i];
+        $string="S".$_POST['SorId']."(A".$inputAmigo."-,,,,)";
+        $SQL= "update `usuarios` SET `UsuSorId`=".$string.", WHERE `UsuId`=".$usuarioSorteo;
+        echo "<br>".$SQL;
+    }
+}
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
         </section>
         
     <footer></footer>

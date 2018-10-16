@@ -322,8 +322,8 @@ function SoloUsuarios(){
 		}
 	
 }
-function ListarUsuariosEnSelect($datosUsuarios){
 
+function ListarUsuariosEnSelect($datosUsuarios){
 	?>
 	<!--Lista de usuarios para participar-->
 	<ul id="LstUsu" name="Usuarios">
@@ -331,8 +331,6 @@ function ListarUsuariosEnSelect($datosUsuarios){
 		for ($i=0;$i<count($datosUsuarios)-1;$i++){
 			echo "<li value= '".$datosUsuarios[$i]['UsuId']."'title='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
 		} ?>
-		
-
 	</ul>
 	<!--Lista definitiva de usuarios a participar-->
 	<ul id="LstUsuFin" name="ListaUsuariosFinal">
