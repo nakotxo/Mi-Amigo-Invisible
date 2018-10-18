@@ -1,82 +1,11 @@
+<?php
 
+            
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+?>
 
 <!DOCTYPE html>
 <html>
@@ -139,6 +68,7 @@
                     if ((NumHijosUlFinal>=3)&&(botonCreado==0)){
                         var nodoBoton= document.createElement("input");
                         $(nodoBoton).attr("value","SuperSorteo");
+                        $(nodoBoton).attr("name","Sorteo");
                         $(nodoBoton).attr("type","submit");
                         formularioSorteo.appendChild(nodoBoton);
                         
@@ -296,6 +226,7 @@
                     <?php 
                         //SoloSorteo(); 
                           SoloUsuarios(); 
+                          
                     ?>
                     
                    
@@ -316,74 +247,7 @@
             }
             
             ?>
-            <?php
-if (isset($_POST['Sorteo'])){
 
-
-    $hijos=$_POST['hijos'];
-    $numMax=$hijos-1;
-    $NumRandom =0;
-
-    $arraySorteo=[];
-    
-    
-        while ($NumRandom==0){
-            $NumRandom= rand ( 0 , $numMax);//Math.random()*(NumHijosUlFinal-0)+0; // un número aleatorio entre min (incluido) y max (excluido) funcion = Math.random() * (max - min) + min;
-            //$NumRandom=parseInt($NumRandom);
-            $primeraVez=true;
-        }
-    
-        while (sizeof($arraySorteo)<$hijos){
-            if (!$primeraVez){
-                /* Creación de un número aleatorio */
-                $NumRandom= rand ( 0 , $numMax);
-                /* Fin Número aleatorio */
-            }
-            $primeraVez=false;
-            $existe=false;
-            for ($i=0;$i<sizeof($arraySorteo);$i++){
-                if ($arraySorteo[$i]==$NumRandom){
-                    $existe=true;
-                    break;
-                }
-                if (sizeof($arraySorteo)==$NumRandom){
-                    if (sizeof($arraySorteo)==($hijos-1)){
-                        $existe=true;
-                        $i=0;
-                        $NumRandom=0;
-                        while ($NumRandom==0){
-                            $NumRandom= rand ( 0 , $numMax);
-                            $primeraVez=true;
-                        }
-                        $arraySorteo=[];
-                        break;
-                    }
-                    $existe=true;
-                    break;
-                }
-            }
-            if (!$existe){
-                $arraySorteo[sizeof($arraySorteo)]=$NumRandom;
-            }
-        }
-
-    
-    /* Comprobación de funcionamiento de atgoritmo */
-    
-    print_r($arraySorteo);
-    //S0(A3-0,1,2,3,4)S12(A2-3,6,12,56,105).
-    
-    for ($i=0;$i<$hijos;$i++){
-        $inputAmigo=$_POST['input'.$arraySorteo[$i]];
-        $usuarioSorteo=$_POST['input'.$i];
-        $string="S".$_POST['SorId']."(A".$inputAmigo."-,,,,)";
-        $SQL= "update `usuarios` SET `UsuSorId`=".$string.", WHERE `UsuId`=".$usuarioSorteo;
-        echo "<br>".$SQL;
-    }
-}
-
-
-?>
 
 
 

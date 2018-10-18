@@ -76,8 +76,6 @@ function controlador_admin_usuarios(){
 	$datos[]=array();
 	$datos['titulo']="Home Usuario";
 	$valor="";
-	
-	
 	require 'HomeUsuarios.php';
 	
 }
@@ -107,6 +105,92 @@ function get_Conexion(){
 function Controlador_Sorteo(){
 	$datos[]=array();
 	$datos['titulo']="Creacion Sorteo";
+	/* si el usuario pulsa el boton de realizar Sorteo */
+	if (isset($_POST['Sorteo'])){
+   	 	$hijos=$_POST['hijos'];
+   	 	$numMax=$hijos-1;
+   	 	$NumRandom =0;
+   	 	$arraySorteo=[];
+       	while ($NumRandom==0){
+           	 $NumRandom= rand ( 0 , $numMax);
+           	 $primeraVez=true;
+       	}
+       	while (sizeof($arraySorteo)<$hijos){
+        	if (!$primeraVez){
+            	/* Creación de un número aleatorio */
+            	$NumRandom= rand ( 0 , $numMax);
+            	/* Fin Número aleatorio */
+           	}
+           	$primeraVez=false;
+           	$existe=false;
+           	for ($i=0;$i<sizeof($arraySorteo);$i++){
+               	if ($arraySorteo[$i]==$NumRandom){
+                   	$existe=true;
+                   	break;
+               	}
+               	if (sizeof($arraySorteo)==$NumRandom){
+                   	if (sizeof($arraySorteo)==($hijos-1)){
+                       	$existe=true;
+                       	$i=0;
+                       	$NumRandom=0;
+                       	while ($NumRandom==0){
+                          	$NumRandom= rand ( 0 , $numMax);
+                          	$primeraVez=true;
+                       	}
+                       	$arraySorteo=[];
+                       	break;
+                   	}
+                   	$existe=true;
+                   	break;
+               	}
+           	}
+           	if (!$existe){
+               	$arraySorteo[sizeof($arraySorteo)]=$NumRandom;
+           	}
+       	}
+   	 	print_r($arraySorteo);
+   	
+		/** TEST atgoritmo 
+		 * Test Funcionamiento de atgoritmo
+		 * de realizar el sorteo sin repeticiones
+		 * simulando una UPDATE con su sentencia
+		*/
+		
+		
+
+   		for ($i=0;$i<$hijos;$i++){
+       		$inputAmigo=$_POST['input'.$arraySorteo[$i]];
+       		$usuarioSorteo=$_POST['input'.$i];
+       		$string="S".$_POST['SorId']."(A".$inputAmigo."-,,,,)";
+			
+			$SQL= "UPDATE usuarios SET UsuSorId='".$string."' WHERE UsuId=".$usuarioSorteo;
+			$valorDeseos=valorDeseos($usuarioSorteo);
+			$deseos=$valorDeseos['UsuDesId'];
+			
+			
+
+
+			echo "<br>".$SQL;
+			echo "<br>".$deseos."<br>";
+			if ($deseos==""){
+				//echo "Realizar la Update";
+				$conexion=get_Conexion();
+				if ($mysqli=get_Conexion()){
+					if ($mysqli-> query($SQL)){
+						//echo "<br>realizado<br><br>";
+					}else{
+						echo "Se ha producido un error";
+					}
+				}
+			}else{
+				echo "no vacio";
+			}
+   	 	}
+		/* --------fin del test -------------------- */
+		$MisSorteos=BuscaSorteo($deseos,$usuarioSorteo);
+			/**TEST Impresion $MisSorteos */
+			print_r ($MisSorteos);
+	}
 	require 'Sorteo.php';
 }
 
