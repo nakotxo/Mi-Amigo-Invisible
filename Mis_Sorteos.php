@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +6,7 @@
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
-        <script src="main.js"></script>
+        <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
     </head>
 <body>
     <header>
@@ -48,7 +47,7 @@
         <form method="POST" action="?">
 		<nav>
 			<ul>
-            <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Mis Datos</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Mis Datos</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
                 <?php
@@ -63,13 +62,33 @@
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
-            <?php
-                if (isset($_POST['Listado'])){
-                    Listado();
-                }elseif (isset($_POST['LisUsu'])){
-                    MisSorteos();
-                }
+            <?php 
+            
+
+            
+            MisSorteos();
+
+            if (isset($_POST['Listado'])){
+                Listado();
+            
+                
+            }
+            
             ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </section>
         
     <footer></footer>

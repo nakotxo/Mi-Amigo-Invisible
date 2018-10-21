@@ -17,13 +17,7 @@ if(isset($_POST['logout'])){
 }
 /* ---- fin $_POST['logout'] ----*/
 
-/** $_POST['Sorteo'] 
- * Pulsación del botón que realiza el sorteo
-*/
-/*if (isset($_POST['Sorteo'])){
-  if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
-	  echo "No se puede realizar el sorteo ya que faltan datos del SORTEO";
-  }else{*/
+
 function superSorteo(){
 	$hijos=$_POST['hijos']; //recepción de variable de número de participantes
 	$numMax=$hijos-1;	//se resta la unidad para contarcon el 0 como los arrays
@@ -39,8 +33,6 @@ function superSorteo(){
 			$stringParticipantes=$stringParticipantes.",".$_POST[$input.$i];
 		}
 	}
-
-
 
 	$sorteoInsert=array(
 		'SorId'=>$_POST['SorId'],
@@ -116,28 +108,9 @@ function superSorteo(){
 		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.')';
 		InsertPadreUsuSor($insertPadreUsuSor);
 		/*-----------------FIN--------------------*/
-
-
 	}
   
 }
-
-
-/*function UsuSorIdUpdate($stringSorteos,$stringDeseos,$usuarioSorteo){
-	$SQL= "UPDATE usuarios SET UsuSorId='".$stringSorteos."', UsuDesId='".$stringDeseos."' WHERE UsuId=".$usuarioSorteo;
-	$conexion=get_Conexion();
-	if ($mysqli=get_Conexion()){
-		if ($mysqli-> query($SQL)){
-			/** TEST hecho 
-			* confirmación de realización de Update */
-			//echo "<br>".$SQL;
-			//echo "<br>realizado<br><br>";
-			/*--- Fin TEST ---*/
-/*		}else{
-			echo "Error en Update UsuSorIdUpdate";
-		}
-	}
-}*/
 
 function InsertPadreUsuSor($insertPadreUsuSor){
 	$conexion=get_Conexion();
@@ -171,8 +144,6 @@ function sorteoInsert($sorteoInsert){
 	}
 }
 
-
-
 function get_Conexion(){
 	$servidor= "localhost";
 	$usuario= "root";   //"id3972968_joseignaciohidalgo";
@@ -190,19 +161,18 @@ function get_Conexion(){
 }
 
 
-
-/*------fin logout -----------*/
-function UsuValorCualquiera($UsuId){	
+/*------ recepcion de datos de usuario buscando por Id o por Nombre ---- */
+function UsuValorCualquiera($UsuId){	//por ID
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda Participantes -------------- */
-		$sqlDeseos="SELECT * FROM USUARIOS WHERE UsuId='".$UsuId."'";
+		$sqlUsuario="SELECT * FROM USUARIOS WHERE UsuId='".$UsuId."'";
 		/**TEST visualización deseos
 		 * comprobacion de la carga de los deseos */	
 		//echo $sqlDeseos;
 		/* OK
 		*/
-		if ($resultado=$mysqli->query($sqlDeseos)){
+		if ($resultado=$mysqli->query($sqlUsuario)){
 			$fila=$resultado->fetch_assoc();
 		}else{
 			$fila= "No hay resultados";
@@ -214,35 +184,7 @@ function UsuValorCualquiera($UsuId){
 	return $UsuValorCualquiera;
 }
 
-function existe_usuario($usuario){
-
-	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		
-		$registroOK=false;
-		$sql="SELECT UsuNom FROM usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
-
-		if ($resultado=$mysqli->query($sql)){
-			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-				if ($fila['UsuNom']==$usuario){
-					$registroOK=true; //true=1
-				}else{
-					$registroOK=false;  //false=0
-				}
-			}
-			return $registroOK;
-		}else{
-			
-			echo "Error en la consulta Existe Usuario";
-		
-		}
-	}else{
-		
-		echo "<h3>Error conexión con la base de datos</h3>";
-	
-	}
-}
-
-function DatosUsuario($UsuNom){
+function DatosUsuario($UsuNom){	//datos usuario por nombre
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda sorteos -------------- */
@@ -256,16 +198,36 @@ function DatosUsuario($UsuNom){
 	}
 
 }
+/*-----------------FIN BUSQUEDA DATOS USUARIO ----------------------------*/
 
+
+
+function existe_usuario($usuario){
+	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
+		$registroOK=false;
+		$sql="SELECT UsuNom FROM usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
+		if ($resultado=$mysqli->query($sql)){
+			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
+				if ($fila['UsuNom']==$usuario){
+					$registroOK=true; //true=1
+				}else{
+					$registroOK=false;  //false=0
+				}
+			}
+			return $registroOK;
+		}else{
+			echo "Error en la consulta Existe Usuario";
+		}
+	}else{
+		echo "<h3>Error conexión con la base de datos</h3>";
+	}
+}
 
 function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada){
-	
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		$registroOK=false;
 		$sql="SELECT UsuNom, UsuPwd FROM usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
-		
 		if ($resultado=$mysqli->query($sql)){
-			
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
 				if (($fila['UsuNom']==$usuario)&&(($fila['UsuPwd']==$contrasena)||($fila['UsuPwd']==$contrasenaCifrada))){
 					$registroOK=true; 
@@ -275,50 +237,35 @@ function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada){
 			}
 			return $registroOK;
 		}else{
-			
 			echo "Error en la consulta usuario y contraseña";
 		}
 	}else{
-		
 		echo "<h3>Error conexión con la base de datos</h3>";
-	
 	}
 }
 
-
 function get_rol($usuario){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		
 		$sql="select UsuNom,UsuRol,UsuId from usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
-		
 		if ($resultado=$mysqli->query($sql)){
-			
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
 				$rol=$fila['UsuRol'];
 			}
 			return $rol;
 		}else{
-			
 			echo "Error en la consulta Rol";
-		
 		}
 	}else{
-		
 		echo "<h3>Error conexión con la base de datos</h3>";
-	
 	}
 }
-
-
 
 function NuevoUsuario(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		$sql="SELECT UsuId FROM usuarios";		//Select para ejecutar, donde, seleccionará los Id delos usuario de la BD
-		
 		if ($resultado=$mysqli->query($sql)){
 			$UsuarioId=0;
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-
 				if ($fila['UsuId']==$UsuarioId){
 					$UsuarioId++;	//incremento la variable para obtener el primer Id vacio
 				} else{
@@ -330,15 +277,14 @@ function NuevoUsuario(){
 			echo "Error en la consulta de Id de Usuario";
 		}
 	}else{
-		
 		echo "<h3>Error conexión con la base de datos</h3>";
-	
 	}
 }
+
+
 function NuevoSorteo(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		$sql="SELECT SorId FROM SORTEOS";		//Select para ejecutar, donde, seleccionará los Id de los SORTEOS de la BD
-		
 		if ($resultado=$mysqli->query($sql)){
 			$SorteoId=0;
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
@@ -354,24 +300,17 @@ function NuevoSorteo(){
 			echo "Error en la consulta de Id de Sorteo";
 		}
 	}else{
-		
 		echo "<h3>Error conexión con la base de datos</h3>";
-	
 	}
 }
 
 function get_ban($valor){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		
 		$sql="SELECT * FROM usuarios WHERE Ban='".$valor."'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
-
 		$datos[]=array();
 		$arrayAyuda[]=array();
-		
 		if ($resultado=$mysqli->query($sql)){
-			
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-				
 				array_push($datos,$arrayAyuda=array(
 				'usuario'=>$fila['Usuario'],
 				'nombre'=>$fila['Nombre'],
@@ -380,53 +319,34 @@ function get_ban($valor){
 				'rol'=>$fila['Rol'],
 				'ban'=>$fila['Ban']
 				));
-				
 			}
 			unset($datos[0]);
-
 			return $datos;
 		}else{
-			
 			echo "Error en la consulta Baneado";
-		
 		}
 	}else{
-		
 		echo "<h3>Error conexión con la base de datos</h3>";
-	
 	}
 }
 
 
 function set_ban($Usuario, $Ban){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		
-		
 		$sql="UPDATE Usuarios SET Ban ='$Ban' WHERE Usuario='$Usuario'";	//update
-		
 		if ($resultado=$mysqli->query($sql)){
-			
 			echo "UPDATE Realizada";
-
 		}else{
-			
 			echo "Error en la UPDATE";
-		
 		}
 	}else{
-		
 		echo "<h3>Error conexión con la base de datos</h3>";
-	
 	}
 }
 
 
-
-
-
 function registrar_usuario($datos_usuario, $mensaje){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-
 		//Insertar datos 
 		$sql = "INSERT INTO usuarios (UsuId, UsuNom, UsuPwd, UsuRol, UsuEma) 
 				VALUES ('$datos_usuario[id]','$datos_usuario[usuario]','$datos_usuario[contrasena]','Usu','$datos_usuario[email]')";
@@ -636,60 +556,22 @@ function ListarSorteosEnSelect($datosSorteos){
 
 
 
-
-
-
-
-
 function MisSorteos(){
 	//MisDatos --> Creacion de array con todos los datos del Usuario
 	$UsuNom=$_SESSION['Usuario'];
 	$MisDatos=DatosUsuario($UsuNom);
 
-	//Asignacion de datos de Usuario a Variables	
+	//Asignacion de datos de Usuario a Variable	
 	$UsuId=$MisDatos['UsuId'];
-	$UsuRol=$MisDatos['UsuRol'];
-	$UsuPwd=$MisDatos['UsuPwd'];
-	$UsuEma=$MisDatos['UsuEma'];
-	$UsuSorId=$MisDatos['UsuSorId'];
-	$UsuDesId=$MisDatos['UsuDesId'];
-	$UsuAdminSorId=$MisDatos['UsuAdminSorId'];
+
 	//TEST carga de datos en array $MisDatos ok
 	//print_r ($MisDatos);
 	//echo "<br>".$UsuId.	$UsuRol.$UsuNom.$UsuPwd.$UsuEma.$UsuSorId.$UsuDesId.$UsuAdminSorId;
 
 	//MisSorteos --> Creacion de array con todos los sorteos del Usuario
-	$MisSorteos=BuscaSorteo($UsuSorId,$UsuDesId);
+	$MisSorteos=BuscaSorteo($UsuId);
 	$NumSorteos=$MisSorteos[0];
-	/*Aclaracion del contenido de MisSorteos:
-		si el Usuario tiene sorteos, en el array nos encontraremos:
-		[0]=> numero de sorteos (n)
-		[1]=> Id del Sorteo Nº x
-		[2]=> Id del Amigo del Sorteo x
-		[3]=> Id del Deseo1 del Amigo del Sorteo x
-		[4]=> Id del Deseo2 del Amigo del Sorteo x
-		[5]=> Id del Deseo3 del Amigo del Sorteo x
-		[6]=> Id del Deseo4 del Amigo del Sorteo x
-		[7]=> Id del Deseo5 del Amigo del Sorteo x
-		[8]=> Id de mi Deseo1 para el sorteo x
-		[9]=> Id de mi Deseo2 para el sorteo x
-		[10]=>Id de mi Deseo3 para el sorteo x
-		[11]=>Id de mi Deseo4 para el sorteo x
-		[12]=>Id de mi Deseo5 para el sorteo x
-		[13]=> número de participantes (n)
-		[14]=> Participante 1 de n
-		[15]=> Participante 2 de n
-		[16]=> Participante 3 de n
-		...vuelta a empezar con el sorteo x+1...
-		[n+m+1]=> Id del Sorteo Nº x+1 (si lo hubiera)
-		[n+m+2]=>Id del Amigo del Sorteo x+1 (si lo hubiera)
-		...así sucesivamente hasta (n) */
-	/*TEST de variable de cantidad de Sorteos COMPROBACION ok
-	//echo "cantidad sorteos:".$NumSorteos;
-	//print_r ($MisSorteos);*/
 
-
-	TratarDatosSorteos($MisDatos,$MisSorteos);
 
 		
 
@@ -709,172 +591,26 @@ function MisSorteos(){
 para acceder rapidamente a la información.
 N-º de sorteos, cuales son, amigos invisibles, los deseos de su amigo invisible y los deseos para ese sorteo*/
 
-function BuscaSorteo($sqlSorteo,$sqlMisDeseos){
-	$LosSorteos=array(); 	// declaracion de array
-	if ($sqlSorteo==""){	//Si el resultado de la consulta esta vacio, $sqlSorteo-> sorteos del usuario 
-		$LosSorteos[0]="<br/>Aun no esta incluido en ningún sorteo";
-	}else{
-		//echo $sqlSorteo."<br/>";
-		$i=0;	//variable para controlar entrada y salida bucle	
-		$Longitud= strlen($sqlSorteo);	//variable que contiene longitud del valor 
-		$cuantos=substr_count ( $sqlSorteo , "S", $offset = 0, $Longitud); //Variable cuntos sorteos hay
-		$LosSorteos[$i]=$cuantos;	// posición [0] cantidad de sorteos de la persona
-		
-		$cont=1; 
-		while ($i!=$cuantos){
-			/* Busqueda y asignacion en array de la id del sorteo */
-			$inicioSorteo= strpos ($sqlSorteo,"S",$i);	//busqueda posicion del Id del Sorteo
-			$finalSorteo=strpos ($sqlSorteo,"(",$inicioSorteo+1); // busqueda del fin del Id del Sorteo
-			$totalCarateresSorteo= ($finalSorteo-$inicioSorteo)-1; // varible del total de caracteres que ocupa el Id del Sorteo
-			$ElSorteo= substr ($sqlSorteo, $inicioSorteo+1, $totalCarateresSorteo); // Extrae el dato Id del Sorteo
-			
-			$LosSorteos[$cont]= $ElSorteo;	//posición [1],[1+12]... Id del sorteo
-			$cont++; 
-
-			/* Busqueda del id del amigo */
-			$inicioAmigo= strpos ($sqlSorteo,"A",$inicioSorteo);	//busqueda posicion del Id del Amigo
-			$finalAmigo=strpos ($sqlSorteo,"-",$inicioAmigo+1); // busqueda del fin del Id del Amigo
-			$totalCarateresAmigo= ($finalAmigo-$inicioAmigo)-1; // varible del total de caracteres que ocupa el Id del Amigo
-			$ElAmigo= substr ($sqlSorteo, $inicioAmigo+1, $totalCarateresAmigo); // Extrae el dato Id del Amigo
-			
-
-			$LosSorteos[$cont]= $ElAmigo;    // posicion [2],[2+12]... Id del amigo
-			$cont++; 
-
-			//tratamiento de los deseos del amigo del sorteo
-			$j=0;
-			$inicioDeseo= strpos ($sqlSorteo,"-",$inicioAmigo)+1;	//busqueda posicion del Id del Deseo
-			$finalDeseo=strpos ($sqlSorteo,",",$inicioDeseo); // busqueda del fin del Id del Deseo
-			$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
-			$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
-			
-			$LosSorteos[$cont]=$ElDeseo; //posición [3],[3+12]... id deseo1 del amigo
-			$cont++;
-
-			while ($j<4){
-				if ($j<3){
-						$inicioDeseo= ($inicioDeseo+$totalCarateresDeseo+1);	//busqueda posicion del Id del Deseo
-						$finalDeseo=strpos ($sqlSorteo,",",$inicioDeseo); // busqueda del fin del Id del Deseo
-						$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
-						$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
-				}else{
-						$inicioDeseo= ($inicioDeseo+$totalCarateresDeseo+1);	//busqueda posicion del Id del Deseo
-						$finalDeseo=strpos ($sqlSorteo,")",$inicioDeseo-$totalCarateresDeseo-2); // busqueda del fin del Id del Deseo
-						$totalCarateresDeseo=($finalDeseo-$inicioDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
-						$ElDeseo=substr($sqlSorteo,$inicioDeseo,$totalCarateresDeseo);
-				}
-
-				$LosSorteos[$cont]=$ElDeseo; //[4],[5],[6],[7]-,[4+12],[5+12],[6+12],[7+12]... id de los deseos 2,3,4,5 del amigo
-				$cont++;
-				$j++;
+function BuscaSorteo($usuId){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		$LosSorteos=array(); 	// declaracion de array
+		$sqlString='SELECT * FROM PADREUSUSOR WHERE IdUsu='.$usuId;
+		$LosSorteos[0]="";
+		$i=0;
+		if($resultado=$mysqli->query($sqlString)){
+			while ($fila=$resultado->fetch_assoc()){
+				$LosSorteos[$i]=$fila['IdSor'];
+				$i++;
 			}
-
-			//tratamiento de los deseos propios para el sorteo
-			$k=0;
-			if ($cont<12){
-				$InicioMiDeseo= strpos ($sqlMisDeseos,"(",0)+1;	//busqueda posicion del Id del Deseo
-			}else{
-				$InicioMiDeseo= strpos ($sqlMisDeseos,"(",$InicioMiDeseo)+1;	//busqueda posicion del Id del Deseo
-			}
-			$FinalMiDeseo=strpos ($sqlMisDeseos,",",$InicioMiDeseo); // busqueda del fin del Id del Deseo
-			$TotalCarateresMiDeseo=($FinalMiDeseo-$InicioMiDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
-			$MiDeseo=substr($sqlMisDeseos,$InicioMiDeseo,$TotalCarateresMiDeseo);
 			
-			$LosSorteos[$cont]=$MiDeseo; //posición [8],[8+12] id de Mideseo1 
-			$cont++;
-
-			while ($k<4){
-				if ($k<3){
-						$InicioMiDeseo= ($InicioMiDeseo+$TotalCarateresMiDeseo+1);	//busqueda posicion del Id del Deseo
-
-						$FinalMiDeseo=strpos ($sqlMisDeseos,",",$InicioMiDeseo); // busqueda del fin del Id del Deseo
-
-						$TotalCarateresMiDeseo=($FinalMiDeseo-$InicioMiDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
-						$MiDeseo=substr($sqlMisDeseos,$InicioMiDeseo,$TotalCarateresMiDeseo);
-
-				}else{
-						$InicioMiDeseo= ($InicioMiDeseo+$TotalCarateresMiDeseo+1);	//busqueda posicion del Id del Deseo
-
-						$FinalMiDeseo=strpos ($sqlMisDeseos,")",$InicioMiDeseo-$TotalCarateresMiDeseo-2); // busqueda del fin del Id del Deseo
-
-						$TotalCarateresMiDeseo=($FinalMiDeseo-$InicioMiDeseo); // varible del total de caracteres que ocupa el Id del Deseo1
-						$MiDeseo=substr($sqlMisDeseos,$InicioMiDeseo,$TotalCarateresMiDeseo);
-
-				}
-
-				$LosSorteos[$cont]=$MiDeseo; //[9],[10],[11],[12]-[9+12],[10+12],[11+12],[12+12]  id de MiDeseo 2,3,4,5
-				$cont++;
-				$k++;
-			}
-			//tratamiento de los participantes
-			$DatPar=DatosSorteo($ElSorteo); //optencion de los datos del sorteo
-			$LosPar=$DatPar['SorPar'];
-			/**TEST 
-			 * comprobación de correcta carga de cantidad de participante
-			 */
-			//echo "participantes".$LosPar;
-			/* -----fin Test----- */
-			$LongPar= strlen($LosPar);	//variable que contiene longitud del valor 
-			$NumPar=substr_count($LosPar,',',$offset=0,$LongPar)+1; //contando las ',' mas 1 nos da el total de participantes
-			/** TEST 
-			 * comprobación de numero de participantes
-			 */
-			//echo "son: ".$NumPar;
-			/* --- fin de test --- */
-			$LosSorteos[$cont]=$NumPar;
-			$cont++;
-			for ($m=0;$m<$NumPar;$m++){
-				if ($m==0){
-					$IniPar=0;
-					$TotalCarateresPar=strpos($LosPar,',',$IniPar);
-					$ElParticipante=substr($LosPar,$IniPar,$TotalCarateresPar);
-					$LosSorteos[$cont]=$ElParticipante;
-					$cont++;
-					/** TEST 
-					 * Comprobación de correcto carga de participante
-					 */
-					//echo "El parti es: ".$ElParticipante;
-					/* --- fin Test ---*/
-
-				}else if ($m<$NumPar-1){
-					$IniPar=$IniPar+$TotalCarateresPar+1;
-					$FinPar=strpos($LosPar,',',$IniPar+1);
-					$TotalCarateresPar=$FinPar-$IniPar;
-					$ElParticipante=substr($LosPar,$IniPar,$TotalCarateresPar);
-					$LosSorteos[$cont]=$ElParticipante;
-					$cont++;
-					/** TEST 
-					 * Comprobación de correcto carga de participante
-					 */
-					//echo "El parti es: ".$ElParticipante;
-					/* --- fin Test ---*/
-				}else if($m==$NumPar-1){
-					$IniPar=$IniPar+$TotalCarateresPar+1;
-					$FinPar=$LongPar;
-					$TotalCarateresPar=$FinPar-$IniPar;
-					$ElParticipante=substr($LosPar,$IniPar,$TotalCarateresPar);
-					$LosSorteos[$cont]=$ElParticipante;
-					$cont++;
-					/** TEST 
-					 * Comprobación de correcto carga de participante
-					 */
-					//echo "El parti es: ".$ElParticipante;
-					/* --- fin Test ---*/
-				}
-			}
-			$i++;
+		}else{
+		echo 'error en conexion';
 		}
 	}
-	
-	/** TEST 
-	* comprobacion de los datos introducidos al array
-	*todo ok */
-	echo "<br>";
-	print_r ($LosSorteos);
-	echo "<br>";
-	/* --- fin de TEST*/
-	
-	return $LosSorteos; //devuelve el array o de variable
+		print_r($LosSorteos);
+
+		return $LosSorteos; //devuelve el array o de variable
 	
 }
 
@@ -982,6 +718,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 	<?php
 	
 }
+
 //función para sacar toda la información del sorteo 
 function DatosSorteo($IdSorteo){
 	$conexion=get_Conexion();
@@ -1041,6 +778,5 @@ function DatosDeseos($IdDeseos){
 }
 /** Función UsuValorCualquiera 
  * Función devolver valor deseos a traves de un UsuID */
-
 
 ?>

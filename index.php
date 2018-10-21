@@ -39,6 +39,8 @@ session_start();
 		controlador_login();
 	}elseif ($URL == 'Crear_Sorteo'){
 		Controlador_Sorteo();
+	}elseif ($URL == 'Mis_Sorteos'){
+		Controlador_Mis_Sorteos();
 	}else{ //Podemos gestionar errores de URL de esta forma
 		header('Status: 404 Not Found');
 		echo "Error, página inexistente";

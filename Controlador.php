@@ -107,9 +107,12 @@ function get_Conexion(){
 function Controlador_Sorteo(){
 	$datos[]=array();
 	$datos['titulo']="Creacion Sorteo";
-	/* si el usuario pulsa el boton de realizar Sorteo */
 	require 'Sorteo.php';
 }
 
-
+function Controlador_Mis_Sorteos(){
+	$datos[]=array();
+	$datos['titulo']="Mis Sorteos";
+	require 'Mis_Sorteos.php';
+}
 

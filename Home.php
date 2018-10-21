@@ -62,7 +62,7 @@
                   <nav>
                     <ul>
                         <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Mis Datos</a></li>
-                        <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Mis Sorteos</a></li>
+                        <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
                         <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
                         <?php
                             if ($_SESSION['Rol']=='Root'){
