@@ -1,4 +1,13 @@
 <?php
+/** ISSET
+ * Controladores de envio de datos por URL
+ */
+
+
+/**
+ * $_POST['logout']
+ * salida de usuario
+ */
 /* si el usuario realiza un logout, cerramos sesion y visualizamos el HOME */
 if(isset($_POST['logout'])){
 	setcookie('login','',time()-100);
@@ -6,17 +15,191 @@ if(isset($_POST['logout'])){
     $_SESSION['Usuario']="";
 	echo "<script>window.location.href='http://localhost/proyecto/index.php/Home'</script>";
 }
+/* ---- fin $_POST['logout'] ----*/
+
+/** $_POST['Sorteo'] 
+ * Pulsación del botón que realiza el sorteo
+*/
+/*if (isset($_POST['Sorteo'])){
+  if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
+	  echo "No se puede realizar el sorteo ya que faltan datos del SORTEO";
+  }else{*/
+function superSorteo(){
+	$hijos=$_POST['hijos']; //recepción de variable de número de participantes
+	$numMax=$hijos-1;	//se resta la unidad para contarcon el 0 como los arrays
+	$NumRandom =0;
+	$stringParticipantes;
+	$sorPar="";
+	$input='input';
+
+	for ($i=0;$i<$hijos;$i++){
+		if ($i==0){
+			$stringParticipantes=$_POST[$input.$i];
+		}else{
+			$stringParticipantes=$stringParticipantes.",".$_POST[$input.$i];
+		}
+	}
+
+
+
+	$sorteoInsert=array(
+		'SorId'=>$_POST['SorId'],
+		'SorNom'=>$_POST['SorNom'],
+		'SorFec'=>$_POST['SorFec'],
+		'SorPar'=>$stringParticipantes,
+		'SorPre'=>$_POST['SorPre']
+	);
+	
+	$arraySorteo=[];	//inicializacion de array
+   	while ($NumRandom==0){
+		/* Creación de un número aleatorio */
+		$NumRandom= rand ( 0 , $numMax);	//formula de obtención de número entre el maximo y el mínimo
+		$primeraVez=true;
+		/* Fin Número aleatorio */
+   	}
+  	while (sizeof($arraySorteo)<$hijos){
+		if (!$primeraVez){
+			/* Creación de un número aleatorio */
+			$NumRandom= rand ( 0 , $numMax);
+			/* Fin Número aleatorio */
+	   	}
+	   	$primeraVez=false;
+	   	$existe=false;
+	   	for ($i=0;$i<sizeof($arraySorteo);$i++){
+		   	if ($arraySorteo[$i]==$NumRandom){
+				$existe=true;
+				break;
+		   	}
+		   	if (sizeof($arraySorteo)==$NumRandom){
+				if (sizeof($arraySorteo)==($hijos-1)){
+					$existe=true;
+					$i=0;
+					$NumRandom=0;
+					while ($NumRandom==0){
+						/* Creación de un número aleatorio */
+						$NumRandom= rand ( 0 , $numMax);
+						/* Fin Número aleatorio */
+						$primeraVez=true;
+					}
+				  	$arraySorteo=[];
+				   	break;
+			    }
+			    $existe=true;
+			    break;
+		    }
+	    }
+	    if (!$existe){
+		    $arraySorteo[sizeof($arraySorteo)]=$NumRandom;
+	    }
+	}
+	/** TEST 
+	 * comprobación de carga correcta de array
+	*/
+	//print_r($arraySorteo);
+	/* --- Fin Test ---*/
+	sorteoInsert($sorteoInsert);
+	
+   	for ($i=0;$i<$hijos;$i++){
+	  	$inputAmigo=$_POST['input'.$arraySorteo[$i]];	//variable idAmigo
+	  	$usuarioSorteo=$_POST['input'.$i];				//variable idUsuario
+		  
+		/* Insert para tabla relación PadreUsuSor */
+		$idUsu=$usuarioSorteo;
+		$idSor=$_POST['SorId'];
+		$idAmi=$inputAmigo;
+		$idDes1=0;
+		$idDes2=0;
+		$idDes3=0;
+		$idDes4=0;
+		$idDes5=0;
+		$insertPadreUsuSor='INSERT INTO PADREUSUSOR (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5) VALUES
+		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.')';
+		InsertPadreUsuSor($insertPadreUsuSor);
+		/*-----------------FIN--------------------*/
+
+
+	}
+  
+}
+
+
+/*function UsuSorIdUpdate($stringSorteos,$stringDeseos,$usuarioSorteo){
+	$SQL= "UPDATE usuarios SET UsuSorId='".$stringSorteos."', UsuDesId='".$stringDeseos."' WHERE UsuId=".$usuarioSorteo;
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		if ($mysqli-> query($SQL)){
+			/** TEST hecho 
+			* confirmación de realización de Update */
+			//echo "<br>".$SQL;
+			//echo "<br>realizado<br><br>";
+			/*--- Fin TEST ---*/
+/*		}else{
+			echo "Error en Update UsuSorIdUpdate";
+		}
+	}
+}*/
+
+function InsertPadreUsuSor($insertPadreUsuSor){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		if ($mysqli-> query($insertPadreUsuSor)){
+		}else{
+			echo "Error en la Insert InsertPadresUsuSor.";
+		}
+	}else{
+		echo "Error en conexion BBDD";
+	}
+}
+
+function sorteoInsert($sorteoInsert){
+	$sqlInsert = "INSERT INTO SORTEOS (SorId, SorNom, SorPar, SorFec, SorPre)  VALUES ("
+		.$sorteoInsert['SorId'].","
+		."'".$sorteoInsert['SorNom']."',"
+		."'".$sorteoInsert['SorPar']."',"
+		."'".$sorteoInsert['SorFec']."',"
+		."'".$sorteoInsert['SorPre']."')";
+	
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		if ($mysqli-> query($sqlInsert)){
+		}else{
+			echo "Error en SorteoInsert.";
+			echo $sqlInsert;
+		}
+	}else{
+		echo "Error en conexión con la base de datos.";
+	}
+}
+
+
+
+function get_Conexion(){
+	$servidor= "localhost";
+	$usuario= "root";   //"id3972968_joseignaciohidalgo";
+	$psw= "";   //"AmigoInvisible";
+	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
+
+    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
+	if ($conexion->connect_error ){
+        echo "error conexion";
+		die("Connection failed: " . $conexion->connect_error);
+	}else{
+        $conexion->set_charset ("utf8");
+        return $conexion;
+	}
+}
+
 
 
 /*------fin logout -----------*/
-function valorDeseos($UsuId){	
+function UsuValorCualquiera($UsuId){	
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda Participantes -------------- */
 		$sqlDeseos="SELECT * FROM USUARIOS WHERE UsuId='".$UsuId."'";
 		/**TEST visualización deseos
 		 * comprobacion de la carga de los deseos */	
-			 echo $sqlDeseos;
+		//echo $sqlDeseos;
 		/* OK
 		*/
 		if ($resultado=$mysqli->query($sqlDeseos)){
@@ -27,8 +210,8 @@ function valorDeseos($UsuId){
 		/* -----------------------FIN------------------------- */
 	}
 	
-	$valorDeseos=$fila;
-	return $valorDeseos;
+	$UsuValorCualquiera=$fila;
+	return $UsuValorCualquiera;
 }
 
 function existe_usuario($usuario){
@@ -344,21 +527,26 @@ function SoloUsuarios(){
 			//print_r($datos);
 			}
 		}
-	
 }
 
 function ListarUsuariosEnSelect($datosUsuarios){
 	?>
 	<!--Lista de usuarios para participar-->
-	<ul id="LstUsu" name="Usuarios">
+	<div id='divTotal'>
+	<div id='divUlUsu'>
+	<ul id="LstUsu">
 		<?php 
 		for ($i=0;$i<count($datosUsuarios)-1;$i++){
 			echo "<li value= '".$datosUsuarios[$i]['UsuId']."'title='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
 		} ?>
 	</ul>
+	</div>
 	<!--Lista definitiva de usuarios a participar-->
-	<ul id="LstUsuFin" name="ListaUsuariosFinal">
+	<div id='divUlUsuFin'>
+		<ul id="LstUsuFin" name="ListaUsuariosFinal">
 	</ul>
+	</div>
+	</div>
 	<?php
 }
 
@@ -851,7 +1039,7 @@ function DatosDeseos($IdDeseos){
 		/* -----------------------FIN------------------------- */
 	}
 }
-/** Función valorDeseos 
+/** Función UsuValorCualquiera 
  * Función devolver valor deseos a traves de un UsuID */
 
 
