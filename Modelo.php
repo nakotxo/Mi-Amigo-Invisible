@@ -104,8 +104,8 @@ function superSorteo(){
 		$idDes3=0;
 		$idDes4=0;
 		$idDes5=0;
-		$insertPadreUsuSor='INSERT INTO PADREUSUSOR (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5) VALUES
-		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.')';
+		$insertPadreUsuSor='INSERT INTO PADREUSUSOR (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
+		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
 		InsertPadreUsuSor($insertPadreUsuSor);
 		/*-----------------FIN--------------------*/
 	}
@@ -125,10 +125,9 @@ function InsertPadreUsuSor($insertPadreUsuSor){
 }
 
 function sorteoInsert($sorteoInsert){
-	$sqlInsert = "INSERT INTO SORTEOS (SorId, SorNom, SorPar, SorFec, SorPre)  VALUES ("
+	$sqlInsert = "INSERT INTO SORTEOS (SorId, SorNom, SorFec, SorPre)  VALUES ("
 		.$sorteoInsert['SorId'].","
 		."'".$sorteoInsert['SorNom']."',"
-		."'".$sorteoInsert['SorPar']."',"
 		."'".$sorteoInsert['SorFec']."',"
 		."'".$sorteoInsert['SorPre']."')";
 	
@@ -363,7 +362,7 @@ function registrar_usuario($datos_usuario, $mensaje){
 
 function Listado(){
 	$conexion=get_Conexion();
-	if (isset($_POST['Listado'])){
+	
 		if ($mysqli=get_Conexion()){
 			$sqlUsuarios="SELECT * FROM USUARIOS";
 			if ($resultado=$mysqli->query($sqlUsuarios)){
@@ -394,16 +393,16 @@ function Listado(){
 				ListarSorteos($datosSorteos);
 			//print_r($datosSorteos);
 			}
-		}
+		
 	}
 }
 
 function ListarUsuarios($datosUsuarios){
 	echo "<h1>".$datosUsuarios['titulo']."</h1>";
 	?>	
-		<table border-style='solid 1px' aling='center'>
+		<table align ='center'>
 			<tr>
-				<td COLSPAN='8'>Usuarios Baneados</td>
+				<td COLSPAN='5'>Usuarios Baneados</td>
 			</tr>
 			<tr>
 				<td>ID</td>
@@ -411,9 +410,6 @@ function ListarUsuarios($datosUsuarios){
 				<td>Pasword</td>
 				<td>Rol</td>
 				<td>E-mail</td>
-				<td>ID Sorteos</td>
-				<td>ID Deseos</td>
-				<td>Administrador de sorteo</td>
 			</tr>
 			
 				<?php
@@ -424,9 +420,6 @@ function ListarUsuarios($datosUsuarios){
 						echo "<td>".$datosUsuarios[$i]['UsuPwd']."</td>";
 						echo "<td>".$datosUsuarios[$i]['UsuRol']."</td>";
 						echo "<td>".$datosUsuarios[$i]['UsuEma']."</td>";
-						echo "<td>".$datosUsuarios[$i]['UsuSorId']."</td>";
-						echo "<td>".$datosUsuarios[$i]['UsuDesId']."</td>";
-						echo "<td>".$datosUsuarios[$i]['UsuAdminSorId']."</td>";
 						echo "</tr>";
 					} 
 				?>
@@ -475,7 +468,7 @@ function ListarUsuariosEnSelect($datosUsuarios){
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
-		<table border-style='solid 1px' aling='center'>
+		<table border-style='solid 1px' align='center'>
 			<tr>
 				<td COLSPAN='3'>Listado de deseos</td>
 			</tr>
@@ -503,14 +496,14 @@ function ListarDeseos($datosDeseos){
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
 	?>	
-		<table border-style='solid 1px' aling='center'>
+		<table border-style='solid 1px' align='center'>
 			<tr>
 				<td COLSPAN='4'>Listado de Sorteos</td>
 			</tr>
 			<tr>
 				<td>ID</td>
 				<td>Nombre Sorteo</td>
-				<td>Caracteristicas</td>
+				<td>Presupuesto</td>
 				<td>Fecha sorteo</td>
 			</tr>
 				<?php
@@ -518,7 +511,7 @@ function ListarSorteos($datosSorteos){
 						echo "<tr>";
 						echo "<td>".$datosSorteos[$i]['SorId']."</td>";
 						echo "<td>".$datosSorteos[$i]['SorNom']."</td>";
-						echo "<td>".$datosSorteos[$i]['SorPar']."</td>";
+						echo "<td>".$datosSorteos[$i]['SorPre']." €</td>";
 						echo "<td>".$datosSorteos[$i]['SorFec']."</td>";
 						echo "</tr>";
 					} 
@@ -570,22 +563,14 @@ function MisSorteos(){
 
 	//MisSorteos --> Creacion de array con todos los sorteos del Usuario
 	$MisSorteos=BuscaSorteo($UsuId);
-	$NumSorteos=$MisSorteos[0];
-
-
-		
-
-
-	/* -----------------------FIN------------------------- */
 	
-
+	//función tratamiento de datos adquiridos
+	if ($MisSorteos){
+		TratarDatosSorteos($MisDatos,$MisSorteos);
+	}else{
+		echo "<h3>Todavia no pertenece a ningún Sorteo.</h3>";
+	}
 }
-
-// Funcion que devuelve los datos del usuario
-
-
-
-
 
 /* función encargada de buscar los sorteos e introducir todos sus datos en un array
 para acceder rapidamente a la información.
@@ -608,7 +593,6 @@ function BuscaSorteo($usuId){
 		echo 'error en conexion';
 		}
 	}
-		print_r($LosSorteos);
 
 		return $LosSorteos; //devuelve el array o de variable
 	
@@ -622,10 +606,9 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 	 */
 	//print_r ($MisSorteos);
 	/*--- fin TEST */
-	$NumSor=$MisSorteos[0]; //numero de sorteos
-	
+	$NumSor=count($MisSorteos); //numero de sorteos
 	?>
-	<table border='1px' align='center'>
+	<table align='center'>
 		<tr>
 			<td>SORTEO</td>
 			<td>FECHA SORTEO</td>
@@ -635,86 +618,102 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 			<td>PARTICIPANTES</td>
 		</tr>
 		<?php 
-		$cont=0;
 		for ($i=0;$i<$NumSor;$i++){
-			$DatSor=DatosSorteo($MisSorteos[$cont+1]);
-			$DatAmi=DatosParticipante($MisSorteos[$cont+2]);
-			
-			// Carga de todos los deseos del amigo invisible
-			$NumDes=0; //Numero de deseos que tiene el amigo invisible
-			$DatDes=array();
-			$DatDes[0]=DatosDeseos($MisSorteos[$cont+3]);
-			$DatDes[1]=DatosDeseos($MisSorteos[$cont+4]);
-			$DatDes[2]=DatosDeseos($MisSorteos[$cont+5]);
-			$DatDes[3]=DatosDeseos($MisSorteos[$cont+6]);
-			$DatDes[4]=DatosDeseos($MisSorteos[$cont+7]);
-			$AmiDeseos="";
-			for ($Des=0;$Des<=4;$Des++){
-				if ($DatDes[$Des]['DesId']!=0){ 
-					$NumDes++;
-					if ($NumDes==1){
-						$AmiDeseos=$DatDes[$Des]['DesNom'];
-					}else{
-						$AmiDeseos=$AmiDeseos."<br>".$DatDes[$Des]['DesNom'];
-					}
-				}
-				if ($NumDes==0){
-					$AmiDeseos="No ha elegido regalos para este sorteo";
-				}
-			}
-
-			// Carga de todos mis deseos del Sorteo
-			$NumMisDes=0; //Numero de deseos que tenemos
-			$DatMisDes=array();
-			$DatMisDes[0]=DatosDeseos($MisSorteos[$cont+8]);
-			$DatMisDes[1]=DatosDeseos($MisSorteos[$cont+9]);
-			$DatMisDes[2]=DatosDeseos($MisSorteos[$cont+10]);
-			$DatMisDes[3]=DatosDeseos($MisSorteos[$cont+11]);
-			$DatMisDes[4]=DatosDeseos($MisSorteos[$cont+12]);
-			$MisDeseos="";
-			for ($MisDes=0;$MisDes<=4;$MisDes++){
-				if ($DatMisDes[$MisDes]['DesId']!=0){ 
-					$NumMisDes++;
-					if ($NumMisDes==1){
-						$MisDeseos=$DatMisDes[$MisDes]['DesNom'];
-					}else{
-						$MisDeseos=$MisDeseos."<br>".$DatMisDes[$MisDes]['DesNom'];
-					}
-				}
-				if ($NumMisDes==0){
-					$MisDeseos="No has elegido regalos para este sorteo";
-				}
-			}
-
-			$SorNom=$DatSor['SorNom'];
-			$SorFec=$DatSor['SorFec'];
-			$AmiNom=$DatAmi['UsuNom']."<br>".$DatAmi['UsuEma'];
-			
-			//carga de los Participantes
-			$NumPar=$MisSorteos[$cont+13];
-			$LosPartis="";
-			for ($Partis=0;$Partis<$NumPar;$Partis++){
-				$DatLosPartis=DatosParticipante($MisSorteos[$cont+14+$Partis]);
-				$LosPartis=$LosPartis."<br> ".$DatLosPartis['UsuNom'];
-			}
-			
+			//busqueda de participantes del sorteo
+			$datosParticipantes=DatosParticipante($MisSorteos[$i]);
 		
-			$cont=$cont+$NumPar+13;
-		?>
-		<tr>
-			<td><?php echo $SorNom?></td>
-			<td><?php echo $SorFec?></td>
-			<td><?php echo $AmiNom?></td>
-			<td><?php echo $AmiDeseos?></td>
-			<td><?php echo $MisDeseos?></td>
-			<td><?php echo $LosPartis?></td>
-		</tr>
-		<?php
-		}
+			// busqueda de todos los deseos del amigo invisible
+			//primero buscamos el amigo invisible
+			$amigo=buscaAmigo($MisSorteos[$i],$MisDatos['UsuId']);
+			$losDeseos=buscaDeseos($MisSorteos[$i],$amigo);
 
-		?>
+			// busqueda de todos mis deseos del para este sorteo
+			//primero buscamos el amigo invisible
+			$misDeseos=buscaDeseos($MisSorteos[$i],$MisDatos['UsuId']);
+			
+			/** TEST 
+			 * Comprobacion de datos obtenidos
+			 * por las diversas funciones
+			 * Se imprimen los datos ID
+			 */
+			//print_r ($datosParticipantes);
+			//echo $amigo;
+			//print_r ($losDeseos);
+			//print_r ($misDeseos);
+			/* ---- fin de Test ---- */
+
+			//optenemos los nombres a traves de los id's en las siguientes funciones
+			$datSor=DatosSorteo($MisSorteos[$i]);
+			$sorNom=$datSor['SorNom'];	//nombre de Sorteo
+			$sorFec=$datSor['SorFec'];	//Fecha del Sorteo
+			$sorPre=$datSor['SorPre'];	//Presupuesto Sorteo
+
+			$datAmi=UsuValorCualquiera($amigo);
+			$amiNom=$datAmi['UsuNom'];	//nombre del amigo Invisible
+			$amiEma=$datAmi['UsuEma'];	//email del Amigo invisible
+
+			for($j=0;$j<5;$j++){	
+				$datDeseos=DatosDeseos($losDeseos[$j]);
+				$amiDesNom[$j]=$datDeseos['DesNom'];//array con lo 5 deseos del amigo
+				$amiDesCar[$j]=$datDeseos['DesCar'];//array con lo 5 caracteristicas del amigo
+			}
+
+			for($j=0;$j<5;$j++){
+				$datMisDeseos=DatosDeseos($misDeseos[$j]);
+				$misDesNom[$j]=$datMisDeseos['DesNom']; //array con mis 5 deseos
+				$misDesCar[$j]=$datMisDeseos['DesCar']; //array con mis 5 caracteristicas deseos
+			}
+
+			for($j=0;$j<count($datosParticipantes);$j++){
+				$datParticipantes=UsuValorCualquiera($datosParticipantes[$j]);
+				$partiNom[$j]=$datParticipantes['UsuNom']; //nombre de los participantes
+				$partiEma[$j]=$datParticipantes['UsuEma'];	// email de los participantes
+			}
+			/** TEST 
+			 * Comprobacion de datos obtenidos
+			 * por las diversas funciones
+			 * Se imprimen los datos en texto
+			 */
+			//echo ($sorNom);
+			//echo ($sorFec);
+			//echo ($sorPre);
+			//echo ($amiNom);
+			//echo ($amiEma);
+			//print_r($amiDesNom);
+			//print_r($amiDesCar);
+			//print_r($misDesNom);
+			//print_r($misDesCar);
+			//print_r($partiNom);
+			//print_r($partiEma);
+			/* --- fin Test --- */
+			
+			?>
+			<tr>
+			<td><?php echo $sorNom.'<br><br>Presupuesto:'.$sorPre.'€'?></td>
+				<td><?php echo $sorFec?></td>
+				<td><?php echo $amiNom.'<br><br>'.$amiEma?></td>
+				<td><?php 
+						for($j=0;$j<5;$j++){
+							echo $amiDesNom[$j].'<br>';
+							echo $amiDesCar[$j].'<br><br>';
+						}
+					?></td>
+				<td><?php 
+						for($j=0;$j<5;$j++){
+							echo $misDesNom[$j].'<input type=\'button\'><br>';
+							echo $misDesCar[$j].'<br><br>';
+						}
+				?></td>
+				<td><?php for($j=0;$j<count($partiNom);$j++){
+							echo $partiNom[$j].'<br>'; //nombre de los participantes
+							echo $partiEma[$j].'<br><br>';	// email de los participantes
+						}
+				?></td>
+			</tr>
+			<?php
+		}?>
 	</table>
-	
+	}
 	<?php
 	
 }
@@ -733,7 +732,6 @@ function DatosSorteo($IdSorteo){
 			/*--- Fin TEST ---*/
 		if ($resultado=$mysqli->query($sqlSorteo)){
 			$fila=$resultado->fetch_assoc();
-			
 			return($fila);
 		}
 		/* -----------------------FIN------------------------- */
@@ -741,28 +739,52 @@ function DatosSorteo($IdSorteo){
 }
 
 //función para sacar toda la información del Participante
-function DatosParticipante($IdParticipante){
+function DatosParticipante($sorId){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
-		/* ------------ Inicio busqueda Participantes -------------- */
-		$sqlParticipante="SELECT *  FROM USUARIOS WHERE UsuId='".$IdParticipante."'";
-		/* TEST compropación de la sintaxis de la sql	
-		//echo $sqlParticipante;
-		*/
-		if ($resultado=$mysqli->query($sqlParticipante)){
+		$losParticipantes=array(); 	// declaracion de array
+		$sqlString='SELECT * FROM PADREUSUSOR WHERE IdSor='.$sorId;
+		$losParticipantes[0]="";
+		$i=0;
+		if($resultado=$mysqli->query($sqlString)){
+			while ($fila=$resultado->fetch_assoc()){
+				$losParticipantes[$i]=$fila['IdUsu'];
+				$i++;
+			}
+			
+		}else{
+		echo 'error en sql';
+		}
+	}
+		return $losParticipantes; //devuelve el array o de variable
+	
+}
+
+function buscaAmigo($sorId,$usuId){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		/* ------------ Inicio busqueda sorteos -------------- */
+		$sqlSorteo='SELECT *  FROM PADREUSUSOR WHERE IdSor='.$sorId.' AND IdUsu='.$usuId;
+			/** TEST
+			 * visualización de variable,
+			 * para comprobación sintaxys
+			 */
+			//echo $sqlSorteo;
+			/*--- Fin TEST ---*/
+		if ($resultado=$mysqli->query($sqlSorteo)){
 			$fila=$resultado->fetch_assoc();
-			return($fila);
+			$amigo=$fila['IdAmi'];
+			return($amigo);
 		}
 		/* -----------------------FIN------------------------- */
 	}
 }
-
 
 //función para sacar toda la información del Participante
 function DatosDeseos($IdDeseos){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
-		/* ------------ Inicio busqueda Participantes -------------- */
+		/* ------------ Inicio busqueda Deseos -------------- */
 		$sqlDeseos="SELECT *  FROM DESEOS WHERE DesId='".$IdDeseos."'";
 		/**TEST visualización deseos
 		 * comprobacion de la carga de los deseos 	
@@ -776,7 +798,23 @@ function DatosDeseos($IdDeseos){
 		/* -----------------------FIN------------------------- */
 	}
 }
-/** Función UsuValorCualquiera 
- * Función devolver valor deseos a traves de un UsuID */
-
+function buscaDeseos($sorId,$usuId){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		$losDeseos=array(); 	// declaracion de array
+		$sqlString='SELECT * FROM PADREUSUSOR WHERE IdSor='.$sorId.' AND IdUsu='.$usuId;
+		$losDeseos[0]="";
+		$i=0;
+		if($resultado=$mysqli->query($sqlString)){
+			$fila=$resultado->fetch_assoc();
+			for ($i=1;$i<=5;$i++){
+				$losDeseos[$i-1]=$fila['IdDes'.$i];
+			}
+			
+		}else{
+			echo 'No Existentes';
+		}
+	}
+		return $losDeseos; //devuelve el array o de variable
+}
 ?>

@@ -130,7 +130,7 @@
                 <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
                 <?php
                     if ($_SESSION['Rol']=='Root'){
-                        echo ('<li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Listados</a></li>');
+                        echo ('<li><a href="http://localhost/proyecto/index.php/Listados">Listados</a></li>');
                     }
                 ?>
 			</ul>

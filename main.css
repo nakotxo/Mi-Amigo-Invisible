@@ -136,14 +136,8 @@ section{
 	letter-spacing:1px;
     text-decoration:none;
     height: 60px;
-	padding:0px 0px;
+    padding:0px 0px;
 }
-
-
-
-
-
-
 
 
 #capitulos dt{
@@ -259,5 +253,8 @@ h1{
 
 
 
-
+table tr td{
+    border: groove;
+    
+}
 

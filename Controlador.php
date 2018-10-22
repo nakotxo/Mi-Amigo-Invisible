@@ -116,3 +116,8 @@ function Controlador_Mis_Sorteos(){
 	require 'Mis_Sorteos.php';
 }
 
+function Controlador_Listados(){
+	$datos[]=array();
+	$datos['titulo']="Listados";
+	require 'Listados.php';
+}
