@@ -18,8 +18,10 @@ function controlador_login(){
 		$usuario = $_POST['usuario'];
 		$contrasenaCifrada = md5($_POST['contrasena']);
 		$contrasena=($_POST['contrasena']);
+		$Pwd=$_POST['contrasena'];
+		$clave=encriptar($Pwd);
 		if (existe_usuario($usuario)){
-			if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada)){
+			if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$clave)){
 				setcookie('login','true',time()+ 3600*24);
 				$_SESSION['Usuario']=$usuario;
 				$_SESSION['Rol']=get_rol($usuario);
@@ -56,11 +58,15 @@ function controlador_Registro(){
 		if(existe_usuario($usuario)){
 			$valor="Lo sentimos pero el usuario ya existe.";
 		}else{
+
+			//llamar función encriptado
+			$pwd=$_POST['UsuPwd'];
+			$clave=encriptar($pwd);
 			$datos_usuario=array(
 				'id'=>$UsuarioId,
 				'usuario' => $_POST['UsuNom'], 
 				'email' => $_POST['UsuEma'],
-				'contrasena' => md5($_POST['UsuPwd']),
+				'contrasena' => $clave,
 				'rol' => $_POST['UsuRol']);
 			
 			$valor=registrar_usuario($datos_usuario, $valor);
@@ -128,3 +134,63 @@ function Controlador_Mis_Datos(){
 	require 'Mis_Datos.php';
 }
 
+
+
+
+
+
+
+
+
+
+/*
+	define('METHOD','AES-256-CBC');
+	define('SECRET_KEY','$CARLOS@2016');
+	define('SECRET_IV','101712');
+	class SED {
+		public static function encryption($string){
+			$output=FALSE;
+			$key=hash('sha256', SECRET_KEY);
+			$iv=substr(hash('sha256', SECRET_IV), 0, 16);
+			$output=openssl_encrypt($string, METHOD, $key, 0, $iv);
+			$output=base64_encode($output);
+			return $output;
+		}
+		public static function decryption($string){
+			$key=hash('sha256', SECRET_KEY);
+			$iv=substr(hash('sha256', SECRET_IV), 0, 16);
+			$output=openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
+			return $output;
+		}
+	}*/
+
+
+	Function encriptar($clave){
+		$METHOD='AES-256-CBC';
+		$SECRET_KEY='$Ignacio@2018';
+		$SECRET_IV='101712';
+		echo "encriptar:".$clave;
+		$output=FALSE;
+		$key=hash('sha256', $SECRET_KEY);
+		$iv=substr(hash('sha256', $SECRET_IV), 0, 16);
+		$output=openssl_encrypt($clave, $METHOD, $key, 0, $iv);
+		$output=base64_encode($output);
+		echo($output)."<br>";
+		return $output;
+	
+		//desencriptar($output);
+	}
+	
+	function desencriptar($clave){
+		$METHOD='AES-256-CBC';
+		$SECRET_KEY='$Ignacio@2018';
+		$SECRET_IV='101712';
+	
+		$key=hash('sha256', $SECRET_KEY);
+		$iv=substr(hash('sha256', $SECRET_IV), 0, 16);
+		$output=openssl_decrypt(base64_decode($clave), $METHOD, $key, 0, $iv);
+		
+		echo "desencriptar:".$clave.", ".$output;	
+		return $output;
+		
+	}

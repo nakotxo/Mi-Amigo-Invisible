@@ -38,7 +38,7 @@
         <section>
             <form method="POST" action="?">
                 <div id="DivLogin">
-                    <lavel>Usuario id</lavel><input id="usuarioId" type="text" name="UsuId">
+                    <label>Usuario id</label><input id="usuarioId" type="text" name="UsuId">
                     <label>Usuario</label><input id="usuario" type="text" name="UsuNom" placeholder="Nombre">
                     <label>Contraseña</label><input id="contrasena" type="password" name="UsuPwd" placeholder="Contraseña">
 					<label>Rol</label><input id="rol" type="text" name="UsuRol" placeholder="Usuario">

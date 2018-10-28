@@ -222,16 +222,22 @@ function existe_usuario($usuario){
 	}
 }
 
-function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada){
+function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$Pwd){
+	
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		$registroOK=false;
 		$sql="SELECT UsuNom, UsuPwd FROM usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
+		
+		
 		if ($resultado=$mysqli->query($sql)){
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-				if (($fila['UsuNom']==$usuario)&&(($fila['UsuPwd']==$contrasena)||($fila['UsuPwd']==$contrasenaCifrada))){
+		
+		
+				if (($fila['UsuNom']==$usuario)&&(($fila['UsuPwd']==$contrasena)||($fila['UsuPwd']==$contrasenaCifrada)||($fila['UsuPwd']==$Pwd))){
 					$registroOK=true; 
 				}else{
 					$registroOK=false;  
+					echo("estoy en comprueba y fila['UsuPwd']vale: ".$fila['UsuPwd']." y Pwd: ".$Pwd);
 				}
 			}
 			return $registroOK;
@@ -297,32 +303,6 @@ function NuevoSorteo(){
 			return $SorteoId;
 		}else{
 			echo "Error en la consulta de Id de Sorteo";
-		}
-	}else{
-		echo "<h3>Error conexión con la base de datos</h3>";
-	}
-}
-
-function get_ban($valor){
-	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		$sql="SELECT * FROM usuarios WHERE Ban='".$valor."'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
-		$datos[]=array();
-		$arrayAyuda[]=array();
-		if ($resultado=$mysqli->query($sql)){
-			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-				array_push($datos,$arrayAyuda=array(
-				'usuario'=>$fila['Usuario'],
-				'nombre'=>$fila['Nombre'],
-				'apellidos'=>$fila['Apellidos'],
-				'email'=>$fila['Email'],
-				'rol'=>$fila['Rol'],
-				'ban'=>$fila['Ban']
-				));
-			}
-			unset($datos[0]);
-			return $datos;
-		}else{
-			echo "Error en la consulta Baneado";
 		}
 	}else{
 		echo "<h3>Error conexión con la base de datos</h3>";
@@ -806,6 +786,7 @@ function buscaDeseos($sorId,$usuId){
 
 function Mis_datos(){
 	$MisDatos=DatosUsuario($_SESSION['Usuario']);
+	$desClave=desencriptar($MisDatos['UsuPwd']);
 	?>
 	<div id='divMisDatos'>
 		<table id='tablaMisDatos'>
@@ -842,11 +823,12 @@ function Mis_datos(){
 					//hacer update
 					updateEmail($_POST['Pwd'],$_POST['caso']);
 					$MisDatos=DatosUsuario($_SESSION['Usuario']);
+					$desClave=desencriptar($MisDatos['UsuPwd']);
 				}
 				if (isset($_GET['Pwd'])){?>
 					<td class='tdDescrip'>Contraseña:</td>
 					<form method='POST' action='?'>
-						<td class='tdMisDatos'><input class='inpDato'type='text' name='Pwd'value='<?=$MisDatos['UsuPwd']?>'></td>
+						<td class='tdMisDatos'><input class='inpDato'type='text' name='Pwd'value='<?=$desClave?>'></td>
 						<input type='hidden' name='caso'value='Pwd'>
 						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
 					</form>
@@ -854,7 +836,7 @@ function Mis_datos(){
 				}else{
 				?>
 					<td class='tdDescrip'>Contraseña:</td>
-					<td class='tdMisDatos'><?=$MisDatos['UsuPwd']?></td>
+					<td class='tdMisDatos'><?=$desClave?></td>
 					<td><a href='Mis_Datos?Pwd="<?=utf8_encode($MisDatos['UsuPwd'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
 				<?php
 				}
@@ -912,7 +894,8 @@ function updateEmail($dato,$caso){
 				}
 				break;
 			case 'Pwd':
-				$sql="UPDATE USUARIOS SET UsuPwd ='$dato' WHERE UsuNom='$usuario'";	//update
+				$clave=encriptar($dato);
+				$sql="UPDATE USUARIOS SET UsuPwd ='$clave' WHERE UsuNom='$usuario'";	//update
 				if ($resultado=$conexion->query($sql)){
 					/** TEST 
 					 * Comprobacion de realizacion de test
@@ -941,6 +924,7 @@ function updateEmail($dato,$caso){
 		echo "<h3>Error conexión con la base de datos</h3>";
 	}
 }
+
 
 
 ?>
