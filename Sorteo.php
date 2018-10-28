@@ -91,7 +91,7 @@
         <div id="DivHeader">
             <div id="Logo"></div>
 
-            <div id="TituloPagina"></div>
+            <div id="TituloPagina">Mi Amigo Invisible</div>
             
             <div id="DivLogOut">
                 <label>Bienvenido Usuario<br/></label>
@@ -125,7 +125,7 @@
         <form method="POST" action="?">
 		<nav>
 			<ul>
-                <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Mis Datos</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Mis_Datos">Mis Datos</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
                 <?php

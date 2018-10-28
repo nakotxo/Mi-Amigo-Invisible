@@ -330,20 +330,6 @@ function get_ban($valor){
 }
 
 
-function set_ban($Usuario, $Ban){
-	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		$sql="UPDATE Usuarios SET Ban ='$Ban' WHERE Usuario='$Usuario'";	//update
-		if ($resultado=$mysqli->query($sql)){
-			echo "UPDATE Realizada";
-		}else{
-			echo "Error en la UPDATE";
-		}
-	}else{
-		echo "<h3>Error conexión con la base de datos</h3>";
-	}
-}
-
-
 function registrar_usuario($datos_usuario, $mensaje){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		//Insertar datos 
@@ -817,4 +803,144 @@ function buscaDeseos($sorId,$usuId){
 	}
 		return $losDeseos; //devuelve el array o de variable
 }
+
+function Mis_datos(){
+	$MisDatos=DatosUsuario($_SESSION['Usuario']);
+	?>
+	<div id='divMisDatos'>
+		<table id='tablaMisDatos'>
+			<tr>
+				<th colspan=3>Mis Datos</th>
+			</tr>
+			<tr>
+				<?php
+				if (isset($_POST['Nombre'])){
+					//hacer update
+					updateEmail($_POST['Nombre'],$_POST['caso']);
+					$MisDatos=DatosUsuario($_SESSION['Usuario']);
+				}
+				if (isset($_GET['Nombre'])){?>
+					<td class='tdDescrip'>Nombre:</td>
+					<form method='POST' action='?'>
+						<td class='tdMisDatos'><input class='inpDato'type='text' name='Nombre'value='<?=$MisDatos['UsuNom']?>'></td>
+						<input type='hidden' name='caso'value='Nombre'>
+						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
+					</form>
+				<?php
+				}else{
+				?>
+					<td class='tdDescrip'>Nombre:</td>
+					<td class='tdMisDatos'><?=$MisDatos['UsuNom']?></td>
+					<td><a href='Mis_Datos?Nombre="<?=utf8_encode($MisDatos['UsuNom'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
+				<?php
+				}
+				?>
+			</tr>
+			<tr>
+				<?php
+				if (isset($_POST['Pwd'])){
+					//hacer update
+					updateEmail($_POST['Pwd'],$_POST['caso']);
+					$MisDatos=DatosUsuario($_SESSION['Usuario']);
+				}
+				if (isset($_GET['Pwd'])){?>
+					<td class='tdDescrip'>Contraseña:</td>
+					<form method='POST' action='?'>
+						<td class='tdMisDatos'><input class='inpDato'type='text' name='Pwd'value='<?=$MisDatos['UsuPwd']?>'></td>
+						<input type='hidden' name='caso'value='Pwd'>
+						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
+					</form>
+				<?php 
+				}else{
+				?>
+					<td class='tdDescrip'>Contraseña:</td>
+					<td class='tdMisDatos'><?=$MisDatos['UsuPwd']?></td>
+					<td><a href='Mis_Datos?Pwd="<?=utf8_encode($MisDatos['UsuPwd'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
+				<?php
+				}
+				?>
+			</tr>
+			<tr>
+				<?php
+				if (isset($_POST['Email'])){
+					//hacer update
+					updateEmail($_POST['Email'],$_POST['caso']);
+					$MisDatos=DatosUsuario($_SESSION['Usuario']);
+				}
+				if (isset($_GET['Email'])){?>
+					<td class='tdDescrip'>E-mail:</td>
+					<form method='POST' action='?'>
+						<td class='tdMisDatos'><input class='inpDato'type='text' name='Email'value='<?=$MisDatos['UsuEma']?>'></td>
+						<input type='hidden' name='caso'value='Email'>
+						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
+					</form>
+				<?php 
+				}else{
+				?>
+					<td class='tdDescrip'>E-mail:</td>
+					<td class='tdMisDatos'><?=$MisDatos['UsuEma']?></td>
+					<td><a href='Mis_Datos?Email="<?=utf8_encode($MisDatos['UsuEma'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
+				<?php
+				}
+
+				?>
+			</tr>		
+		</ul>
+	</div>
+	<?php
+}
+
+function updateEmail($dato,$caso){
+	$usuario=$_SESSION['Usuario'];
+	/**TEST
+	 * Comprobación de los valores optenidos en la función
+	 */
+	//echo $caso;
+	/*--- fin Test ---*/
+	if ($conexion = get_Conexion()){		//Realizacion de conexion a base de datos
+		switch ($caso) {
+			case 'Email':
+				$sql="UPDATE USUARIOS SET UsuEma ='$dato' WHERE UsuNom='$usuario'";	//update
+				if ($resultado=$conexion->query($sql)){
+					/** TEST 
+					 * Comprobacion de realizacion de test
+					*/
+					//echo "UPDATE Realizada";
+					/*-- fin del Test --*/
+				}else{
+					echo "Error en la UPDATE";
+				}
+				break;
+			case 'Pwd':
+				$sql="UPDATE USUARIOS SET UsuPwd ='$dato' WHERE UsuNom='$usuario'";	//update
+				if ($resultado=$conexion->query($sql)){
+					/** TEST 
+					 * Comprobacion de realizacion de test
+					*/
+					//echo "UPDATE Realizada";
+					/*-- fin del Test --*/
+				}else{
+					echo "Error en la UPDATE";
+				}
+				break;
+			case 'Nombre':
+				$sql="UPDATE USUARIOS SET UsuNom ='$dato' WHERE UsuNom='$usuario'";	//update
+				$_SESSION['Usuario']=$dato;
+				if ($resultado=$conexion->query($sql)){
+					/** TEST 
+					 * Comprobacion de realizacion de test
+					*/
+					//echo "UPDATE Realizada";
+					/*-- fin del Test --*/
+				}else{
+					echo "Error en la UPDATE";
+				}
+				break;
+		}
+	}else{
+		echo "<h3>Error conexión con la base de datos</h3>";
+	}
+}
+
+
 ?>

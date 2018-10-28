@@ -33,8 +33,8 @@ session_start();
 		controlador_registro(); 
 	}elseif ($URL == 'adminusuarios'){
 		controlador_admin_usuarios(); 
-	}elseif ($URL == 'controlador_admin_libros'){
-		controlador_admin_libros(); 
+	}elseif ($URL == 'Mis_Datos'){
+		controlador_Mis_Datos(); 
 	}elseif ($URL == 'login'){
 		controlador_login();
 	}elseif ($URL == 'Crear_Sorteo'){

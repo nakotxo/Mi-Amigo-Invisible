@@ -13,7 +13,7 @@
     <header>
         <div id="DivHeader">
             <div id="Logo"></div>
-            <div id="TituloPagina"></div>
+            <div id="TituloPagina">Mi Amigo Invisible</div>
             <div id="DivLogeado">
             </div>
         </div>

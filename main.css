@@ -1,5 +1,10 @@
 /* Especificacion de texto para el documento */
 
+@font-face {
+    font-family: comic;
+    src: url(multimedia/comic.ttf);
+    
+  }
 body{
     background-image: url(multimedia/fondo.jpg);
     background-size: 100%;
@@ -219,6 +224,9 @@ section{
 #TituloPagina{
     width: 70%;
     height: 100px;
+    text-align: center;
+    font-size: 4em;
+    color:rgb(80, 67, 97);
 }
 
 h1{
@@ -263,3 +271,43 @@ table tr td{
     
 }
 
+#divMisDatos{
+    width: 800px;
+    height: 300px;
+}
+
+#tablaMisDatos tr td{
+    border-style: none;
+
+}
+
+#tablaMisDatos .tdDescrip{
+    text-align: right;
+    margin: 5px;
+}
+
+#tablaMisDatos .tdMisDatos{
+    text-align: left;
+    margin: 5px;
+}
+
+.btnEdit{
+    height: 40px;
+    width: 40px;
+    /*background: none;*/
+    border: 0;
+    color: inherit;
+}
+
+.tdDescrip, th{
+    font-size: 2em;
+}
+.tdMisDatos{
+    font-size: 2em;
+    font-family: comic;
+}
+
+.inpDato{
+    height: 20px;
+    font-size: 75%;
+}

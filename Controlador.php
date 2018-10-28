@@ -121,3 +121,10 @@ function Controlador_Listados(){
 	$datos['titulo']="Listados";
 	require 'Listados.php';
 }
+
+function Controlador_Mis_Datos(){
+	$datos[]=array();
+	$datos['titulo']="Mis Datos";
+	require 'Mis_Datos.php';
+}
+

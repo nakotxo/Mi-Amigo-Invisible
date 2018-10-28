@@ -12,7 +12,7 @@
 <header>
         <div id="DivHeader">
             <div id="Logo"></div>
-            <div id="TituloPagina"></div>
+            <div id="TituloPagina">Mi Amigo Invisible</div>
             
                 <?php 
                     if (isset($_POST['Usuario'])){ ?>
@@ -57,13 +57,11 @@
                     <label>Contraseña</label><input id="contrasena" type="password" name="UsuPwd" placeholder="Contraseña">
 					<input id="rol" type="hidden" name="UsuRol" placeholder="Usuario" value="Usu" >
 					<label>E-mail</label><input id="text" type="text" name="UsuEma" placeholder="Email@mail.com">
-                    <div id="log"><input id="login" type="submit" name="login" value="Login" ></div>
+                    <div id="log"><input id="login" type="submit" name="login" value="Registrar" ></div>
                 </div>
             </form>
             <h1><?php echo $valor?></h1>
-
         </section>
-        
     <footer></footer>
 </body>
 </html>

@@ -14,7 +14,7 @@
     <header>
         <div id="DivHeader">
             <div id="Logo"></div>
-            <div id="TituloPagina"></div>
+            <div id="TituloPagina">Mi Amigo Invisible</div>
             <?php 
             if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
                 ?>
@@ -41,7 +41,8 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-            <li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
+            <!--<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>-->
+            <li><a href="http://localhost/proyecto/index.php/Registro">NUEVO USUARIO</a></li>
 				<li><a href="#">CATEGORIAS</a>
 					<ul>
 						<li><a href="#">AUTORES</a></li>
@@ -61,7 +62,7 @@
                 <form method="POST" action="?">
                   <nav>
                     <ul>
-                        <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Mis Datos</a></li>
+                        <li><a href="http://localhost/proyecto/index.php/Mis_Datos">Mis Datos</a></li>
                         <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
                         <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
                         <?php
