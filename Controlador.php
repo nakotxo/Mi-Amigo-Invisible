@@ -138,9 +138,6 @@ function Controlador_Crear_Deseos(){
 	$datos[]=array();
 	$datos['titulo']="Crear Deseos";
 	require 'Registro_Deseos.php';
-	if (isset($_GET['registrarDeseos'])){
-		$dato=registrarDeseo($_GET['DesId'],$_GET['DesNom'],$_GET['DesCar']);
-	}
 }
 
 

@@ -919,7 +919,7 @@ function updateEmail($dato,$caso){
 	}
 }
 
-/*function formularioDeseos(){
+function formularioDeseos(){
 	$id=calculoIdDeseo();//solicitamos el último id utilizado
 	$valor='';
 	?>
@@ -933,7 +933,20 @@ function updateEmail($dato,$caso){
     </form>
 	<h1><?php echo $valor?></h1>
 	<?php
-}*/
+	if (isset($_GET['registrarDeseos'])){
+		?>
+		<form method="POST" action="?">
+        	<div id="divForDes">
+            	<input id="deseoId" type="text" name="DesId" value=" <?php echo $id ?>">    
+            	<label>Deseo</label><input id="deseo" type="text" name="DesNom" placeholder="<?php $_GET['DesNom'] ?>">
+				<label>Caracteristicas</label><input id="caracteristicas" type="text" name="DesCar" placeholder="Talla, color, enlace web...">
+				<div id="log"><input id="login" type="submit" name="registrarDeseos" value="Registrar" ></div>
+        	</div>
+    	</form>
+		<?php
+		$dato=registrarDeseo($_GET['DesId'],$_GET['DesNom'],$_GET['DesCar']);
+	}
+}
 
 function calculoIdDeseo(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
