@@ -127,7 +127,8 @@
 			<ul>
                 <li><a href="http://localhost/proyecto/index.php/Mis_Datos">Mis Datos</a></li>
                 <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
-                <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">CrearSorteo</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Crear Sorteo</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Crear_Deseos">Crear Deseo</a></li>
                 <?php
                     if ($_SESSION['Rol']=='Root'){
                         echo ('<li><a href="http://localhost/proyecto/index.php/Listados">Listados</a></li>');
@@ -170,33 +171,6 @@
                     ?>
                 </div>
             </form>
-            <?php 
-            
-
-            
-
-
-            if (isset($_POST['Listado'])){
-                Listado();
-            }elseif (isset($_POST['LisUsu'])){
-                MisSorteos();
-            }
-            
-            ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </section>
         
     <footer></footer>

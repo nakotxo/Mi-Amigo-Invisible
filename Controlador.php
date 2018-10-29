@@ -134,7 +134,14 @@ function Controlador_Mis_Datos(){
 	require 'Mis_Datos.php';
 }
 
-
+function Controlador_Crear_Deseos(){
+	$datos[]=array();
+	$datos['titulo']="Crear Deseos";
+	require 'Registro_Deseos.php';
+	if (isset($_GET['registrarDeseos'])){
+		$dato=registrarDeseo($_GET['DesId'],$_GET['DesNom'],$_GET['DesCar']);
+	}
+}
 
 
 
@@ -164,33 +171,3 @@ function Controlador_Mis_Datos(){
 		}
 	}*/
 
-
-	Function encriptar($clave){
-		$METHOD='AES-256-CBC';
-		$SECRET_KEY='$Ignacio@2018';
-		$SECRET_IV='101712';
-		echo "encriptar:".$clave;
-		$output=FALSE;
-		$key=hash('sha256', $SECRET_KEY);
-		$iv=substr(hash('sha256', $SECRET_IV), 0, 16);
-		$output=openssl_encrypt($clave, $METHOD, $key, 0, $iv);
-		$output=base64_encode($output);
-		echo($output)."<br>";
-		return $output;
-	
-		//desencriptar($output);
-	}
-	
-	function desencriptar($clave){
-		$METHOD='AES-256-CBC';
-		$SECRET_KEY='$Ignacio@2018';
-		$SECRET_IV='101712';
-	
-		$key=hash('sha256', $SECRET_KEY);
-		$iv=substr(hash('sha256', $SECRET_IV), 0, 16);
-		$output=openssl_decrypt(base64_decode($clave), $METHOD, $key, 0, $iv);
-		
-		echo "desencriptar:".$clave.", ".$output;	
-		return $output;
-		
-	}

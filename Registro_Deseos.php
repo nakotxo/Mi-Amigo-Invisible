@@ -7,6 +7,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
         <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
+        <script>
+            $(document).ready(function(){
+	            $("#login").click(function(){
+                    var deseoId=document.getElementById('deseoId').value;
+                    var deseo=document.getElementById('deseo').value;
+                    var caracteristicas=document.getElementById('caracteristicas').value;
+                    var accion = document.getElementById('login').value;
+                    if (accion=='Registrar'){
+                        /*int(deseoId)=deseoId;
+                        deseoId=deseoId+1;*/
+                        document.getElementById('deseoId').value=deseoId+1;
+                        document.getElementById('deseo').value=deseo
+                        document.getElementById('caracteristicas').value=caracteristicas;
+                        document.getElementById('login').value='Confirmar';
+                    }
+                    alert("has hecho click botón Corregir, "+deseoId+deseo+caracteristicas);
+                });
+            });
+        </script>
     </head>
 <body>
     <header>
@@ -63,8 +82,24 @@
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
-            <?php 
-                Mis_datos();
+            <?Php
+            //formularioDeseos();
+            $id=calculoIdDeseo();//solicitamos el último id utilizado
+            if (isset($valor)){
+                $id=calculoIdDeseo();
+            }
+            $valor='';
+            ?>
+            <form method="GET" action="?">
+                <div id="divForDes">
+                    <input id="deseoId" type="text" name="DesId" value=" <?php echo $id ?>">    
+                    <label>Deseo</label><input id="deseo" type="text" name="DesNom" placeholder="Nombre Deseo">
+                    <label>Caracteristicas</label><input id="caracteristicas" type="text" name="DesCar" placeholder="Talla, color, enlace web...">
+                    <div id="log"><input id="login" type="submit" name="registrarDeseos" value="Registrar" ></div>
+                </div>
+            </form>
+            <h1><?php echo $valor?></h1>
+            <?php
             ?>
         </section>
         

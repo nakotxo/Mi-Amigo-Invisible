@@ -286,7 +286,6 @@ function NuevoUsuario(){
 	}
 }
 
-
 function NuevoSorteo(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		$sql="SELECT SorId FROM SORTEOS";		//Select para ejecutar, donde, seleccionará los Id de los SORTEOS de la BD
@@ -308,7 +307,6 @@ function NuevoSorteo(){
 		echo "<h3>Error conexión con la base de datos</h3>";
 	}
 }
-
 
 function registrar_usuario($datos_usuario, $mensaje){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
@@ -429,8 +427,6 @@ function ListarUsuariosEnSelect($datosUsuarios){
 	<?php
 }
 
-
-
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
@@ -456,8 +452,6 @@ function ListarDeseos($datosDeseos){
 		</table>
 	<?php
 }
-
-
 
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
@@ -924,6 +918,118 @@ function updateEmail($dato,$caso){
 		echo "<h3>Error conexión con la base de datos</h3>";
 	}
 }
+
+/*function formularioDeseos(){
+	$id=calculoIdDeseo();//solicitamos el último id utilizado
+	$valor='';
+	?>
+	<form method="GET" action="?">
+        <div id="divForDes">
+            <input id="deseoId" type="text" name="DesId" value=" <?php echo $id ?>">    
+            <label>Deseo</label><input id="deseo" type="text" name="DesNom" placeholder="Nombre Deseo">
+			<label>Caracteristicas</label><input id="caracteristicas" type="text" name="DesCar" placeholder="Talla, color, enlace web...">
+			<div id="log"><input id="login" type="submit" name="registrarDeseos" value="Registrar" ></div>
+        </div>
+    </form>
+	<h1><?php echo $valor?></h1>
+	<?php
+}*/
+
+function calculoIdDeseo(){
+	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
+		$sql="SELECT DesId FROM DESEOS";		//Select para ejecutar, donde, seleccionará los Id delos usuario de la BD
+		if ($resultado=$mysqli->query($sql)){
+			$deseoId=0;
+			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
+				if ($fila['DesId']==$deseoId){
+					$deseoId++;	//incremento la variable para obtener el primer Id vacio
+				} else{
+					break;
+				}
+			}
+			return $deseoId;
+		}else{
+			echo "Error en la consulta de Id de Usuario";
+		}
+	}else{
+		echo "<h3>Error conexión con la base de datos</h3>";
+	}
+}
+
+function registrarDeseo($desId,$desNom,$desCar){
+	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
+		//Insertar datos 
+		$sql = "INSERT INTO DESEOS (DesId, DesNom, DesCar) 
+				VALUES ($desId,'$desNom','$desCar')";
+		if ($mysqli-> query($sql)){
+			$mensaje= "Inserción en tabla DESEOS realizada con éxito<br>";
+		}else{
+			$mensaje= "Error insert registro";
+		}
+	}else{
+		$mensaje= "Error conexion registro";
+	}
+	$id=calculoIdDeseo();
+	return ($id);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Function encriptar($clave){
+	$METHOD='AES-256-CBC';
+	$SECRET_KEY='$Ignacio@2018';
+	$SECRET_IV='101712';
+	
+	$output=FALSE;
+	$key=hash('sha256', $SECRET_KEY);
+	$iv=substr(hash('sha256', $SECRET_IV), 0, 16);
+	$output=openssl_encrypt($clave, $METHOD, $key, 0, $iv);
+	$output=base64_encode($output);
+	/**TEST 
+	 * Comprobacion de entrada y salida 
+	*/
+	//echo($output)."<br>";
+	//echo "encriptar:".$clave;
+	/*--- Fin Test ---*/
+	return $output;
+
+	
+}
+
+function desencriptar($clave){
+	$METHOD='AES-256-CBC';
+	$SECRET_KEY='$Ignacio@2018';
+	$SECRET_IV='101712';
+
+	$key=hash('sha256', $SECRET_KEY);
+	$iv=substr(hash('sha256', $SECRET_IV), 0, 16);
+	$output=openssl_decrypt(base64_decode($clave), $METHOD, $key, 0, $iv);
+	/**
+	 * TEST
+	 * Comprobación variables de recibidas y para enviar
+	 */
+	//echo "desencriptar:".$clave.", ".$output;	
+	/*--- fin Test ---*/
+	return $output;
+	
+}
+
+
+
+
 
 
 

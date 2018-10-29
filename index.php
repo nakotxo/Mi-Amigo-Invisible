@@ -43,6 +43,8 @@ session_start();
 		Controlador_Mis_Sorteos();
 	}elseif ($URL == 'Listados'){
 		Controlador_Listados();
+	}elseif ($URL == 'Crear_Deseos'){
+		Controlador_Crear_Deseos();
 	}else{ //Podemos gestionar errores de URL de esta forma
 		header('Status: 404 Not Found');
 		echo "Error, página inexistente";
