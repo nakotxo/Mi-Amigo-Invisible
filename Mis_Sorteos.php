@@ -7,6 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
         <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
+        <script>
+	            $(document).ready(function () {
+	            	$('option').change(function () {
+	            		alert("has hecho doble click en el option");
+	            	});
+	            });
+
+        </script>
     </head>
 <body>
     <header>
@@ -67,7 +75,6 @@
             
 
             MisSorteos();
-
             ?>
         </section>
         

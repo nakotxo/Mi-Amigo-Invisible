@@ -508,7 +508,6 @@ function ListarSorteosEnSelect($datosSorteos){
 }
 
 
-
 function MisSorteos(){
 	//MisDatos --> Creacion de array con todos los datos del Usuario
 	$UsuNom=$_SESSION['Usuario'];
@@ -668,18 +667,31 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 						for($j=0;$j<5;$j++){
 							
 							if(isset($_GET['Des'.$j])){
-								echo "echo echo";
-								
-								echo $_GET['Deseo'.$j];
+								$listaDeseos=ListarDeseosEnLst();	
+								$DesNomAmod=$_GET['Des'.$j];
+								$idAmod=idDeseo($DesNomAmod);
+								?>
+
+								<form method='GET' action='?'>
+									<select id="LstDes" name="deseos[]">
+										<?php 
+										for ($p=0;$p<count($listaDeseos)-1;$p++){
+											echo "<option value='".$listaDeseos[$p]['DesId']."'>".$listaDeseos[$p]['DesId']." - ".$listaDeseos[$p]['DesNom']."</option>";
+										} ?>
+									</select>
+									<input type='text' name='idAmod' value=<?=$idAmod?>>
+									<input type='image'src='http://localhost/proyecto/multimedia/save1.png'>
+								</form>
+
+								<?php
 							}else{
 								?>
-								
-								
 								<form method='GET' action='?'>
 									<?php $valor=utf8_encode($misDesNom[$j]); ?>
-									<label><?php echo $valor ?></label><?php
-									echo ("<a href=Mis_Sorteos?Des".$j."=".$valor."><img src='http://localhost/proyecto/multimedia/editar2.png'/></a>"); ?>
+									<label><?php echo $valor ?></label>
+									<a href='Mis_Sorteos?Des<?=$j?>="<?=utf8_encode($misDesNom[$j])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a>
 								</form>
+								
 								<?php
 							}	
 
@@ -701,6 +713,37 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 	}
 	
 }
+
+function idDeseo($desNom){
+	$sql=" SELECT DesId FROM DESEOS WHERE DesNom='".$DesNom."'";
+}
+
+function ListarDeseosEnLst(){
+	$conexion=get_Conexion();
+	if ($mysqli=get_Conexion()){
+		$sqlDeseos="SELECT * FROM DESEOS";
+		if ($resultado=$mysqli->query($sqlDeseos)){
+			while ($fila=$resultado->fetch_assoc()){
+				$datosDeseos[]=$fila;
+			}
+		}else{
+		 echo "No hay datos de sorteos";
+		}
+		return($datosDeseos);
+	/*	?>
+		<select id="LstDes" name="deseos">
+			<?php 
+			for ($i=0;$i<count($datosDeseos)-1;$i++){
+				echo "<option value='".$i."'>".$datosDeseos[$i]['DesId']." - ".$datosDeseos[$i]['DesNom']."</option>";
+			} ?>
+		</select>
+		<?php*/
+	}else{
+		echo "Error en conexion con la base de datos";
+	}
+}
+
+
 
 //función para sacar toda la información del sorteo 
 function DatosSorteo($IdSorteo){
