@@ -143,21 +143,21 @@ function sorteoInsert($sorteoInsert){
 	}
 }
 
-function get_Conexion(){
-	$servidor= "localhost";
-	$usuario= "root";   //"id3972968_joseignaciohidalgo";
-	$psw= "";   //"AmigoInvisible";
-	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
-
-    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
-	if ($conexion->connect_error ){
+//function get_Conexion(){
+//	$servidor= "localhost";
+//	$usuario= "root";   //"id3972968_joseignaciohidalgo";
+//	$psw= "";   //"AmigoInvisible";
+//	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
+//
+//    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
+//	if ($conexion->connect_error ){
         echo "error conexion";
 		die("Connection failed: " . $conexion->connect_error);
-	}else{
+//	}else{
         $conexion->set_charset ("utf8");
         return $conexion;
-	}
-}
+//	}
+//}
 
 
 /*------ recepcion de datos de usuario buscando por Id o por Nombre ---- */
