@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="http://www.bnkysukq.lucusvirtual.es/main.css" />
         <script src="main.js"></script>
     </head>
 <body>
@@ -25,7 +25,7 @@
                         </div><?php
                     }else{?>
                         <div id="DivLogeado">
-                            <input type="button" value="LogIn" onclick="location.href='http://localhost/proyecto/index.php/login'">
+                            <input type="button" value="LogIn" onclick="location.href='http://www.bnkysukq.lucusvirtual.es/index.php/login'">
                         </div><?php
                     }
                 ?>
@@ -36,15 +36,15 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
-				<li><a href="#">CATEGORIAS</a>
+				<li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Home">HOME</a></li>
+				<li><a href="#">QUIENES SOMOS</a>
 					<ul>
-						<li><a href="#">AUTORES</a></li>
-						<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/autores/a/8">TITULOS</a></li>
-						<li><a href="http://novalibros.com/novedad-editorial/">NOVEDADES</a></li>
+						<li><a href="#">EMPRESA</a></li>
+						<li><a href="#">EVENTOS</a></li>
+						<li><a href="#">NOVEDADES</a></li>
 					</ul>
 				</li>
-			    <li><a href="https://es-es.facebook.com/">AMIGOS</a></li>
+			    <li><a href="https://es-es.facebook.com/">FACEBOOK</a></li>
 			 </ul>
 		</nav>
     </div>

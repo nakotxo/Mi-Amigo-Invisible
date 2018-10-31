@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
-        <script src="http://localhost/proyecto/jquery3.3.1.js"></script>
+		<link rel="stylesheet" type="text/css" media="screen" href="http://www.bnkysukq.lucusvirtual.es/main.css" />
+        <script src="http://www.bnkysukq.lucusvirtual.es/jquery3.3.1.js"></script>
         <script>
             var arrayParticipantes= new Array() ; //array con el valor de los UsuId
             var NumHijos;
@@ -16,7 +16,7 @@
             $(document).ready(function(){
 	            $("li").dblclick(function(){
                     //Declaración de variables
-                    var ulUsu = document.getElementById("LstUsu"); // nodo Lista de Usuarios
+                    var ulUsu = document.getElementById("LstUsu"); // nodo Lista de usuarios
                     var ulFinal = document.getElementById("LstUsuFin"); // nodo lista de participantes
                     var formularioSorteo = document.getElementById("formularioSorteo");
                     NumHijos= ulUsu.children.length; //numero de hijos que tiene la lista
@@ -107,16 +107,16 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
-                <li><a href="http://localhost/proyecto/index.php/Registro">NUEVO USUARIO</a></li>
-                <li><a href="#">CATEGORIAS</a>
+				<li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Home">HOME</a></li>
+                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Registro">NUEVO USUARIO</a></li>
+                <li><a href="#">QUIENES SOMOS</a>
 					<ul>
-						<li><a href="#">AUTORES</a></li>
-						<li><a href="https://www.planetadelibros.com/editorial/editorial-planeta/autores/a/8">TITULOS</a></li>
-						<li><a href="http://novalibros.com/novedad-editorial/">NOVEDADES</a></li>
+						<li><a href="#">EMPRESA</a></li>
+						<li><a href="#">EVENTOS</a></li>
+						<li><a href="#">NOVEDADES</a></li>
 					</ul>
 				</li>
-			    <li><a href="https://es-es.facebook.com/">AMIGOS</a></li>
+			    <li><a href="https://es-es.facebook.com/">FACEBOOK</a></li>
 			 </ul>
 		</nav>
     </div>
@@ -125,13 +125,13 @@
         <form method="POST" action="?">
 		<nav>
 			<ul>
-                <li><a href="http://localhost/proyecto/index.php/Mis_Datos">Mis Datos</a></li>
-                <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
-                <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Crear Sorteo</a></li>
-                <li><a href="http://localhost/proyecto/index.php/Crear_Deseos">Crear Deseo</a></li>
+                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Mis_Datos">Mis Datos</a></li>
+                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Mis_Sorteos">Mis Sorteos</a></li>
+                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Crear_Sorteo">Crear Sorteo</a></li>
+                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Crear_Deseos">Crear Deseo</a></li>
                 <?php
                     if ($_SESSION['Rol']=='Root'){
-                        echo ('<li><a href="http://localhost/proyecto/index.php/Listados">Listados</a></li>');
+                        echo ('<li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Listados">Listados</a></li>');
                     }
                 ?>
 			</ul>
@@ -160,7 +160,7 @@
                     
                     <?php 
                         //SoloSorteo(); 
-                          SoloUsuarios(); 
+                          Solousuarios(); 
                           if (isset($_POST['Sorteo'])){
                             if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
                                 echo "No se puede realizar el sorteo ya que faltan datos del SORTEO";

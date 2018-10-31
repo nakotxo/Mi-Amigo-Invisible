@@ -165,7 +165,7 @@ function UsuValorCualquiera($UsuId){	//por ID
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda Participantes -------------- */
-		$sqlUsuario="SELECT * FROM USUARIOS WHERE UsuId='".$UsuId."'";
+		$sqlUsuario="SELECT * FROM usuarios WHERE UsuId='".$UsuId."'";
 		/**TEST visualización deseos
 		 * comprobacion de la carga de los deseos */	
 		//echo $sqlDeseos;
@@ -187,7 +187,7 @@ function DatosUsuario($UsuNom){	//datos usuario por nombre
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda sorteos -------------- */
-		$sql="SELECT *  FROM USUARIOS WHERE UsuNom='".$UsuNom."'";
+		$sql="SELECT *  FROM usuarios WHERE UsuNom='".$UsuNom."'";
 		
 		if ($resultado=$mysqli->query($sql)){
 			$fila=$resultado->fetch_assoc();
@@ -715,7 +715,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 }
 
 function idDeseo($desNom){
-	$sql=" SELECT DesId FROM DESEOS WHERE DesNom='".$DesNom."'";
+	$sql=" SELECT DesId FROM deseos WHERE DesNom='".$DesNom."'";
 }
 
 function ListarDeseosEnLst(){
@@ -811,8 +811,8 @@ function buscaAmigo($sorId,$usuId){
 function DatosDeseos($IdDeseos){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
-		/* ------------ Inicio busqueda Deseos -------------- */
-		$sqlDeseos="SELECT *  FROM DESEOS WHERE DesId='".$IdDeseos."'";
+		/* ------------ Inicio busqueda deseos -------------- */
+		$sqlDeseos="SELECT *  FROM deseos WHERE DesId='".$IdDeseos."'";
 		/**TEST visualización deseos
 		 * comprobacion de la carga de los deseos 	
 		 * echo $sqlDeseos;
@@ -943,7 +943,7 @@ function updateEmail($dato,$caso){
 	if ($conexion = get_Conexion()){		//Realizacion de conexion a base de datos
 		switch ($caso) {
 			case 'Email':
-				$sql="UPDATE USUARIOS SET UsuEma ='$dato' WHERE UsuNom='$usuario'";	//update
+				$sql="UPDATE usuarios SET UsuEma ='$dato' WHERE UsuNom='$usuario'";	//update
 				if ($resultado=$conexion->query($sql)){
 					/** TEST 
 					 * Comprobacion de realizacion de test
@@ -956,7 +956,7 @@ function updateEmail($dato,$caso){
 				break;
 			case 'Pwd':
 				$clave=encriptar($dato);
-				$sql="UPDATE USUARIOS SET UsuPwd ='$clave' WHERE UsuNom='$usuario'";	//update
+				$sql="UPDATE usuarios SET UsuPwd ='$clave' WHERE UsuNom='$usuario'";	//update
 				if ($resultado=$conexion->query($sql)){
 					/** TEST 
 					 * Comprobacion de realizacion de test
@@ -968,7 +968,7 @@ function updateEmail($dato,$caso){
 				}
 				break;
 			case 'Nombre':
-				$sql="UPDATE USUARIOS SET UsuNom ='$dato' WHERE UsuNom='$usuario'";	//update
+				$sql="UPDATE usuarios SET UsuNom ='$dato' WHERE UsuNom='$usuario'";	//update
 				$_SESSION['Usuario']=$dato;
 				if ($resultado=$conexion->query($sql)){
 					/** TEST 
@@ -1042,7 +1042,7 @@ function calculoIdDeseo(){
 function registrarDeseo($desId,$desNom,$desCar){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
 		//Insertar datos 
-		$sql = "INSERT INTO DESEOS (DesId, DesNom, DesCar) 
+		$sql = "INSERT INTO deseos (DesId, DesNom, DesCar) 
 				VALUES ($desId,'$desNom','$desCar')";
 		if ($mysqli-> query($sql)){
 			$mensaje= "Inserción del DESEO realizada con éxito";

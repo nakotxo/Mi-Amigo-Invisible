@@ -48,7 +48,7 @@ INSERT INTO `deseos` (`DesId`, `DesNom`, `DesCar`) VALUES
 (4, 'Deseo 4', 'Características Deseo 4'),
 (6, 'Deseo 6', 'Características Deseo 6'),
 (12, 'Deseo 12', 'Características Deseo 12'),
-(56, 'Deseo 56', 'Características Deseos 56'),
+(56, 'Deseo 56', 'Característicasdeseos56'),
 (105, 'Deseo 105', 'Características Deseo 105');
 
 -- --------------------------------------------------------

@@ -8,10 +8,6 @@
 	*    Inclulle al principio del documento controlador.php.
 	* 	 Fijándonos en el controlador frontal de la unidad 5 desarrolla las condiciones necesarias para enrutar:
 	* 	/index.php para controlador_index()
-	* 	/Controlador.php/registro para controlador_registro()
-	* 	/Controlador.php/login para controlador_login()
-	* 	/admin_usuarios.php/admin_usuarios para controlador_admin_usuarios()
-	* 	/admin_libros.php/admin_libros para controlador_admin_libros()
 	*
 	* @file index.php
 	* @author Jose Ignacio Hidalgo Perez
@@ -20,8 +16,8 @@
 session_start();
 	
 	
-	require_once "modelo.php";
-	require_once "controlador.php";
+	require_once "Modelo.php";
+	require_once "Controlador.php";
 
 	$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	$segments = explode('/', $path);

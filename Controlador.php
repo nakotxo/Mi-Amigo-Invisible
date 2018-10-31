@@ -1,9 +1,65 @@
 <?php
 
+/** 
+* Función get_Conexion()
+* Funcion para funcionamiento en Local
+*/
+ 
+/*
+function get_Conexion(){
+	$servidor= "localhost";
+	$usuario= "root";   //"id3972968_joseignaciohidalgo";
+	$psw= "";   //"AmigoInvisible";
+	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
+
+    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
+	if ($conexion->connect_error ){
+        echo "error conexion";
+		die("Connection failed: " . $conexion->connect_error);
+	}else{
+        $conexion->set_charset ("utf8");
+        return $conexion;
+	}
+}
+// NOTA: importante sustituir todos los: http://www.bnkysukq.lucusvirtual.es  por : http://www.bnkysukq.lucusvirtual.es 
+
+*/
+
+
+
+ //funcionamiento en servidor
+function get_Conexion(){
+	$servidor= "localhost";
+	$usuario=  "hmpnxgvg_JoseIgnacio"; //"root";   //"id3972968_joseignaciohidalgo";
+	$psw= "AmigoInvisible";//"";   //"AmigoInvisible";
+	$bd= "hmpnxgvg_amigoinvisible";//"AmigoInvisible";    //"id3972968_amigoinvisible";
+
+    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
+	if ($conexion->connect_error ){
+		echo "error conexion";
+		echo $conexion->connect_error;
+		die("Connection failed: " . $conexion->connect_error);
+	}else{
+        $conexion->set_charset ("utf8");
+        return $conexion;
+	}
+
+}
+// NOTA: importante sustituir todos los: http://www.bnkysukq.lucusvirtual.es   por : http://www.bnkysukq.lucusvirtual.es 
+
+
+
+
+
+
+
+
+
+
 function controlador_index(){	
 	$datos[]=array();
 	$datos['titulo']="Mi Amigo Invisible";
-	require_once 'home.php';
+	require_once 'Home.php';
 }
 
 /**
@@ -26,7 +82,7 @@ function controlador_login(){
 				$_SESSION['Usuario']=$usuario;
 				$_SESSION['Rol']=get_rol($usuario);
 				//echo $_SESSION['Usuario'];
-				$direccion= "<script>window.location.href='http://localhost/Proyecto/index.php/adminusuarios'</script>";
+				$direccion= "<script>window.location.href='http://www.bnkysukq.lucusvirtual.es/index.php/adminusuarios'</script>";
 				echo $direccion;
 				
 			}else{
@@ -82,33 +138,11 @@ function controlador_admin_usuarios(){
 	$datos[]=array();
 	$datos['titulo']="Home Usuario";
 	$valor="";
-	require 'HomeUsuarios.php';
+	require 'Homeusuarios.php';
 	
 }
 
 
-/**
-* Función get_Conexion()
-*/
-/* ...............................probar si funciona en otro lugar
-function get_Conexion(){
-	$servidor= "localhost";
-	$usuario= "root";   //"id3972968_joseignaciohidalgo";
-	$psw= "";   //"AmigoInvisible";
-	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
-
-    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
-	if ($conexion->connect_error ){
-        echo "error conexion";
-		die("Connection failed: " . $conexion->connect_error);
-	}else{
-        $conexion->set_charset ("utf8");
-        return $conexion;
-	}
-
-}
-
-*/
 
 function Controlador_Sorteo(){
 	$datos[]=array();
@@ -145,26 +179,4 @@ function Controlador_Crear_Deseos(){
 
 
 
-
-
-/*
-	define('METHOD','AES-256-CBC');
-	define('SECRET_KEY','$CARLOS@2016');
-	define('SECRET_IV','101712');
-	class SED {
-		public static function encryption($string){
-			$output=FALSE;
-			$key=hash('sha256', SECRET_KEY);
-			$iv=substr(hash('sha256', SECRET_IV), 0, 16);
-			$output=openssl_encrypt($string, METHOD, $key, 0, $iv);
-			$output=base64_encode($output);
-			return $output;
-		}
-		public static function decryption($string){
-			$key=hash('sha256', SECRET_KEY);
-			$iv=substr(hash('sha256', SECRET_IV), 0, 16);
-			$output=openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
-			return $output;
-		}
-	}*/
-
+?>
