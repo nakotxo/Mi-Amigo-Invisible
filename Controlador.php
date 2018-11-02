@@ -4,8 +4,6 @@
 * Función get_Conexion()
 * Funcion para funcionamiento en Local
 */
- 
-/*
 function get_Conexion(){
 	$servidor= "localhost";
 	$usuario= "root";   //"id3972968_joseignaciohidalgo";
@@ -21,31 +19,26 @@ function get_Conexion(){
         return $conexion;
 	}
 }
-// NOTA: importante sustituir todos los: http://www.bnkysukq.lucusvirtual.es  por : http://www.bnkysukq.lucusvirtual.es 
-
-*/
-
-
+// NOTA: importante sustituir todos los: http://bnkysukq.lucusvirtual.es  por : http://localhost/proyecto 
 
  //funcionamiento en servidor
-function get_Conexion(){
-	$servidor= "localhost";
-	$usuario=  "hmpnxgvg_JoseIgnacio"; //"root";   //"id3972968_joseignaciohidalgo";
-	$psw= "AmigoInvisible";//"";   //"AmigoInvisible";
-	$bd= "hmpnxgvg_amigoinvisible";//"AmigoInvisible";    //"id3972968_amigoinvisible";
-
-    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
-	if ($conexion->connect_error ){
-		echo "error conexion";
-		echo $conexion->connect_error;
-		die("Connection failed: " . $conexion->connect_error);
-	}else{
-        $conexion->set_charset ("utf8");
-        return $conexion;
-	}
-
-}
-// NOTA: importante sustituir todos los: http://www.bnkysukq.lucusvirtual.es   por : http://www.bnkysukq.lucusvirtual.es 
+//function get_Conexion(){
+//	$servidor= "localhost";
+//	$usuario=  "hmpnxgvg_JoseIgnacio"; //"root";   //"id3972968_joseignaciohidalgo";
+//	$psw= "AmigoInvisible";//"";   //"AmigoInvisible";
+//	$bd= "hmpnxgvg_amigoinvisible";//"AmigoInvisible";    //"id3972968_amigoinvisible";
+//
+//    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
+//	if ($conexion->connect_error ){
+//		echo "error conexion";
+//		echo $conexion->connect_error;
+//		die("Connection failed: " . $conexion->connect_error);
+//	}else{
+//        $conexion->set_charset ("utf8");
+//        return $conexion;
+//	}
+//}
+// NOTA: importante sustituir todos los: http://localhost/proyecto   por : http://bnkysukq.lucusvirtual.es
 
 
 
@@ -82,24 +75,19 @@ function controlador_login(){
 				$_SESSION['Usuario']=$usuario;
 				$_SESSION['Rol']=get_rol($usuario);
 				//echo $_SESSION['Usuario'];
-				$direccion= "<script>window.location.href='http://www.bnkysukq.lucusvirtual.es/index.php/adminusuarios'</script>";
+				$direccion= "<script>window.location.href='http://localhost/proyecto/index.php/adminusuarios'</script>";
 				echo $direccion;
 				
 			}else{
-				echo "Contraseña No RECONOCIDA intentelo otra vez";
+				$valor="Contraseña No RECONOCIDA intentelo otra vez";
+			//	return $valor;
 			}
-			
-		
 		}else{
-			
 			$valor= "Error en usuario y contraseña";
-		
 		}
-			
+		
 	}
-	
 	require 'login.php';
-	
 }
 /**
 * Funcion controlador_Registro()
@@ -138,7 +126,7 @@ function controlador_admin_usuarios(){
 	$datos[]=array();
 	$datos['titulo']="Home Usuario";
 	$valor="";
-	require 'Homeusuarios.php';
+	require 'HomeusUarios.php';
 	
 }
 

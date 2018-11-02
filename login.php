@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" media="screen" href="http://www.bnkysukq.lucusvirtual.es/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
         <script src="main.js"></script>
     </head>
 <body>
@@ -22,8 +22,8 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Home">HOME</a></li>
-                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Registro">NUEVO USUARIO</a></li>
+				<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Registro">NUEVO USUARIO</a></li>
                 <li><a href="#">QUIENES SOMOS</a>
 					<ul>
 						<li><a href="#">EMPRESA</a></li>
@@ -35,7 +35,7 @@
 			 </ul>
 		</nav>
     </div>
-        <h1><?php echo $datos['titulo']; ?></h1><hr/>
+        <h1><?php echo $datos['titulo']; $valor=''; ?></h1><hr/>
         <section>
             <form method="POST" action="?">
                 <div id="DivLogin">
@@ -44,6 +44,7 @@
                     <div id="log"><input id="login" type="submit" name="Login" value="Login" ></div>
                 </div>
             </form>
+            <h1><?php echo $valor?></h1>
         </section>
         
     <footer></footer>

@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" media="screen" href="http://www.bnkysukq.lucusvirtual.es/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="http://localhost/proyecto/main.css" />
         <script src="main.js"></script>
     </head>
 <body>
@@ -30,8 +30,8 @@
     <div id="DivNavSup">
         <nav id="menu_cabecera">
 			<ul>
-				<li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Home">HOME</a></li>
-                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Registro">NUEVO USUARIO</a></li>
+				<li><a href="http://localhost/proyecto/index.php/Home">HOME</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Registro">NUEVO USUARIO</a></li>
                 <li><a href="#">QUIENES SOMOS</a>
 					<ul>
 						<li><a href="#">EMPRESA</a></li>
@@ -48,13 +48,13 @@
         <form method="POST" action="?">
 		<nav>
 			<ul>
-            <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Mis_Datos">Mis Datos</a></li>
-                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Mis_Sorteos">Mis Sorteos</a></li>
-                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Crear_Sorteo">Crear Sorteo</a></li>
-                <li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Crear_Deseos">Crear Deseo</a></li>
+            <li><a href="http://localhost/proyecto/index.php/Mis_Datos">Mis Datos</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Mis_Sorteos">Mis Sorteos</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Crear_Sorteo">Crear Sorteo</a></li>
+                <li><a href="http://localhost/proyecto/index.php/Crear_Deseos">Crear Deseo</a></li>
                 <?php
                     if ($_SESSION['Rol']=='Root'){
-                        echo ('<li><a href="http://www.bnkysukq.lucusvirtual.es/index.php/Listados">Listados</a></li>');
+                        echo ('<li><a href="http://localhost/proyecto/index.php/Listados">Listados</a></li>');
                     }
                 ?>
 			</ul>
@@ -65,11 +65,6 @@
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
             <?php
-                if (isset($_POST['Listado'])){
-                    Listado();
-                }elseif (isset($_POST['LisUsu'])){
-                    MisSorteos();
-                }
             ?>
         </section>
         

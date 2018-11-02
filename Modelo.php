@@ -151,11 +151,11 @@ function sorteoInsert($sorteoInsert){
 //
 //    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
 //	if ($conexion->connect_error ){
-        echo "error conexion";
-		die("Connection failed: " . $conexion->connect_error);
+//        echo "error conexion";
+//		die("Connection failed: " . $conexion->connect_error);
 //	}else{
-        $conexion->set_charset ("utf8");
-        return $conexion;
+//        $conexion->set_charset ("utf8");
+//        return $conexion;
 //	}
 //}
 
@@ -237,7 +237,11 @@ function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$Pwd){
 					$registroOK=true; 
 				}else{
 					$registroOK=false;  
-					echo("estoy en comprueba y fila['UsuPwd']vale: ".$fila['UsuPwd']." y Pwd: ".$Pwd);
+					/** TEST 
+					 * Comprobación de datos introducidos
+					 * en el logueo
+					 */
+					 // echo("estoy en comprueba y fila['UsuPwd']vale: ".$fila['UsuPwd']." y Pwd: ".$Pwd);
 				}
 			}
 			return $registroOK;
@@ -292,7 +296,6 @@ function NuevoSorteo(){
 		if ($resultado=$mysqli->query($sql)){
 			$SorteoId=0;
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-
 				if ($fila['SorId']==$SorteoId){
 					$SorteoId++;	//incremento la variable para obtener el primer Id vacio
 				} else{
