@@ -62,6 +62,6 @@
             </form>
             <h1><?php echo $valor?></h1>
         </section>
-    <footer></footer>
+        <footer>          <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>         Contacto: HidalgoJ.Ignacio@gmail.com<br>         Creado por: Jose Ignacio Hidalgo</p>     </footer>
 </body>
 </html>

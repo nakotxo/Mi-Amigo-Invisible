@@ -104,7 +104,7 @@ function superSorteo(){
 		$idDes3=0;
 		$idDes4=0;
 		$idDes5=0;
-		$insertPadreUsuSor='INSERT INTO PADREUSUSOR (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
+		$insertPadreUsuSor='INSERT INTO padreususor (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
 		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
 		InsertPadreUsuSor($insertPadreUsuSor);
 		/*-----------------FIN--------------------*/
@@ -125,7 +125,7 @@ function InsertPadreUsuSor($insertPadreUsuSor){
 }
 
 function sorteoInsert($sorteoInsert){
-	$sqlInsert = "INSERT INTO SORTEOS (SorId, SorNom, SorFec, SorPre)  VALUES ("
+	$sqlInsert = "INSERT INTO sorteos (SorId, SorNom, SorFec, SorPre)  VALUES ("
 		.$sorteoInsert['SorId'].","
 		."'".$sorteoInsert['SorNom']."',"
 		."'".$sorteoInsert['SorFec']."',"
@@ -292,7 +292,7 @@ function NuevoUsuario(){
 
 function NuevoSorteo(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		$sql="SELECT SorId FROM SORTEOS";		//Select para ejecutar, donde, seleccionará los Id de los SORTEOS de la BD
+		$sql="SELECT SorId FROM sorteos";		//Select para ejecutar, donde, seleccionará los Id de los SORTEOS de la BD
 		if ($resultado=$mysqli->query($sql)){
 			$SorteoId=0;
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
@@ -331,7 +331,7 @@ function Listado(){
 	$conexion=get_Conexion();
 	
 		if ($mysqli=get_Conexion()){
-			$sqlUsuarios="SELECT * FROM USUARIOS";
+			$sqlUsuarios="SELECT * FROM usuarios";
 			if ($resultado=$mysqli->query($sqlUsuarios)){
 				$datosUsuarios['titulo']="Listado Usuarios";
 				while ($fila=$resultado->fetch_assoc()){
@@ -341,7 +341,7 @@ function Listado(){
 			//print_r($datos);
 			}
 
-			$sqlDeseos="SELECT * FROM DESEOS";
+			$sqlDeseos="SELECT * FROM deseos";
 			if ($resultado=$mysqli->query($sqlDeseos)){
 				$datosDeseos['titulo']="Listado DESEOS";
 				while ($fila=$resultado->fetch_assoc()){
@@ -351,7 +351,7 @@ function Listado(){
 			//print_r($datosDeseos);
 			}
 
-			$sqlSorteos="SELECT * FROM SORTEOS";
+			$sqlSorteos="SELECT * FROM sorteos";
 			if ($resultado=$mysqli->query($sqlSorteos)){
 				$datosSorteos['titulo']="Listado SORTEOS";
 				while ($fila=$resultado->fetch_assoc()){
@@ -397,7 +397,7 @@ function ListarUsuarios($datosUsuarios){
 function SoloUsuarios(){
 	$conexion=get_Conexion();
 		if ($mysqli=get_Conexion()){
-			$sqlUsuarios="SELECT * FROM USUARIOS";
+			$sqlUsuarios="SELECT * FROM usuarios";
 			if ($resultado=$mysqli->query($sqlUsuarios)){
 				$datosUsuarios['titulo']="Listado Usuarios";
 				while ($fila=$resultado->fetch_assoc()){
@@ -486,7 +486,7 @@ function ListarSorteos($datosSorteos){
 function SoloSorteo(){
 	$conexion=get_Conexion();
 		if ($mysqli=get_Conexion()){
-			$sqlSorteos="SELECT * FROM SORTEOS";
+			$sqlSorteos="SELECT * FROM sorteos";
 			if ($resultado=$mysqli->query($sqlSorteos)){
 				$datosSorteos['titulo']="Listado SORTEOS";
 				while ($fila=$resultado->fetch_assoc()){
@@ -542,7 +542,7 @@ function BuscaSorteo($usuId){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		$LosSorteos=array(); 	// declaracion de array
-		$sqlString='SELECT * FROM PADREUSUSOR WHERE IdUsu='.$usuId;
+		$sqlString='SELECT * FROM padreususor WHERE IdUsu='.$usuId;
 		$LosSorteos[0]="No tiene sorteos asociados";
 		$i=0;
 		if($resultado=$mysqli->query($sqlString)){
@@ -724,7 +724,7 @@ function idDeseo($desNom){
 function ListarDeseosEnLst(){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
-		$sqlDeseos="SELECT * FROM DESEOS";
+		$sqlDeseos="SELECT * FROM deseos";
 		if ($resultado=$mysqli->query($sqlDeseos)){
 			while ($fila=$resultado->fetch_assoc()){
 				$datosDeseos[]=$fila;
@@ -753,7 +753,7 @@ function DatosSorteo($IdSorteo){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda sorteos -------------- */
-		$sqlSorteo="SELECT *  FROM SORTEOS WHERE SorId='".$IdSorteo."'";
+		$sqlSorteo="SELECT *  FROM sorteos WHERE SorId='".$IdSorteo."'";
 			/** TEST
 			 * visualización de variable,
 			 * para comprobación sintaxys
@@ -773,7 +773,7 @@ function DatosParticipante($sorId){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		$losParticipantes=array(); 	// declaracion de array
-		$sqlString='SELECT * FROM PADREUSUSOR WHERE IdSor='.$sorId;
+		$sqlString='SELECT * FROM padreususor WHERE IdSor='.$sorId;
 		$losParticipantes[0]="";
 		$i=0;
 		if($resultado=$mysqli->query($sqlString)){
@@ -794,7 +794,7 @@ function buscaAmigo($sorId,$usuId){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		/* ------------ Inicio busqueda sorteos -------------- */
-		$sqlSorteo='SELECT *  FROM PADREUSUSOR WHERE IdSor='.$sorId.' AND IdUsu='.$usuId;
+		$sqlSorteo='SELECT *  FROM padreususor WHERE IdSor='.$sorId.' AND IdUsu='.$usuId;
 			/** TEST
 			 * visualización de variable,
 			 * para comprobación sintaxys
@@ -832,7 +832,7 @@ function buscaDeseos($sorId,$usuId){
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
 		$losDeseos=array(); 	// declaracion de array
-		$sqlString='SELECT * FROM PADREUSUSOR WHERE IdSor='.$sorId.' AND IdUsu='.$usuId;
+		$sqlString='SELECT * FROM padreususor WHERE IdSor='.$sorId.' AND IdUsu='.$usuId;
 		$losDeseos[0]="";
 		$i=0;
 		if($resultado=$mysqli->query($sqlString)){
@@ -931,7 +931,7 @@ function Mis_datos(){
 
 				?>
 			</tr>		
-		</ul>
+		</table>
 	</div>
 	<?php
 }
@@ -1023,7 +1023,7 @@ function formularioDeseos(){
 
 function calculoIdDeseo(){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
-		$sql="SELECT DesId FROM DESEOS";		//Select para ejecutar, donde, seleccionará los Id delos usuario de la BD
+		$sql="SELECT DesId FROM deseos";		//Select para ejecutar, donde, seleccionará los Id delos usuario de la BD
 		if ($resultado=$mysqli->query($sql)){
 			$deseoId=0;
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
