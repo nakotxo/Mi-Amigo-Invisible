@@ -122,12 +122,10 @@ function controlador_Registro(){
 }
 
 function controlador_admin_usuarios(){
-	
 	$datos[]=array();
 	$datos['titulo']="Home Usuario";
 	$valor="";
-	require 'HomeusUarios.php';
-	
+	require 'HomeUsuarios.php';
 }
 
 
