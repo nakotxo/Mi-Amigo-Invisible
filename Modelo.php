@@ -1,4 +1,5 @@
 <?php
+$x;
 /** ISSET
  * Controladores de envio de datos por URL
  */
@@ -16,6 +17,27 @@ if(isset($_POST['logout'])){
 	echo "<script>window.location.href='http://localhost/proyecto/index.php/Home'</script>";
 }
 /* ---- fin $_POST['logout'] ----*/
+
+
+/*
+function get_Conexion(){
+	$servidor= "localhost";
+	$usuario= "root";   //"id3972968_joseignaciohidalgo";
+	$psw= "";   //"AmigoInvisible";
+	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
+
+    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
+	if ($conexion->connect_error ){
+        echo "error conexion";
+		die("Connection failed: " . $conexion->connect_error);
+	}else{
+        $conexion->set_charset ("utf8");
+        return $conexion;
+	}
+}
+
+*/
+
 
 
 function superSorteo(){
@@ -143,21 +165,6 @@ function sorteoInsert($sorteoInsert){
 	}
 }
 
-//function get_Conexion(){
-//	$servidor= "localhost";
-//	$usuario= "root";   //"id3972968_joseignaciohidalgo";
-//	$psw= "";   //"AmigoInvisible";
-//	$bd= "AmigoInvisible";    //"id3972968_amigoinvisible";
-//
-//    $conexion= new mysqli($servidor,$usuario,$psw,$bd);
-//	if ($conexion->connect_error ){
-//        echo "error conexion";
-//		die("Connection failed: " . $conexion->connect_error);
-//	}else{
-//        $conexion->set_charset ("utf8");
-//        return $conexion;
-//	}
-//}
 
 
 /*------ recepcion de datos de usuario buscando por Id o por Nombre ---- */
@@ -198,8 +205,6 @@ function DatosUsuario($UsuNom){	//datos usuario por nombre
 
 }
 /*-----------------FIN BUSQUEDA DATOS USUARIO ----------------------------*/
-
-
 
 function existe_usuario($usuario){
 	if ($mysqli = get_Conexion()){		//Realizacion de conexion a base de datos
@@ -568,6 +573,8 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 	 */
 	//print_r ($MisSorteos);
 	/*--- fin TEST */
+	$miId=$MisDatos['UsuId'];
+
 	$control=$MisSorteos[0];
 	if($control=="No tiene sorteos asociados"){
 		echo "<h1><p>".$control."</p></h1>";
@@ -612,6 +619,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 
 				//optenemos los nombres a traves de los id's en las siguientes funciones
 				$datSor=DatosSorteo($MisSorteos[$i]);
+				$sorId=$datSor['SorId'];
 				$sorNom=$datSor['SorNom'];	//nombre de Sorteo
 				$sorFec=$datSor['SorFec'];	//Fecha del Sorteo
 				$sorPre=$datSor['SorPre'];	//Presupuesto Sorteo
@@ -668,38 +676,40 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 					?></td>
 				<td><?php //listado de mis deseos
 						for($j=0;$j<5;$j++){
-							
-							if(isset($_GET['Des'.$j])){
+							if(isset($_GET['DesPos'.$j.$i])){
 								$listaDeseos=ListarDeseosEnLst();	
 								$DesNomAmod=$_GET['Des'.$j];
-								$idAmod=idDeseo($DesNomAmod);
+								$DatAmod=idDeseo($DesNomAmod);
+								$idAmod=$DatAmod;
 								?>
-
 								<form method='GET' action='?'>
 									<select id="LstDes" name="deseos[]">
 										<?php 
 										for ($p=0;$p<count($listaDeseos)-1;$p++){
-											echo "<option value='".$listaDeseos[$p]['DesId']."'>".$listaDeseos[$p]['DesId']." - ".$listaDeseos[$p]['DesNom']."</option>";
+											echo "<option name='ModificarElId' value='".$listaDeseos[$p]['DesId']."'>".$listaDeseos[$p]['DesId']." - ".$listaDeseos[$p]['DesNom']."</option>";
 										} ?>
 									</select>
-									<input type='text' name='idAmod' value=<?=$idAmod?>>
+									<input type='text' name='idAmod' title='idDesViejo' value=<?=$DatAmod?>>
+									<input type='text' name='idSor' title='miSor' value=<?=$sorId?>>
+									<input type='text' name='miId' title='miId' value=<?=$miId?>>
+									<?php $numeroDeseoAmod=$j+1;?> 
+									<input type='text' name='idDesSorAmod' title='idDeseSorAmod' value=<?=$numeroDeseoAmod?>>
 									<input type='image'src='http://localhost/proyecto/multimedia/save1.png'>
 								</form>
-
+							
 								<?php
 							}else{
-								?>
+							?>
 								<form method='GET' action='?'>
 									<?php $valor=utf8_encode($misDesNom[$j]); ?>
 									<label><?php echo $valor ?></label>
-									<a href='Mis_Sorteos?Des<?=$j?>="<?=utf8_encode($misDesNom[$j])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a>
+									<a href='Mis_Sorteos?DesPos<?=$j.$i?>="<?=utf8_encode($misDesNom[$j])?>"&Des<?=$j?>="<?=utf8_encode($misDesNom[$j])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a>
 								</form>
 								
-								<?php
-							}	
-
-							
+								<?php	
+							}
 							//echo $misDesCar[$j].'<br><br>';
+							
 						}
 				?></td>
 				<td><?php for($j=0;$j<count($partiNom);$j++){
@@ -718,7 +728,32 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 }
 
 function idDeseo($desNom){
-	$sql=" SELECT DesId FROM deseos WHERE DesNom='".$DesNom."'";
+
+	
+	if ($conexion=get_Conexion()){
+		
+		/* ------------ Inicio busqueda deseo -------------- */
+		$sql="SELECT *  FROM deseos WHERE DesNom=$desNom";
+			/** TEST
+			 * visualización de variable,
+			 * para comprobación sintaxys
+			 */
+			//echo $sql;
+			/*--- Fin TEST ---*/
+		if ($resultado=$conexion->query($sql)){
+			$fila=$resultado->fetch_assoc();
+			$idDes=$fila['DesId'];
+			return($idDes);
+		}
+		/* -----------------------FIN------------------------- */
+	}
+
+
+
+
+
+
+
 }
 
 function ListarDeseosEnLst(){
@@ -730,7 +765,7 @@ function ListarDeseosEnLst(){
 				$datosDeseos[]=$fila;
 			}
 		}else{
-		 echo "No hay datos de sorteos";
+		 echo "No hay datos de deseos";
 		}
 		return($datosDeseos);
 	/*	?>
@@ -846,6 +881,52 @@ function buscaDeseos($sorId,$usuId){
 		}
 	}
 		return $losDeseos; //devuelve el array o de variable
+}
+
+function updateDeseo(){
+	echo "esto dentro <br>";
+	$conexion = get_Conexion();
+	/**
+	 *  vamos a realizar la update en padreususor 
+	 * para ello necesitamos:
+	 * id del usuario	$idUsu
+	 * id del sorteo	$idSor
+	 * id de la posicion del deseo a modificar	$idDes
+	 * id del deseo viejo	$idVieja
+	 * id del deseo nuevo	$idNueva
+	 * */
+
+	/*--------variables del POST -------------*/
+	$idUsu= $_GET['miId'];	// variable con mi id
+	$idSor = $_GET['idSor'];	//variable con id del sorteo al que nos refirimos
+	$idDes= $_GET['idDesSorAmod']; // variable con la posicion del deso a cambiar
+	$idVieja = $_GET['idAmod'];//variable con id a modificar (vieja)
+	$idNueva = $_GET['deseos'][0];//array con id para modificar en posición[0](nueva)
+	/**
+	 * TEST imprimir variables de modificación 
+	*/
+	echo "(".$idVieja.", ".$idNueva.")";
+	//fin del test
+
+
+	if ($idNueva==$idVieja){
+		$mensaje="No hay cambios";
+		echo $mensaje;
+		return $mensaje;
+	}else{
+		if ($conexion = get_Conexion()){
+			$sql="UPDATE padreususor SET IdDes".$idDes."=$idNueva WHERE IdSor=$idSor And IdUsu=$idUsu";	//update
+			echo $sql;	
+			if ($resultado=$conexion->query($sql)){
+				}else{
+					echo "error en la Udate";
+				}
+		}//conexion
+	}
+
+
+
+
 }
 
 function Mis_datos(){
@@ -1111,6 +1192,12 @@ function desencriptar($clave){
 	return $output;
 	
 }
+
+
+
+
+
+
 
 
 

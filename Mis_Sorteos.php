@@ -69,12 +69,13 @@
         </form>
 	</div>
 	<!-- ---------------------------- -->
-        <h1><?php echo $datos['titulo']; ?></h1><hr/>
+        <h1><?php echo $datos['titulo'];?></h1><hr/>
         <section>
             <?php 
             
 
-            MisSorteos();
+            $mensaje=MisSorteos();
+            echo $mensaje;
             ?>
         </section>
         

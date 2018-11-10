@@ -1,5 +1,13 @@
 <?php
 
+if (isset($_GET['idAmod'])){
+	updateDeseo();
+}
+
+
+
+
+
 /** 
 * Función get_Conexion()
 * Funcion para funcionamiento en Local
