@@ -141,6 +141,9 @@ function controlador_admin_usuarios(){
 function Controlador_Sorteo(){
 	$datos[]=array();
 	$datos['titulo']="Creacion Sorteo";
+	if (isset($_GET['e-mail'])){
+		EnvioEmail();
+	}
 	require 'Sorteo.php';
 }
 
@@ -167,10 +170,6 @@ function Controlador_Crear_Deseos(){
 	$datos['titulo']="Crear Deseos";
 	require 'Registro_Deseos.php';
 }
-
-
-
-
 
 
 ?>

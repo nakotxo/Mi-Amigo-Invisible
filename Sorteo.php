@@ -140,6 +140,10 @@
 	</div>
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
+        <form action='?' method='GET'>
+            <input type='submit' name='e-mail' value='e-Mail'onclic='envioEmail();'>
+            <input type="submit" name="" value="Buscar" id="boton1" onclick = "funcion();">
+        </form>
         <section>
             <div>
                 <p>Si ha habido alguna confusión a la hora de

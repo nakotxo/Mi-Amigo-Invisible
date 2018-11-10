@@ -905,7 +905,7 @@ function updateDeseo(){
 	/**
 	 * TEST imprimir variables de modificación 
 	*/
-	echo "(".$idVieja.", ".$idNueva.")";
+	//echo "(".$idVieja.", ".$idNueva.")";
 	//fin del test
 
 
@@ -919,13 +919,10 @@ function updateDeseo(){
 			echo $sql;	
 			if ($resultado=$conexion->query($sql)){
 				}else{
-					echo "error en la Udate";
+					echo "Error en la Udate del Deseo";
 				}
-		}//conexion
+		}
 	}
-
-
-
 
 }
 
@@ -1139,10 +1136,45 @@ function registrarDeseo($desId,$desNom,$desCar){
 	return ($mensaje);
 }
 
+function envioEmail(){
+	echo "hello kitty";
+	$to='hidalgoj.ignacio@gmail.com'; //Destinatario/s del correo.
+	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
+	$message="tu amigo invisible te escribe";
 
+	mail ($to , $subject , $message);
+/* 
+to
+Destinatario/s del correo.
 
+El formato de este string debe cumplir con la » RFC 2822. Algunos ejemplos son:
 
+usuario@example.com
+usuario@example.com, otrousuario@example.com
+Usuario <usuario@example.com>
+Usuario <usuario@example.com>, Otro usuario <otrousuario@example.com>
+subject
+Título del correo electrónico a enviar.
 
+Precaución
+El título debe cumplir con la » RFC 2047.
+
+message
+Mensaje a enviar.
+
+Cada línea debería separarse con un CRLF (\r\n). Las líneas no deberían ocupar más de 70 caracteres.
+
+Precaución
+(Sólo en Windows) Cuando PHP se comunica directamente con un servidor SMTP, si encuentra un punto al principio de la línea, éste se elimina. Para evitar esto es necesario reemplazar estas apariciones con un doble punto.
+
+<?php
+$texto = str_replace("\n.", "\n..", $texto);
+?>
+additional_headers (opcional)
+String a insertar al final de la cabecera del correo.
+*/
+
+}
 
 
 
