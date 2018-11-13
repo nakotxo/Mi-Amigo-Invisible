@@ -132,15 +132,13 @@ function superSorteo(){
 		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
 		InsertPadreUsuSor($insertPadreUsuSor);
 		/*-----------------FIN--------------------*/
-		envioEmailSinDeseos($idUsu,$idAmi,$idsor);
+		envioEmailSinDeseos($idUsu,$idAmi,$idSor);
 	}
   
 }
 
 
 function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
-	echo "hello kitty";
-	
 	$datoUsu=UsuValorCualquiera($idUsu); 	//todos los datos del usuario (array)
 	$datoAmi=UsuValorCualquiera($idAmi);	// todos los datos del amigo  (array)
 	$datoSor=DatosSorteo($idSor);			// todos los datos del Sorteo (array)
@@ -154,7 +152,7 @@ function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
 
 	$to=$usuEmail; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo\n
+	$message="Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo
 				en el que participas y estos son los datos:\n
 				El Sorteo: ".$sorNom."\n
 				para el proximo día: ".$sorFec."\n
@@ -171,7 +169,8 @@ function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
 	//$message="tu amigo invisible te escribe";
 	/*----------------------fin del test-----------------------------*/
 
-	mail ($to , $subject , $message);
+	//mail ($to , $subject , $message);
+	echo ("hacemos envio email<br>");
 /* 
 to
 Destinatario/s del correo.
@@ -1200,6 +1199,12 @@ function registrarDeseo($desId,$desNom,$desCar){
 }
 
 
+Function validarDatos($usuario,$pasword,$email){
+	if (($usuario=='')||($pasword=='')||($email=='')){
+		$valor='false';
+		return $valor;
+	}
+}
 
 
 

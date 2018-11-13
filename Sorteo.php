@@ -6,7 +6,7 @@
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href='http://<?=URLSERVIDOR?>/main.css' />
-        <script src='http://<?URLSERVIDOR?>/jquery3.3.1.js'></script>
+        <script src='http://<?=URLSERVIDOR?>/jquery3.3.1.js'></script>
         <script>
             var arrayParticipantes= new Array() ; //array con el valor de los UsuId
             var NumHijos;
@@ -75,11 +75,16 @@
 
                 });
                 $("#LstUsuFin").dblclick(function(){
-                    alert("has hecho doble click en ul con numero hijos "+ NumHijos+", en el li hijo: ");
+                    //alert("has hecho doble click en ul con numero hijos "+ NumHijos+", en el li hijo: ");
+                    alert("Esta función todavía no está en funcionamiento\nPulse CORREGIR DATOS para reiniciar.");
                 });
-                $("#Corregir").click(function(){
+                /*$("#Corregir").click(function(){
                     alert("has hecho doble click botón Corregir");
-                });
+                   // header('Location: Crear_Sorteo');
+                    //window.location.href=http://'.URLSERVIDOR.'/index.php/Home
+                    //location.reload;
+                    alert("has hecho doble click botón Corregir");
+                });*/
             });
             
             
@@ -140,17 +145,25 @@
 	</div>
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
-        <form action='?' method='GET'>
-            <input type='submit' name='e-mail' value='e-Mail'onclic='envioEmail();'>
-            <input type="submit" name="" value="Buscar" id="boton1" onclick = "funcion();">
-        </form>
         <section>
             <div>
                 <p>Si ha habido alguna confusión a la hora de
                     rellenar los datos, puede corregirlos, pulsando
                     el boón<span> CORREGIR DATOS</span> lo que probocará
                     la recarga de la página</p>
-                <input id='Corregir' type='button' value='corregir datos'>
+                <form action='?' method='GET'>
+                    <input type='submit' value='CORREGIR DATOS'>
+                </form>
+                <br>
+                <?php 
+                if (isset($_POST['Sorteo'])){
+                    if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
+                        echo "<h3>No se puede realizar el sorteo ya que faltan datos del SORTEO</h3>";
+                    }else{
+                        superSorteo();
+                    }
+                }
+                ?>
             </div>
             <?php $SorteoId=NuevoSorteo();?>
             <form id="formularioSorteo" method="POST" action="?">
@@ -165,13 +178,6 @@
                     <?php 
                         //SoloSorteo(); 
                           Solousuarios(); 
-                          if (isset($_POST['Sorteo'])){
-                            if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
-                                echo "No se puede realizar el sorteo ya que faltan datos del SORTEO";
-                            }else{
-                                superSorteo();
-                            }
-                        }
                     ?>
                 </div>
             </form>

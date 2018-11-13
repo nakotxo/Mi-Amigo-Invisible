@@ -109,12 +109,16 @@ function controlador_Registro(){
 	$UsuarioId=NuevoUsuario(); //llamo a la funcion encargada de buscar la primera Id libre
 	if (isset($_POST['UsuId'])){
 		$usuario=$_POST['UsuNom'];
-		if(existe_usuario($usuario)){
-			$valor="Lo sentimos pero el usuario ya existe.";
+		$pwd=$_POST['UsuPwd'];
+		$email=$_POST['UsuEma'];
+		$estado=validarDatos($usuario,$pwd,$email);
+		if($estado=='false'){
+			$valor ="Todos los campos son obligatorios.";
 		}else{
-
+			if(existe_usuario($usuario)){
+				$valor="Lo sentimos pero el usuario ya existe.";
+			}else{
 			//llamar función encriptado
-			$pwd=$_POST['UsuPwd'];
 			$clave=encriptar($pwd);
 			$datos_usuario=array(
 				'id'=>$UsuarioId,
@@ -124,6 +128,7 @@ function controlador_Registro(){
 				'rol' => $_POST['UsuRol']);
 			
 			$valor=registrar_usuario($datos_usuario, $valor);
+			}
 		}
 	}
 
@@ -143,6 +148,7 @@ function controlador_admin_usuarios(){
 function Controlador_Sorteo(){
 	$datos[]=array();
 	$datos['titulo']="Creacion Sorteo";
+	$valor='';
 	if (isset($_GET['e-mail'])){
 		EnvioEmail();
 	}
