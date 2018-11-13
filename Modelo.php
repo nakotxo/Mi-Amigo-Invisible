@@ -1,4 +1,5 @@
 <?php
+//no funciona el logout linea 18
 $x;
 /** ISSET
  * Controladores de envio de datos por URL
@@ -13,8 +14,9 @@ $x;
 if(isset($_POST['logout'])){
 	setcookie('login','',time()-100);
     $_SESSION['Rol']="";
-    $_SESSION['Usuario']="";
-	echo "<script>window.location.href='http://localhost/proyecto/index.php/Home'</script>";
+	$_SESSION['Usuario']="";
+	header('Location: Home');
+	//echo ('<script>window.location.href=http://'.URLSERVIDOR.'/index.php/Home</script>');
 }
 /* ---- fin $_POST['logout'] ----*/
 
@@ -130,8 +132,77 @@ function superSorteo(){
 		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
 		InsertPadreUsuSor($insertPadreUsuSor);
 		/*-----------------FIN--------------------*/
+		envioEmailSinDeseos($idUsu,$idAmi,$idsor);
 	}
   
+}
+
+
+function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
+	echo "hello kitty";
+	
+	$datoUsu=UsuValorCualquiera($idUsu); 	//todos los datos del usuario (array)
+	$datoAmi=UsuValorCualquiera($idAmi);	// todos los datos del amigo  (array)
+	$datoSor=DatosSorteo($idSor);			// todos los datos del Sorteo (array)
+
+	$usuNom=$datoUsu['UsuNom'];
+	$usuEmail=$datoUsu['UsuEma'];
+	$amiNom=$datoAmi['UsuNom'];
+	$sorNom=$datoSor['SorNom'];
+	$sorFec=$datoSor['SorFec'];
+	$sorPre=$datoSor['SorPre'];
+
+	$to=$usuEmail; //Destinatario/s del correo.
+	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
+	$message="Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo\n
+				en el que participas y estos son los datos:\n
+				El Sorteo: ".$sorNom."\n
+				para el proximo día: ".$sorFec."\n
+				con presupuesto de: ".$sorPre."\n\n
+				-----TU AMIGO INVISIBLE-----\n
+				---------".$amiNom."---------\n
+				----------------------------";
+
+	/**
+	 * TEST Relleno de datos de prueba
+	 */
+	//$to='hidalgoj.ignacio@gmail.com'; //Destinatario/s del correo.
+	//$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
+	//$message="tu amigo invisible te escribe";
+	/*----------------------fin del test-----------------------------*/
+
+	mail ($to , $subject , $message);
+/* 
+to
+Destinatario/s del correo.
+
+El formato de este string debe cumplir con la » RFC 2822. Algunos ejemplos son:
+
+usuario@example.com
+usuario@example.com, otrousuario@example.com
+Usuario <usuario@example.com>
+Usuario <usuario@example.com>, Otro usuario <otrousuario@example.com>
+subject
+Título del correo electrónico a enviar.
+
+Precaución
+El título debe cumplir con la » RFC 2047.
+
+message
+Mensaje a enviar.
+
+Cada línea debería separarse con un CRLF (\r\n). Las líneas no deberían ocupar más de 70 caracteres.
+
+Precaución
+(Sólo en Windows) Cuando PHP se comunica directamente con un servidor SMTP, si encuentra un punto al principio de la línea, éste se elimina. Para evitar esto es necesario reemplazar estas apariciones con un doble punto.
+
+<?php
+$texto = str_replace("\n.", "\n..", $texto);
+?>
+additional_headers (opcional)
+String a insertar al final de la cabecera del correo.
+*/
+
 }
 
 function InsertPadreUsuSor($insertPadreUsuSor){
@@ -747,13 +818,6 @@ function idDeseo($desNom){
 		}
 		/* -----------------------FIN------------------------- */
 	}
-
-
-
-
-
-
-
 }
 
 function ListarDeseosEnLst(){
@@ -780,7 +844,6 @@ function ListarDeseosEnLst(){
 		echo "Error en conexion con la base de datos";
 	}
 }
-
 
 
 //función para sacar toda la información del sorteo 
@@ -1136,45 +1199,7 @@ function registrarDeseo($desId,$desNom,$desCar){
 	return ($mensaje);
 }
 
-function envioEmail(){
-	echo "hello kitty";
-	$to='hidalgoj.ignacio@gmail.com'; //Destinatario/s del correo.
-	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="tu amigo invisible te escribe";
 
-	mail ($to , $subject , $message);
-/* 
-to
-Destinatario/s del correo.
-
-El formato de este string debe cumplir con la » RFC 2822. Algunos ejemplos son:
-
-usuario@example.com
-usuario@example.com, otrousuario@example.com
-Usuario <usuario@example.com>
-Usuario <usuario@example.com>, Otro usuario <otrousuario@example.com>
-subject
-Título del correo electrónico a enviar.
-
-Precaución
-El título debe cumplir con la » RFC 2047.
-
-message
-Mensaje a enviar.
-
-Cada línea debería separarse con un CRLF (\r\n). Las líneas no deberían ocupar más de 70 caracteres.
-
-Precaución
-(Sólo en Windows) Cuando PHP se comunica directamente con un servidor SMTP, si encuentra un punto al principio de la línea, éste se elimina. Para evitar esto es necesario reemplazar estas apariciones con un doble punto.
-
-<?php
-$texto = str_replace("\n.", "\n..", $texto);
-?>
-additional_headers (opcional)
-String a insertar al final de la cabecera del correo.
-*/
-
-}
 
 
 
@@ -1224,6 +1249,7 @@ function desencriptar($clave){
 	return $output;
 	
 }
+
 
 
 

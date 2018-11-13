@@ -6,8 +6,6 @@ if (isset($_GET['idAmod'])){
 
 
 
-
-
 /** 
 * Función get_Conexion()
 * Funcion para funcionamiento en Local
@@ -49,9 +47,14 @@ function get_Conexion(){
 // NOTA: importante sustituir todos los: http://localhost/proyecto   por : http://bnkysukq.lucusvirtual.es
 
 
+/* Constantes para la ruta en localhost y para el servidor externo */
+	/*---------------------LOCALHOST------------------------*/
+		define('URLSERVIDOR', 'localhost/proyecto');
 
+	/*--------------------servidor externo------------------*/
+		//define('URLSERVIDOR', 'bnkysukq.lucusvirtual.es');
 
-
+/*-----------------------------------------------------------------*/
 
 
 
@@ -83,7 +86,7 @@ function controlador_login(){
 				$_SESSION['Usuario']=$usuario;
 				$_SESSION['Rol']=get_rol($usuario);
 				//echo $_SESSION['Usuario'];
-				$direccion= "<script>window.location.href='http://localhost/proyecto/index.php/adminusuarios'</script>";
+				$direccion= "<script>window.location.href='http://".URLSERVIDOR."/index.php/adminusuarios'</script>";
 				echo $direccion;
 				
 			}else{
