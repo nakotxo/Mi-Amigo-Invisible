@@ -70,7 +70,7 @@ function controlador_index(){
 * Funcion controlador_login()
 */
 function controlador_login(){
-	
+	$valor='';
 	$datos[]=array();
 	$datos['titulo']="Página de Logeo";
 	//$valor="";
@@ -91,7 +91,6 @@ function controlador_login(){
 				
 			}else{
 				$valor="Contraseña No RECONOCIDA intentelo otra vez";
-			//	return $valor;
 			}
 		}else{
 			$valor= "Error en usuario y contraseña";

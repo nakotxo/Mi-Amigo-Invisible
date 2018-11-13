@@ -283,7 +283,7 @@ function existe_usuario($usuario){
 		$sql="SELECT UsuNom FROM usuarios WHERE UsuNom='$usuario'";		//Select para ejecutar, donde, seleccionará todos los registros de la BD
 		if ($resultado=$mysqli->query($sql)){
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
-				if ($fila['UsuNom']==$usuario){
+				if ( strtoupper($fila['UsuNom'])==strtoupper($usuario)){
 					$registroOK=true; //true=1
 				}else{
 					$registroOK=false;  //false=0
@@ -309,7 +309,7 @@ function comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$Pwd){
 			while ($fila=$resultado->fetch_assoc()){	//mientras no sea eof(fin de tabla) seguimos al siguiente registro			
 		
 		
-				if (($fila['UsuNom']==$usuario)&&(($fila['UsuPwd']==$contrasena)||($fila['UsuPwd']==$contrasenaCifrada)||($fila['UsuPwd']==$Pwd))){
+				if ((strtoupper($fila['UsuNom'])==strtoupper($usuario))&&(($fila['UsuPwd']==$contrasena)||($fila['UsuPwd']==$contrasenaCifrada)||($fila['UsuPwd']==$Pwd))){
 					$registroOK=true; 
 				}else{
 					$registroOK=false;  

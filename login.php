@@ -35,7 +35,7 @@
 			 </ul>
 		</nav>
     </div>
-        <h1><?php echo $datos['titulo']; $valor=''; ?></h1><hr/>
+        <h1><?php echo $datos['titulo'];?></h1><hr/>
         <section>
             <form method="POST" action="?">
                 <div id="DivLogin">
