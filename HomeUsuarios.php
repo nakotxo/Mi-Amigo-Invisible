@@ -7,7 +7,22 @@
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href='http://<?=URLSERVIDOR?>/main.css' />
-        <script src="main.js"></script>
+        <script>
+        
+            var xhr;
+	        function Peticion(){
+	            xhr = new XMLHttpRequest();
+	            xhr.open("POST",'http://<?=URLSERVIDOR?>/ManualUsuario.php',true);
+	            xhr.addEventListener("readystatechange",gestionarRespuesta,false);
+	            xhr.send();
+	        }
+
+	        function gestionarRespuesta(){
+	        if(xhr.readyState == 4 && xhr.status == 200)
+		        document.getElementById("txt").innerHTML = xhr.responseText;
+	        }
+        
+        </script>
     </head>
 <body>
     <header>
@@ -64,8 +79,16 @@
 	<!-- ---------------------------- -->
         <h1><?php echo $datos['titulo']; ?></h1><hr/>
         <section>
-            <?php
-            ?>
+        <fieldset>
+			
+			<p id="txt"></p>
+		    
+            <form>
+                <script type="text/javascript">
+                    Peticion();
+                </script>
+            </form>
+           
         </section>
         
         <footer>          <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>         Contacto: HidalgoJ.Ignacio@gmail.com<br>         Creado por: Jose Ignacio Hidalgo</p>     </footer>
