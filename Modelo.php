@@ -759,11 +759,11 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 											echo "<option name='ModificarElId' value='".$listaDeseos[$p]['DesId']."'>".$listaDeseos[$p]['DesId']." - ".$listaDeseos[$p]['DesNom']."</option>";
 										} ?>
 									</select>
-									<input type='text' name='idAmod' title='idDesViejo' value=<?=$DatAmod?>>
-									<input type='text' name='idSor' title='miSor' value=<?=$sorId?>>
-									<input type='text' name='miId' title='miId' value=<?=$miId?>>
+									<input type='hidden' name='idAmod' title='idDesViejo' value=<?=$DatAmod?>>
+									<input type='hidden' name='idSor' title='miSor' value=<?=$sorId?>>
+									<input type='hidden' name='miId' title='miId' value=<?=$miId?>>
 									<?php $numeroDeseoAmod=$j+1;?> 
-									<input type='text' name='idDesSorAmod' title='idDeseSorAmod' value=<?=$numeroDeseoAmod?>>
+									<input type='hidden' name='idDesSorAmod' title='idDeseSorAmod' value=<?=$numeroDeseoAmod?>>
 									<input type='image'src='http://localhost/proyecto/multimedia/save1.png'>
 								</form>
 							
@@ -946,7 +946,12 @@ function buscaDeseos($sorId,$usuId){
 }
 
 function updateDeseo(){
-	echo "esto dentro <br>";
+	/**
+	 * TEST
+	 * Comprobación de encontrarnos dentro de la función
+	 */
+	//echo "estoy dentro <br>";
+	/* --------Fin TEST --------------*/
 	$conexion = get_Conexion();
 	/**
 	 *  vamos a realizar la update en padreususor 
@@ -978,7 +983,12 @@ function updateDeseo(){
 	}else{
 		if ($conexion = get_Conexion()){
 			$sql="UPDATE padreususor SET IdDes".$idDes."=$idNueva WHERE IdSor=$idSor And IdUsu=$idUsu";	//update
-			echo $sql;	
+			/**
+			 * TEST
+			 * Comprobacion de la sql para ejecutar
+			 */
+			//echo $sql;	
+			/* --------fin TEST--------*/
 			if ($resultado=$conexion->query($sql)){
 				}else{
 					echo "Error en la Udate del Deseo";

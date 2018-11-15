@@ -343,3 +343,26 @@ table tr td{
     margin-top:5%;
 }
 
+
+
+#homeSection{
+    height: 293px;
+}
+
+#emailA:link {
+    color: orange
+}
+#emailA:visited {
+    color: orange;
+}
+#emailA:active {
+    color: orangered;
+}
+#emailA:hover {
+    color:greenyellow;
+}
+
+#txt{
+    margin-left: 20px;
+    margin-right: 20px;
+}

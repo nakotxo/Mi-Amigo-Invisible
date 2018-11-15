@@ -134,6 +134,7 @@
                 <li><a href='http://<?=URLSERVIDOR?>/index.php/Mis_Sorteos'>Mis Sorteos</a></li>
                 <li><a href='http://<?=URLSERVIDOR?>/index.php/Crear_Sorteo'>Crear Sorteo</a></li>
                 <li><a href='http://<?=URLSERVIDOR?>/index.php/Crear_Deseos'>Crear Deseo</a></li>
+                <li><a href='http://<?=URLSERVIDOR?>/index.php/adminusuarios'>Manual Usuario</a></li>
                 <?php
                     if ($_SESSION['Rol']=='Root'){
                         echo ('<li><a href=http://'.URLSERVIDOR.'/index.php/Listados>Listados</a></li>');
@@ -183,6 +184,10 @@
             </form>
         </section>
         
-        <footer>          <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>         Contacto: HidalgoJ.Ignacio@gmail.com<br>         Creado por: Jose Ignacio Hidalgo</p>     </footer>
+        <footer> 
+            <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>
+            Contacto: <a id="emailA" href="mailto:HidalgoJ.Ignacio@gmail.com">HidalgoJ.Ignacio@gmail.com</a><br>
+            Creado por: Jose Ignacio Hidalgo</p>
+        </footer>
 </body>
 </html>

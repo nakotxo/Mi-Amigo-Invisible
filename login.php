@@ -7,7 +7,6 @@
         <title>Mi Amigo Invisible</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href='http://<?=URLSERVIDOR?>/main.css' />
-        <script src="main.js"></script>
     </head>
 <body>
     <header>
@@ -35,7 +34,7 @@
 		</nav>
     </div>
         <h1><?php echo $datos['titulo'];?></h1><hr/>
-        <section>
+        <section id="homeSection">
             <form method="POST" action="?">
                 <div id="DivLogin">
                     <label>Usuario</label><input id="usuario" type="text" name="usuario" placeholder="Nombre">
@@ -46,6 +45,10 @@
             <h1><?php echo $valor?></h1>
         </section>
         
-        <footer>          <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>         Contacto: HidalgoJ.Ignacio@gmail.com<br>         Creado por: Jose Ignacio Hidalgo</p>     </footer>
+        <footer> 
+            <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>
+            Contacto: <a id="emailA" href="mailto:HidalgoJ.Ignacio@gmail.com">HidalgoJ.Ignacio@gmail.com</a><br>
+            Creado por: Jose Ignacio Hidalgo</p>
+        </footer>
 </body>
 </html>
