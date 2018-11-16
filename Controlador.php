@@ -158,6 +158,9 @@ function Controlador_Sorteo(){
 function Controlador_Mis_Sorteos(){
 	$datos[]=array();
 	$datos['titulo']="Mis Sorteos";
+	if(isset($_POST['avisar'])){
+		enviarInfoRegalador();
+	}
 	require 'Mis_Sorteos.php';
 }
 
