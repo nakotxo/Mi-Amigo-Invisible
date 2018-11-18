@@ -55,7 +55,7 @@
         if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
     ?>
     <!--seccion de navegación lateral-->
-    <div id="capitulos">
+            <div id="capitulos">
                 <form method="POST" action="?">
                   <nav>
                     <ul>
@@ -65,9 +65,9 @@
                         <li><a href='http://<?=URLSERVIDOR?>/index.php/Crear_Deseos'>Crear Deseo</a></li>
                         <li><a href='http://<?=URLSERVIDOR?>/index.php/adminusuarios'>Manual Usuario</a></li>
                         <?php
-                            if ($_SESSION['Rol']=='Root'){
-                                echo ('<li><a href=http://'.URLSERVIDOR.'/index.php/Listados>Listados</a></li>');
-                            }
+                        if ($_SESSION['Rol']=='Root'){
+                            echo ('<li><a href=http://'.URLSERVIDOR.'/index.php/Listados>Listados</a></li>');
+                        }
                         ?>
                     </ul>
                   </nav>	
@@ -83,7 +83,19 @@
                 <div id="DivRegistro">
                     <input id="usuarioId" type="hidden" name="UsuId" value=" <?php echo $UsuarioId ?>">    
                     <label>Usuario</label><input id="usuario" type="text" name="UsuNom" placeholder="Nombre">
-                    <label>Contraseña</label><input id="contrasena" type="password" name="UsuPwd" placeholder="Contraseña">
+                    <?php
+                        //si existe un usuario registrado, no puede conocer la contraseña
+                    if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
+                        $password=crearPassword();
+                        ?>
+                        <input id="contrasena" type="hidden" name="UsuPwd" placeholder="Contraseña" value=<?=$password?>>
+                        <?php
+                    }else{
+                        ?>
+                        <label>Contraseña</label><input id="contrasena" type="password" name="UsuPwd" placeholder="Contraseña">
+                        <?php
+                    }
+                    ?>
 					<input id="rol" type="hidden" name="UsuRol" placeholder="Usuario" value="Usu" >
 					<label>E-mail</label><input id="text" type="text" name="UsuEma" placeholder="Email@mail.com">
                     <div id="log"><input id="login" type="submit" name="login" value="Registrar" ></div>

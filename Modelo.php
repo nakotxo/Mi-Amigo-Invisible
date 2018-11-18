@@ -218,8 +218,9 @@ function enviarInfoRegalador(){
 		$carDeseos[$i]=$datos['DesCar'];
 	}
 
-
-	$mensagge="Muy buenas $nomRegalador.\n
+	$to=$emailRegalador; //Destinatario/s del correo.
+	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
+	$message="Muy buenas $nomRegalador.\n
 				Es un placer informarte, que tu amigo invisible $usuNom,\n
 				ha modificado su lista de regalos para el sorteo $sorNom, el cual te recuerdo tiene un presupuesto de $sorpre €:\n
 				&nbsp&nbsp&nbsp- $nomDeseos[0], $carDeseos[0].\n
@@ -229,9 +230,28 @@ function enviarInfoRegalador(){
 				&nbsp&nbsp&nbsp- $nomDeseos[4], $carDeseos[4].\n\n
 				Espero te ayude a decidir que regalarle.\n\n
 				ANIMO Y BUENA SUERTE!!!!";
-	//echo $mensagge;
-	
+	//echo $message;
+	//mail ($to , $subject , $message);
+	echo ("hacemos envio email<br>");
 
+}
+
+function enviarPassword($datos_usuario){
+	$password=desencriptar($datos_usuario['contrasena']);
+	$to=$datos_usuario['email']; //Destinatario/s del correo.
+	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
+	$message="Hola ".$datos_usuario['usuario'].".<br>
+			Te escribimos desde MI AMIGO INVISIBLE, para comunicarte que has 
+			sido registrado como usuario de esta página. ya puedes acceder a nuestra página, 
+			<a href=http://'.URLSERVIDOR.'/index.php/Home>http://".URLSERVIDOR."/index.php/Home</a>
+			, con:
+			Nombre usuario:".$datos_usuario['usuario']."<br>
+			Contraseña:".$password."<br><br>
+
+			Puede modificar sus datos una vez dentro y se identifique en nuestra página.<br>
+			<a href=http://".URLSERVIDOR."/index.php/Mis_Datos'>http://".URLSERVIDOR."/index.php/Mis_Datos</a>";
+	echo $message;
+	//mail ($to , $subject , $message);
 }
 
 function InsertPadreUsuSor($insertPadreUsuSor){
@@ -422,7 +442,12 @@ function registrar_usuario($datos_usuario, $mensaje){
 		$sql = "INSERT INTO usuarios (UsuId, UsuNom, UsuPwd, UsuRol, UsuEma) 
 				VALUES ('$datos_usuario[id]','$datos_usuario[usuario]','$datos_usuario[contrasena]','Usu','$datos_usuario[email]')";
 		if ($mysqli-> query($sql)){
-			$mensaje= "Inserción en tabla usuarios realizada con éxito<br>";
+
+
+			enviarPassword($datos_usuario);
+
+			$mensaje= "Inserción en tabla usuarios realizada con éxito<br>
+						Se ha enviado un e-mail a ".$datos_usuario['usuario']." con los datos, revise el correo SPAN<br>";
 		}else{
 			$mensaje= "Error insert registro";
 		}
@@ -489,7 +514,9 @@ function ListarUsuarios($datosUsuarios){
 						echo "<tr>";
 						echo "<td>".$datosUsuarios[$i]['UsuId']."</td>";
 						echo "<td>".$datosUsuarios[$i]['UsuNom']."</td>";
-						echo "<td>".$datosUsuarios[$i]['UsuPwd']."</td>";
+						$pwd=$datosUsuarios[$i]['UsuPwd'];
+						$pwd=desencriptar($pwd);
+						echo "<td>".$pwd."</td>";
 						echo "<td>".$datosUsuarios[$i]['UsuRol']."</td>";
 						echo "<td>".$datosUsuarios[$i]['UsuEma']."</td>";
 						echo "</tr>";
@@ -1294,6 +1321,34 @@ Function validarDatos($usuario,$pasword,$email){
 		$valor='false';
 		return $valor;
 	}
+}
+
+function crearPassword(){
+	// del 0 al 10 Números 11-36 minusculas, del 37-62 mayusculas
+	$strPassword="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	// password consta de 7 caracteres, NXxxxxN, empieza por un número sigue una 
+	//mayuscula luego cuatro minusculas y termina en un número
+	
+	// 1º Número
+	$NumRandom= rand ( 0 , 10);
+	$password=substr($strPassword,$NumRandom,1);
+
+	// 2º mayúsculas
+	$NumRandom= rand (37 , 62);
+	$password=$password.substr($strPassword,$NumRandom,1);
+	
+	// 3º cuatro minúsculas
+	for ($i=0;$i<4;$i++){
+		$NumRandom= rand ( 11 , 36);
+		$password=$password.substr($strPassword,$NumRandom,1);
+	}
+
+	// 4º Número
+	$NumRandom= rand ( 0 , 10);
+	$password=$password.substr($strPassword,$NumRandom,1);
+
+	return($password);
 }
 
 
