@@ -13,7 +13,8 @@
 
 
 body,html{
-    background-image: url(multimedia/fondo.jpg);
+    /*background-image: url(multimedia/fondo.jpg);*/
+    background-color:rgb(248, 245, 245);
     background-size: 100%;
 /*    background-color: rgb(248, 247, 248);*/
     margin: 0;
@@ -36,28 +37,31 @@ footer{
     -moz-box-sizing:border-box;
     box-sizing:border-box;
 }
-
+/*------------------------------------------------------------------------------------------------------------------------------------------------------*/
 #DivLogin{
     border: solid 2px;
-    border-color: blue;
+    border-color: rgb(248, 207, 207);
     height:170px;
     width: 350px;
-    background-color: aqua;
+    background-color:#F3EDED;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1.5em;
     margin:0px auto;
     margin-top: 5%;
+    border-radius: 10px;
+    
 }
 #DivRegistro{
     border: solid 2px;
-    border-color: blue;
+    border-color: rgb(248, 207, 207);
     height:230px;
     width: 350px;
-    background-color: aqua;
+    background-color:#F3EDED;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1.5em;
     margin:0px auto;
     margin-top:5%;
+    border-radius: 10px;
 }
 
 #DivLogin label,#DivRegistro label,#divForDes label{
@@ -210,6 +214,8 @@ footer{
     color:white;
 }
 #DivLogeado input{
+    background-color: #2D6CA3;
+    color: white;
     margin-left: 75px;
     margin-top: 70px;
 }
@@ -229,6 +235,7 @@ footer{
     color:white;
 }
 #DivLogOut input{
+    height: 20px;
     margin-top: 30px;
 }
 #logout input{
@@ -250,9 +257,15 @@ footer{
     color:rgb(80, 67, 97);
 }
 
-h1,h2,h3{
+h1,h2{
     text-align: center;
 }
+h3{
+    text-align: center;
+    color:rgb(212, 31, 25);
+}
+
+
     
 #formularioSorteo{
     /*border-style: groove;*/
@@ -286,8 +299,14 @@ h1,h2,h3{
 }
 
 table tr td{
-    border: groove;
-    
+    border:  solid 2px;
+    border-color: rgb(248, 207, 207); 
+}
+
+table{
+    border:  solid 2px;
+    border-radius: 10px;
+    border-color: rgb(248, 207, 207);    
 }
 
 #divMisDatos{
@@ -333,16 +352,29 @@ table tr td{
 
 #divForDes{
     border: solid 2px;
-    border-color: blue;
+    border-color: rgb(248, 207, 207);
     height:170px;
     width: 350px;
-    background-color: aqua;
+    background-color:#F3EDED;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1.5em;
     margin:0px auto;
     margin-top:5%;
+    border-radius: 10px;
 }
 
+
+input [type=button]{
+    background-color: #2D6CA3;
+    color: white;
+}
+input[type=submit]{
+    
+    background-color: #2D6CA3;
+    color: white;
+    height: 30px;
+    border-radius: 7px;
+}
 
 
 #homeSection{

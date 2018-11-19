@@ -1,5 +1,15 @@
 <?php
+/* variables para la ruta en localhost y para el servidor externo */
+	/*---------------------LOCALHOST------------------------*/
 	$URLSERVIDOR='localhost/proyecto';
+
+	/*----------------------SERVIDOR EXTERNO-----------------------*/
+		//$URLSERVIDOR= 'bnkysukq.lucusvirtual.es';
+/*-----------------------------------------------------------------*/
+//Nota: a cambiar
+
+
+
 ?>
 <html>
 <head>

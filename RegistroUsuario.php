@@ -101,7 +101,7 @@
                     <div id="log"><input id="login" type="submit" name="login" value="Registrar" ></div>
                 </div>
             </form>
-            <h1><?php echo $valor?></h1>
+            <h3><?php echo $valor?></h3>
         </section>
         <footer> 
             <p>Para cualquier consulta o error, no dude en contactar con el administrador.<br>

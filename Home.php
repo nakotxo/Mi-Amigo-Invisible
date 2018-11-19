@@ -81,12 +81,12 @@
     <section id="homeSection">
         <h2>Bienvenidos a MI AMIGO INVISIBLE</h2>
         <p>Trata sobre una página donde podrás realizar tusorteo del amigo invisible<br>
-            Solo hace falta registrarte, incluso puedes registrar tu a tus amigos si ellos no pudieran, 
-            solo te hace falta su correo electrónico<br><br>
+            Solo hace falta registrarte, incluso puedes registrar a tus amigos si ellos no pudieran.<br>
+            Solo te hace falta su correo electrónico, y recibiran su contraseña, sin que tu la conozcas. Realiza el sorteo y ...<br><br>
             El resto dejalo en nuestras manos:<br>
             Te haremos llegar todos los datos del sorteo.<br>
-            Quien te ha tocado<br>
-            El presupuesto para el regalo<br>
+            Quien te ha tocado,<br>
+            El presupuesto para el regalo,<br>
             Y cuales son los regalos preferidos para tu amigo invisible.
         </p>
     </section>

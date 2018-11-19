@@ -53,8 +53,8 @@ function get_Conexion(){
 
 	/*--------------------servidor externo------------------*/
 		//define('URLSERVIDOR', 'bnkysukq.lucusvirtual.es');
-
 /*-----------------------------------------------------------------*/
+//Nota: a cambiar
 
 
 
@@ -220,32 +220,5 @@ function Controlador_Crear_Deseos(){
 
 	require 'Registro_Deseos.php';
 }
-
-
-function postLogin(){
-	$usuario = $_POST['usuario'];
-	$contrasenaCifrada = md5($_POST['contrasena']);
-	$contrasena=($_POST['contrasena']);
-	$Pwd=$_POST['contrasena'];
-	$clave=encriptar($Pwd);
-	if (existe_usuario($usuario)){
-		if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$clave)){
-			setcookie('login','true',time()+ 3600*24);
-			$_SESSION['Usuario']=$usuario;
-			$_SESSION['Rol']=get_rol($usuario);
-		}else{
-			$valor="Contraseña No RECONOCIDA intentelo otra vez";
-			return $valor;
-		}
-	}else{
-		$valor= "Error en usuario y contraseña";
-		return $valor;
-	}
-
-}
-
-
-
-
 
 ?>

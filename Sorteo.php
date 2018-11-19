@@ -208,7 +208,7 @@
                     <?php
                     formularioLogin();
                     ?>
-                    <h1><?php echo $valor?></h1>
+                    <h3><?php echo $valor?></h3>
                 </section>
                 <?php
             }

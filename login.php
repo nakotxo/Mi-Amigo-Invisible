@@ -42,7 +42,7 @@
                     <div id="log"><input id="login" type="submit" name="Login" value="Login" ></div>
                 </div>
             </form>
-            <h1><?php echo $valor?></h1>
+            <h3><?php echo $valor?></h3>
         </section>
         
         <footer> 

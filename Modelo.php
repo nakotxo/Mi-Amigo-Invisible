@@ -1,6 +1,5 @@
 <?php
-//no funciona el logout linea 18
-$x;
+
 /** ISSET
  * Controladores de envio de datos por URL
  */
@@ -58,13 +57,17 @@ function superSorteo(){
 			$stringParticipantes=$stringParticipantes.",".$_POST[$input.$i];
 		}
 	}
-
+	if ($_POST['SorPre']==''){
+		$sorPresupuesto=75;
+	}else{
+		$sorPresupuesto=$_POST['SorPre'];
+	}
 	$sorteoInsert=array(
 		'SorId'=>$_POST['SorId'],
 		'SorNom'=>$_POST['SorNom'],
 		'SorFec'=>$_POST['SorFec'],
 		'SorPar'=>$stringParticipantes,
-		'SorPre'=>$_POST['SorPre']
+		'SorPre'=>$sorPresupuesto
 	);
 	
 	$arraySorteo=[];	//inicializacion de array
@@ -153,14 +156,13 @@ function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
 
 	$to=$usuEmail; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo
-				en el que participas y estos son los datos:\n
-				El Sorteo: ".$sorNom."\n
-				para el proximo día: ".$sorFec."\n
-				con presupuesto de: ".$sorPre."\n\n
-				-----TU AMIGO INVISIBLE-----\n
-				---------".$amiNom."---------\n
-				----------------------------";
+	$message="Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo en el que participas y estos son los datos:\n\n
+	El Sorteo: ".$sorNom."\n
+	para el proximo día: ".$sorFec."\n
+	con presupuesto de: ".$sorPre."€\n\n
+	-----TU AMIGO INVISIBLE-----\n
+	---------".$amiNom."---------\n
+	----------------------------";
 
 	/**
 	 * TEST Relleno de datos de prueba
@@ -172,6 +174,7 @@ function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
 
 	//mail ($to , $subject , $message);
 	echo ("hacemos envio email<br>");
+	//Nota: a cambiar
 /* 
 to
 Destinatario/s del correo.
@@ -220,38 +223,40 @@ function enviarInfoRegalador(){
 
 	$to=$emailRegalador; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Muy buenas $nomRegalador.\n
-				Es un placer informarte, que tu amigo invisible $usuNom,\n
-				ha modificado su lista de regalos para el sorteo $sorNom, el cual te recuerdo tiene un presupuesto de $sorpre €:\n
-				&nbsp&nbsp&nbsp- $nomDeseos[0], $carDeseos[0].\n
-				&nbsp&nbsp&nbsp- $nomDeseos[1], $carDeseos[1].\n
-				&nbsp&nbsp&nbsp- $nomDeseos[2], $carDeseos[2].\n
-				&nbsp&nbsp&nbsp- $nomDeseos[3], $carDeseos[3].\n
-				&nbsp&nbsp&nbsp- $nomDeseos[4], $carDeseos[4].\n\n
-				Espero te ayude a decidir que regalarle.\n\n
-				ANIMO Y BUENA SUERTE!!!!";
-	//echo $message;
+	$message="Muy buenas ".$nomRegalador."\n
+	Es un placer informarte, que tu amigo invisible ".$usuNom.",\n
+	ha modificado su lista de regalos para el sorteo ".$sorNom.", el cual te recuerdo tiene un presupuesto de ".$sorpre."€:\n\n
+	- ".$nomDeseos[0].", ".$carDeseos[0]."\n
+	- ".$nomDeseos[1].", ".$carDeseos[1]."\n
+	- ".$nomDeseos[2].", ".$carDeseos[2]."\n
+	- ".$nomDeseos[3].", ".$carDeseos[3]."\n
+	- ".$nomDeseos[4].", ".$carDeseos[4]."\n\n
+	Espero te ayude a decidir que regalarle.\n\n
+	ANIMO Y BUENA SUERTE!!!!";
 	//mail ($to , $subject , $message);
 	echo ("hacemos envio email<br>");
+	echo $message;
+	echo "<br>".$to."<br>".$subject;
+	//Nota: a cambiar
 
 }
+
 
 function enviarPassword($datos_usuario){
 	$password=desencriptar($datos_usuario['contrasena']);
 	$to=$datos_usuario['email']; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Hola ".$datos_usuario['usuario'].".<br>
-			Te escribimos desde MI AMIGO INVISIBLE, para comunicarte que has 
-			sido registrado como usuario de esta página. ya puedes acceder a nuestra página, 
-			<a href=http://'.URLSERVIDOR.'/index.php/Home>http://".URLSERVIDOR."/index.php/Home</a>
-			, con:
-			Nombre usuario:".$datos_usuario['usuario']."<br>
-			Contraseña:".$password."<br><br>
+	$message="Hola ".$datos_usuario['usuario'].".\n
+	Te escribimos desde MI AMIGO INVISIBLE, para comunicarte que has sido registrado como usuario de esta página. ya puedes acceder a nuestra página:\n
+	http://".URLSERVIDOR."/index.php/Home, con:\n\n
+	Nombre usuario:".$datos_usuario['usuario']."\n
+	Contraseña:".$password."\n\n
 
-			Puede modificar sus datos una vez dentro y se identifique en nuestra página.<br>
-			<a href=http://".URLSERVIDOR."/index.php/Mis_Datos'>http://".URLSERVIDOR."/index.php/Mis_Datos</a>";
+	Puede modificar sus datos una vez dentro y se identifique en nuestra página.\n
+	http://".URLSERVIDOR."/index.php/Mis_Datos";
 	echo $message;
 	//mail ($to , $subject , $message);
+	//Nota: a cambiar
 }
 
 function InsertPadreUsuSor($insertPadreUsuSor){
@@ -271,7 +276,7 @@ function sorteoInsert($sorteoInsert){
 		.$sorteoInsert['SorId'].","
 		."'".$sorteoInsert['SorNom']."',"
 		."'".$sorteoInsert['SorFec']."',"
-		."'".$sorteoInsert['SorPre']."')";
+		.$sorteoInsert['SorPre'].")";
 	
 	$conexion=get_Conexion();
 	if ($mysqli=get_Conexion()){
@@ -565,7 +570,7 @@ function ListarUsuariosEnSelect($datosUsuarios){
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
-		<table border-style='solid 1px' align='center'>
+		<table>
 			<tr>
 				<td COLSPAN='3'>Listado de deseos</td>
 			</tr>
@@ -591,7 +596,7 @@ function ListarDeseos($datosDeseos){
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
 	?>	
-		<table border-style='solid 1px' align='center'>
+		<table>
 			<tr>
 				<td COLSPAN='4'>Listado de Sorteos</td>
 			</tr>
@@ -1351,7 +1356,6 @@ function crearPassword(){
 	return($password);
 }
 
-
 function formularioLogin(){
 	?>
 	<form method="POST" action="?">
@@ -1364,11 +1368,27 @@ function formularioLogin(){
 	<?php
 }
 
+function postLogin(){
+	$usuario = $_POST['usuario'];
+	$contrasenaCifrada = md5($_POST['contrasena']);
+	$contrasena=($_POST['contrasena']);
+	$Pwd=$_POST['contrasena'];
+	$clave=encriptar($Pwd);
+	if (existe_usuario($usuario)){
+		if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$clave)){
+			setcookie('login','true',time()+ 3600*24);
+			$_SESSION['Usuario']=$usuario;
+			$_SESSION['Rol']=get_rol($usuario);
+		}else{
+			$valor="Contraseña No RECONOCIDA intentelo otra vez";
+			return $valor;
+		}
+	}else{
+		$valor= "Error en usuario y contraseña";
+		return $valor;
+	}
 
-
-
-
-
+}
 
 
 
@@ -1411,18 +1431,5 @@ function desencriptar($clave){
 	return $output;
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>
