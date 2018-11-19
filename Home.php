@@ -1,4 +1,4 @@
-<!--Home.php-->
+<!--Home.php--> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -63,7 +63,7 @@
                         <li><a href='http://<?=URLSERVIDOR?>/index.php/Mis_Sorteos'>Mis Sorteos</a></li>
                         <li><a href='http://<?=URLSERVIDOR?>/index.php/Crear_Sorteo'>Crear Sorteo</a></li>
                         <li><a href='http://<?=URLSERVIDOR?>/index.php/Crear_Deseos'>Crear Deseo</a></li>
-                        <li><a href='http://<?=URLSERVIDOR?>/index.php/adminusuarios'>Manual Usuario</a></li>
+                        <li><a href='http://<?=URLSERVIDOR?>/index.php/Manual_Usuario'>Manual Usuario</a></li>
                         <?php
                             if ($_SESSION['Rol']=='Root'){
                                 echo ('<li><a href=http://'.URLSERVIDOR.'/index.php/Listados>Listados</a></li>');

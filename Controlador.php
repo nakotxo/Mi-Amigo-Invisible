@@ -86,7 +86,7 @@ function controlador_login(){
 				$_SESSION['Usuario']=$usuario;
 				$_SESSION['Rol']=get_rol($usuario);
 				//echo $_SESSION['Usuario'];
-				$direccion= "<script>window.location.href='http://".URLSERVIDOR."/index.php/adminusuarios'</script>";
+				$direccion= "<script>window.location.href='http://".URLSERVIDOR."/index.php/Manual_Usuario'</script>";
 				echo $direccion;
 				
 			}else{
@@ -140,6 +140,11 @@ function controlador_admin_usuarios(){
 	$datos[]=array();
 	$datos['titulo']="Home Usuario";
 	$valor="";
+
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+
 	require 'HomeUsuarios.php';
 }
 
@@ -152,35 +157,95 @@ function Controlador_Sorteo(){
 	if (isset($_GET['e-mail'])){
 		EnvioEmail();
 	}
+
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+
 	require 'Sorteo.php';
 }
 
 function Controlador_Mis_Sorteos(){
+	$valor='';
 	$datos[]=array();
 	$datos['titulo']="Mis Sorteos";
 	if(isset($_POST['avisar'])){
 		enviarInfoRegalador();
 	}
+
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+
 	require 'Mis_Sorteos.php';
 }
 
 function Controlador_Listados(){
 	$datos[]=array();
 	$datos['titulo']="Listados";
+	$valor='';
+
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+
 	require 'Listados.php';
 }
 
 function Controlador_Mis_Datos(){
+	$valor='';
 	$datos[]=array();
 	$datos['titulo']="Mis Datos";
+
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+	
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+
 	require 'Mis_Datos.php';
+
 }
 
 function Controlador_Crear_Deseos(){
 	$datos[]=array();
 	$datos['titulo']="Crear Deseos";
+	$valor='';
+	
+	if(isset($_POST['Login'])){
+		$valor=postLogin();
+	}
+
 	require 'Registro_Deseos.php';
 }
+
+
+function postLogin(){
+	$usuario = $_POST['usuario'];
+	$contrasenaCifrada = md5($_POST['contrasena']);
+	$contrasena=($_POST['contrasena']);
+	$Pwd=$_POST['contrasena'];
+	$clave=encriptar($Pwd);
+	if (existe_usuario($usuario)){
+		if (comprueba_usuario($usuario, $contrasena, $contrasenaCifrada,$clave)){
+			setcookie('login','true',time()+ 3600*24);
+			$_SESSION['Usuario']=$usuario;
+			$_SESSION['Rol']=get_rol($usuario);
+		}else{
+			$valor="Contraseña No RECONOCIDA intentelo otra vez";
+			return $valor;
+		}
+	}else{
+		$valor= "Error en usuario y contraseña";
+		return $valor;
+	}
+
+}
+
+
+
 
 
 ?>

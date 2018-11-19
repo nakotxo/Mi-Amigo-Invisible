@@ -1352,6 +1352,18 @@ function crearPassword(){
 }
 
 
+function formularioLogin(){
+	?>
+	<form method="POST" action="?">
+        <div id="DivLogin">
+            <label>Usuario</label><input id="usuario" type="text" name="usuario" placeholder="Nombre">
+            <label>Contraseña</label><input id="contrasena" type="password" name="contrasena" placeholder="Contraseña">
+            <div id="log"><input id="login" type="submit" name="Login" value="Login" ></div>
+        </div>
+	</form>
+	<?php
+}
+
 
 
 

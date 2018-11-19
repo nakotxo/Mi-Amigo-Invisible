@@ -26,7 +26,7 @@ session_start();
 		controlador_index();
 	}elseif ($URL == 'Registro'){
 		controlador_registro(); 
-	}elseif ($URL == 'adminusuarios'){
+	}elseif ($URL == 'Manual_Usuario'){
 		controlador_admin_usuarios(); 
 	}elseif ($URL == 'Mis_Datos'){
 		controlador_Mis_Datos(); 
