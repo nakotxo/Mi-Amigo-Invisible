@@ -233,14 +233,13 @@ function enviarInfoRegalador(){
 	- ".$nomDeseos[4].", ".$carDeseos[4]."\n\n
 	Espero te ayude a decidir que regalarle.\n\n
 	ANIMO Y BUENA SUERTE!!!!";
-	//mail ($to , $subject , $message);
-	echo ("hacemos envio email<br>");
 	echo $message;
 	echo "<br>".$to."<br>".$subject;
+	//mail ($to , $subject , $message);
+	echo ("hacemos envio email<br>");
 	//Nota: a cambiar
 
 }
-
 
 function enviarPassword($datos_usuario){
 	$password=desencriptar($datos_usuario['contrasena']);
@@ -570,7 +569,7 @@ function ListarUsuariosEnSelect($datosUsuarios){
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
-		<table>
+		<table align='center'>
 			<tr>
 				<td COLSPAN='3'>Listado de deseos</td>
 			</tr>
@@ -596,7 +595,7 @@ function ListarDeseos($datosDeseos){
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
 	?>	
-		<table>
+		<table align='center'>
 			<tr>
 				<td COLSPAN='4'>Listado de Sorteos</td>
 			</tr>
@@ -839,7 +838,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 									<input type='hidden' name='miId' title='miId' value=<?=$miId?>>
 									<?php $numeroDeseoAmod=$j+1;?> 
 									<input type='hidden' name='idDesSorAmod' title='idDeseSorAmod' value=<?=$numeroDeseoAmod?>>
-									<input type='image'src='http://localhost/proyecto/multimedia/save1.png'>
+									<input type='image'src='http://<?=URLSERVIDOR?>/multimedia/save1.png'>
 								</form>
 							
 								<?php
@@ -848,7 +847,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 								<form method='GET' action='?'>
 									<?php $valor=utf8_encode($misDesNom[$j]); ?>
 									<label><?php echo $valor ?></label>
-									<a href='Mis_Sorteos?DesPos<?=$j.$i?>="<?=utf8_encode($misDesNom[$j])?>"&Des<?=$j?>="<?=utf8_encode($misDesNom[$j])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a>
+									<a href='Mis_Sorteos?DesPos<?=$j.$i?>="<?=utf8_encode($misDesNom[$j])?>"&Des<?=$j?>="<?=utf8_encode($misDesNom[$j])?>"'><img src='http://<?=URLSERVIDOR?>/multimedia/editar2.png'/></a>
 								</form>
 								
 								<?php	
@@ -870,7 +869,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 								echo '<input type="hidden" name="des'.$pi.'" value="'.$misDeseos[$pi].'">';
 							}
 							?>
-							<input type='submit' name='avisar' value='Enviar mis deseos a mi amigo'>
+							<input type='submit' name='avisar' value='Informar Deseos'>
 						</form>
 						<!-----------------------------------fin------------------------------------>
 				</td>
@@ -1131,14 +1130,14 @@ function Mis_datos(){
 					<form method='POST' action='?'>
 						<td class='tdMisDatos'><input class='inpDato'type='text' name='Nombre'value='<?=$MisDatos['UsuNom']?>'></td>
 						<input type='hidden' name='caso'value='Nombre'>
-						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
+						<td><input type='image'src='http://<?=URLSERVIDOR?>/multimedia/save1.png'></td>
 					</form>
 				<?php
 				}else{
 				?>
 					<td class='tdDescrip'>Nombre:</td>
 					<td class='tdMisDatos'><?=$MisDatos['UsuNom']?></td>
-					<td><a href='Mis_Datos?Nombre="<?=utf8_encode($MisDatos['UsuNom'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
+					<td><a href='Mis_Datos?Nombre="<?=utf8_encode($MisDatos['UsuNom'])?>"'><img src='http://<?=URLSERVIDOR?>/multimedia/editar2.png'/></a></td>
 				<?php
 				}
 				?>
@@ -1156,14 +1155,14 @@ function Mis_datos(){
 					<form method='POST' action='?'>
 						<td class='tdMisDatos'><input class='inpDato'type='text' name='Pwd'value='<?=$desClave?>'></td>
 						<input type='hidden' name='caso'value='Pwd'>
-						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
+						<td><input type='image'src='http://<?=URLSERVIDOR?>/multimedia/save1.png'></td>
 					</form>
 				<?php 
 				}else{
 				?>
 					<td class='tdDescrip'>Contraseña:</td>
 					<td class='tdMisDatos'><?=$desClave?></td>
-					<td><a href='Mis_Datos?Pwd="<?=utf8_encode($MisDatos['UsuPwd'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
+					<td><a href='Mis_Datos?Pwd="<?=utf8_encode($MisDatos['UsuPwd'])?>"'><img src='http://<?=URLSERVIDOR?>/multimedia/editar2.png'/></a></td>
 				<?php
 				}
 				?>
@@ -1180,14 +1179,14 @@ function Mis_datos(){
 					<form method='POST' action='?'>
 						<td class='tdMisDatos'><input class='inpDato'type='text' name='Email'value='<?=$MisDatos['UsuEma']?>'></td>
 						<input type='hidden' name='caso'value='Email'>
-						<td><input type='image'src='http://localhost/proyecto/multimedia/save1.png'></td>
+						<td><input type='image'src='http://<?=URLSERVIDOR?>/multimedia/save1.png'></td>
 					</form>
 				<?php 
 				}else{
 				?>
 					<td class='tdDescrip'>E-mail:</td>
 					<td class='tdMisDatos'><?=$MisDatos['UsuEma']?></td>
-					<td><a href='Mis_Datos?Email="<?=utf8_encode($MisDatos['UsuEma'])?>"'><img src='http://localhost/proyecto/multimedia/editar2.png'/></a></td>
+					<td><a href='Mis_Datos?Email="<?=utf8_encode($MisDatos['UsuEma'])?>"'><img src='http://<?=URLSERVIDOR?>/multimedia/editar2.png'/></a></td>
 				<?php
 				}
 

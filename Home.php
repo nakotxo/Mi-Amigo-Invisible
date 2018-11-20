@@ -4,37 +4,48 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mi Amigo Invisible</title>
 		<link rel="stylesheet" type="text/css" media="screen" href='http://<?=URLSERVIDOR?>/main.css' />
     </head>
 <body>
     <header>
-        <div id="DivHeader">
-            <div id="Logo"></div>
-            <div id="TituloPagina">Mi Amigo Invisible</div>
+        <div id="DivHeader" class="mycontainer">
+            <div id="Logo">
+                <img src='http://<?=URLSERVIDOR?>/multimedia/logo.jpg' class="headerImg">
+            </div>
+            <div id="TituloPagina">
+                Mi Amigo Invisible
+            </div>
             <?php 
             if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
                 ?>
                 <div id="DivLogOut">
-                    <label>Bienvenido Usuario<br/></label>
-                    <label> <?php echo $_SESSION['Usuario'] ?> </label>
-                    <form method="POST" action="?">
-                        <input type="submit" name="logout" value="LogOut" >
-                    </form>
+                    <div class='formLogin'>
+                        <img src='http://<?=URLSERVIDOR?>/multimedia/mrx.jpg' id='imgLogin' class="headerImg">
+                        <label>Bienvenido Usuario<br/></label>
+                        <label> <?php echo $_SESSION['Usuario'] ?> </label>
+                        <form method="POST" action="?">
+                            <input type="submit" name="logout" value="LogOut" >
+                        </form>
+                    </div>
                 </div>
                 <?php    
             }else{
                 ?>
                 <div id="DivLogeado">
-                    <input type="button" value="LogIn" onclick="location.href='http://<?=URLSERVIDOR?>/index.php/login'">
+                    <div class='formLogin'>
+                        <img src='http://<?=URLSERVIDOR?>/multimedia/mrx.jpg' id='imgLogin' class="headerImg">
+                        <div id='inpLogin'>
+                            <input id='inpLogin2' type="button" value="LogIn" onclick="location.href='http://<?=URLSERVIDOR?>/index.php/login'">
+                        </div>
+                    </div>
                 </div>
                 <?php
             }
             ?>
 
         </div>
-    </header>
 
     <div id="DivNavSup">
         <nav id="menu_cabecera">
@@ -51,11 +62,12 @@
 			 </ul>
 		</nav>
     </div>
+    </header>
     <?php 
         if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
-    ?>
+    ?>  
             <!--seccion de navegación lateral-->
-            <div id="capitulos">
+            <div id="capitulos" class="mycontainer">
                 <form method="POST" action="?">
                   <nav>
                     <ul>

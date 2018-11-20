@@ -10,6 +10,15 @@
     width: device-width;
 }
 
+@media screen and (max-width: 600px) {
+    #TituloPagina{
+        width: 70%;
+        height: 100px;
+        text-align: center;
+        font-size: 2em;
+    
+    }
+  }
 
 
 body,html{
@@ -105,8 +114,8 @@ footer{
  padding:0;
 }
 #menu_cabecera ul li {
- background-color:#157efb; /*deepppink;*/;
- padding-left:10p
+ background-color:#157efb; /*deepppink;*/
+ padding-left:10px;
 }
 #menu_cabecera ul a, #capitulos ul a {
  display:block;
@@ -212,7 +221,7 @@ footer{
 
 #DivLogeado label{
     color:white;
-}
+} 
 #DivLogeado input{
     background-color: #2D6CA3;
     color: white;
@@ -224,7 +233,7 @@ footer{
     border-color: blue;
     height:100px;
     width: 15%;
-    background-image: url(multimedia/mrx.jpg);
+    /*background-image: url(multimedia/mrx.jpg);*/
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1em; 
     text-align: center;
@@ -247,7 +256,7 @@ footer{
 #Logo{
     width: 15%;
     height: 100px;
-    background-image: url(multimedia/logo.jpg);
+    /*background-image: url(multimedia/logo.jpg);*/
 }
 #TituloPagina{
     width: 70%;
@@ -398,3 +407,64 @@ input[type=submit]{
     margin-left: 20px;
     margin-right: 20px;
 }
+
+@media screen and (max-width: 400px) {
+    #Logo{
+        width: 25%;
+        height: 50px;
+    }
+    #TituloPagina{
+        width:  50%;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    #DivLogOut{
+        width: 25%;
+        height: 50px;
+    }
+    #DivLogeado{
+        width: 25%;
+        height: 50px;
+    }
+
+    .headerImg{
+        width: 100%;
+        height: 50px;
+    }
+
+    #menu_cabecera{
+        padding-left:0px;
+    }
+
+    #menu_cabecera ul a, #capitulos ul a {
+        font-weight:100;
+        font-size:10px;
+        font-family:"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        letter-spacing:1px;
+    }
+    
+    .formLogin{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        height: 50px;
+    }
+     #inpLogin2{
+        position: absolute;
+        top: 30px;
+        right: 25px;
+        height: 20px;
+        margin-top: 0px;
+    }
+    header{
+        height: 70px;
+    }
+    #DivNavSup{
+        top:50px;
+        height: 20px;
+    }
+    
+
+
+  }

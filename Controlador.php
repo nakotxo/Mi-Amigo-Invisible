@@ -72,7 +72,7 @@ function controlador_index(){
 function controlador_login(){
 	$valor='';
 	$datos[]=array();
-	$datos['titulo']="Página de Logeo";
+	$datos['titulo']="Página de Identificación";
 	//$valor="";
 	if(isset($_POST['Login'])){
 		$usuario = $_POST['usuario'];
@@ -138,7 +138,7 @@ function controlador_Registro(){
 
 function controlador_admin_usuarios(){
 	$datos[]=array();
-	$datos['titulo']="Home Usuario";
+	$datos['titulo']="Manual de Usuario";
 	$valor="";
 
 	if(isset($_POST['Login'])){
