@@ -23,10 +23,9 @@
                 <div id="DivLogOut">
                     <div class='formLogin'>
                         <img src='http://<?=URLSERVIDOR?>/multimedia/mrx.jpg' id='imgLogin' class="headerImg">
-                        <label>Bienvenido Usuario<br/></label>
-                        <label> <?php echo $_SESSION['Usuario'] ?> </label>
+                        <label id='lblLogin'>Bienvenido Usuario<br/><?php echo $_SESSION['Usuario'] ?></label>
                         <form method="POST" action="?">
-                            <input type="submit" name="logout" value="LogOut" >
+                            <input id='inpLogin2' type="submit" name="logout" value="LogOut" >
                         </form>
                     </div>
                 </div>
@@ -44,24 +43,23 @@
                 <?php
             }
             ?>
-
         </div>
 
-    <div id="DivNavSup">
-        <nav id="menu_cabecera">
-			<ul>
-            <li><a href='http://<?=URLSERVIDOR?>/index.php/Registro'>NUEVO USUARIO</a></li>
-				<li><a href="#">QUIENES SOMOS</a>
-					<ul>
-						<li><a href="#">EMPRESA</a></li>
-						<li><a href="#">EVENTOS</a></li>
-						<li><a href="#">NOVEDADES</a></li>
-					</ul>
-				</li>
-			    <li><a href="https://es-es.facebook.com/">FACEBOOK</a></li>
-			 </ul>
-		</nav>
-    </div>
+        <div id="DivNavSup">
+            <nav id="menu_cabecera">
+	    		<ul>
+                <li  id='primerLi'><a href='http://<?=URLSERVIDOR?>/index.php/Registro'>NUEVO USUARIO</a></li>
+	    			<li><a href="#">QUIENES SOMOS</a>
+	    				<ul>
+	    					<li><a href="#">EMPRESA</a></li>
+	    					<li><a href="#">EVENTOS</a></li>
+	    					<li><a href="#">NOVEDADES</a></li>
+	    				</ul>
+	    			</li>
+	    		    <li><a href="https://es-es.facebook.com/">FACEBOOK</a></li>
+	    		 </ul>
+	    	</nav>
+        </div>
     </header>
     <?php 
         if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){

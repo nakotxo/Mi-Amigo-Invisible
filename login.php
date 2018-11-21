@@ -1,4 +1,4 @@
-
+<!--login.php--> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,9 +11,15 @@
 <body>
     <header>
         <div id="DivHeader">
-            <div id="Logo"></div>
-            <div id="TituloPagina">Mi Amigo Invisible</div>
-            <div id="DivLogeado"></div>
+            <div id="Logo">
+                <img src='http://<?=URLSERVIDOR?>/multimedia/logo.jpg' class="headerImg">
+            </div>
+            <div id="TituloPagina">
+                Mi Amigo Invisible
+            </div>
+            <div id="DivLogeado">
+                <img src='http://<?=URLSERVIDOR?>/multimedia/mrx.jpg' id='imgLogin' class="headerImg">
+            </div>
         </div>
     </header>
 
