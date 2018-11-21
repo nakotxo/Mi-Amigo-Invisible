@@ -43,6 +43,7 @@
         <section id="homeSection">
             <form method="POST" action="?">
                 <div id="DivLogin">
+                    <!--<img src='http:// <?php //URLSERVIDOR  ?>/multimedia/login.png'>-->
                     <label>Usuario</label><input id="usuario" type="text" name="usuario" placeholder="Nombre">
                     <label>Contraseña</label><input id="contrasena" type="password" name="contrasena" placeholder="Contraseña">
                     <div id="log"><input id="login" type="submit" name="Login" value="Login" ></div>
