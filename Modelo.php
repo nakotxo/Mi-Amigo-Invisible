@@ -173,7 +173,10 @@ function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
 	/*----------------------fin del test-----------------------------*/
 
 	//mail ($to , $subject , $message);
-	echo ("hacemos envio email<br>");
+	echo ("Hacemos envio email<br>");
+	echo ("Para: ".$to."<br>");
+	echo ("Asunto: ".$subject."<br>");
+	echo ("Mensage: ".$message."<br>");
 	//Nota: a cambiar
 /* 
 to
@@ -233,10 +236,12 @@ function enviarInfoRegalador(){
 	- ".$nomDeseos[4].", ".$carDeseos[4]."\n\n
 	Espero te ayude a decidir que regalarle.\n\n
 	ANIMO Y BUENA SUERTE!!!!";
-	echo $message;
-	echo "<br>".$to."<br>".$subject;
+
 	//mail ($to , $subject , $message);
-	echo ("hacemos envio email<br>");
+	echo ("Hacemos envio email<br>");
+	echo ("Para: ".$to."<br>");
+	echo ("Asunto: ".$subject."<br>");
+	echo ("Mensage: ".$message."<br>");
 	//Nota: a cambiar
 
 }
@@ -253,8 +258,12 @@ function enviarPassword($datos_usuario){
 
 	Puede modificar sus datos una vez dentro y se identifique en nuestra página.\n
 	http://".URLSERVIDOR."/index.php/Mis_Datos";
-	echo $message;
+	
 	//mail ($to , $subject , $message);
+	echo ("Hacemos envio email<br>");
+	echo ("Para: ".$to."<br>");
+	echo ("Asunto: ".$subject."<br>");
+	echo ("Mensage: ".$message."<br>");
 	//Nota: a cambiar
 }
 

@@ -1,12 +1,10 @@
 <?php
 	/**
-	* Subtarea 1: Creación del controlador frontal
 	*
 	*	index.php será la página que hará las veces de controlador.
 	*
 	*    Inclulle al principio del documento modelo.php
 	*    Inclulle al principio del documento controlador.php.
-	* 	 Fijándonos en el controlador frontal de la unidad 5 desarrolla las condiciones necesarias para enrutar:
 	* 	/index.php para controlador_index()
 	*
 	* @file index.php
@@ -24,6 +22,10 @@ session_start();
 
 	if ($URL == 'Home'){
 		controlador_index();
+	}elseif ($URL == ''){
+	    controlador_index(); 
+	}elseif ($URL == 'index.php'){
+	    controlador_index();
 	}elseif ($URL == 'Registro'){
 		controlador_registro(); 
 	}elseif ($URL == 'Manual_Usuario'){
