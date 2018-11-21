@@ -501,9 +501,9 @@ function Listado(){
 function ListarUsuarios($datosUsuarios){
 	echo "<h1>".$datosUsuarios['titulo']."</h1>";
 	?>	
-		<table align ='center'>
+		<table id='tablaUsuarios' align ='center' class='tablaListados'>
 			<tr>
-				<td COLSPAN='5'>Usuarios Baneados</td>
+				<td COLSPAN='5'>Usuarios</td>
 			</tr>
 			<tr>
 				<td>ID</td>
@@ -569,7 +569,7 @@ function ListarUsuariosEnSelect($datosUsuarios){
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";
 	?>	
-		<table align='center'>
+		<table id='tablaDeseos' align='center' class='tablaListados'>
 			<tr>
 				<td COLSPAN='3'>Listado de deseos</td>
 			</tr>
@@ -595,7 +595,7 @@ function ListarDeseos($datosDeseos){
 function ListarSorteos($datosSorteos){
 	echo "<h1>".$datosSorteos['titulo']."</h1>";
 	?>	
-		<table align='center'>
+		<table id='tablaSorteos' align='center' class='tablaListados'>
 			<tr>
 				<td COLSPAN='4'>Listado de Sorteos</td>
 			</tr>
@@ -714,7 +714,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 		$NumSor=count($MisSorteos); //numero de sorteos
 
 		?>
-		<table align='center'>
+		<table align='center' id='TablaMisSorteos'>
 			<tr>
 				<td>SORTEO</td>
 				<td>FECHA SORTEO</td>

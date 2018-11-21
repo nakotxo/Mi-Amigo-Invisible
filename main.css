@@ -240,7 +240,7 @@ footer{
 }
 
 #DivLogOut label{
-    color:white;
+    color: lavender;
 }
 #DivLogOut input{
     height: 20px;
@@ -409,7 +409,43 @@ input[type=submit]{
 }
 
 
-@media screen and (max-width: 670px) {
+
+
+
+
+    .formLogin{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        height: 100px;
+    }
+    #DivLogeado input{
+        margin-top: 0px;
+        height: 20px;
+    }
+    #DivLogOut input{
+        margin-top: 0px;
+        height: 20px;
+    }
+    #inpLogin2{
+        position: absolute;
+        top: 80px;
+        right: 73px;
+        height: 20px;
+        margin-top: 0px;
+    }
+    #lblLogin{
+        position: absolute;
+        top: 30px;
+        right: 25px;
+    }
+
+
+
+
+
+
+@media screen and (max-width: 670px) and (min-width: 400px) {
     #Logo{
         width: 31%;
         height: 100px;
@@ -441,7 +477,7 @@ input[type=submit]{
         position: relative;
         display: inline-block;
         text-align: center;
-        height: 50px;
+        height: 100px;
     }
     #DivLogeado input{
         margin-top: 0px;
@@ -458,9 +494,6 @@ input[type=submit]{
         height: 20px;
         margin-top: 0px;
     }
-    .formLogin{
-        height: 100px;
-    }
     #menu_cabecera {
         padding-left: 75px;
     }
@@ -471,7 +504,7 @@ input[type=submit]{
 
 
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 400px)and (min-width:320px) {
     #Logo{
         width: 25%;
         height: 50px;
@@ -562,5 +595,129 @@ input[type=submit]{
         height: 35px;
         margin-left:0px;
     }
+    /* estilo para tabla mis sorteos*/
+    #TablaMisSorteos tr td {
+        font-size:6px;
+    }
+    input[type=submit] {
+        background-color: #2D6CA3;
+        color: white;
+        height: 10px;
+        border-radius: 2px;
+        font-size: 7px;
+    }
+    input[type="image"] {
+        height: 20px;
+    }
+    table tr td img{
+        height: 20px;
+    }
+    /* fin estilo tabla mis sorteos*/
+
+    /* estilo para resto de tablas*/
+    #tablaMisDatos{
+        font-size:0.6em;
+    }
+    .tablaListados{
+        font-size:1em;
+    }
+    #tablaUsuarios{
+        font-size:0.8em;
+    }
+    /* fin estilos de tablas*/
+
+    /* estilo formulario deseos*/
+    #divForDes{
+        width: 320px;
+    }
+    #divForDes input{
+        font-size:0.7em;
+        margin-top: 12px 0px 0px 0px ;    
+    }
+    #divForDes label{
+        font-size: 1em;
+        margin: 12px 0px 12px 0px ;
+    }
+    /*   fin de formulario deseos   */
+
+    /* Estilo Formulario Registro  */
+    #DivRegistro{
+        width: 320px;
+    }
+    #DivRegistro input{
+        font-size:0.7em;
+        margin-top: 12px 0px 0px 0px ;    
+    }
+    #DivRegistro label{
+        font-size: 1em;
+        margin: 12px 0px 12px 0px ;
+    }
+    /*   fin formulario Registro   */
+    #login{
+        height: 28px;
+    }
+
     
   }
+
+
+
+ @media screen and (max-width: 320px){
+   #Logo{
+       width: 31%;
+       height: 50px;
+   }
+   #TituloPagina{
+       width:  38%;
+       height: 50px;
+       font-size: 30px;
+   }
+   #DivLogOut{
+       width: 31%;
+       height: 50px;
+   }
+   #DivLogeado{
+       width: 31%;
+       height: 50px;
+   }
+   #lblLogin{
+       position: absolute;
+       top: 40px;
+       right: 240px;
+   }
+   #DivLogOut label {
+       color: black;
+       font-size: 20px;
+       width: 200px;
+   }
+   .formLogin{
+       position: relative;
+       display: inline-block;
+       text-align: center;
+       height: 50px;
+   }
+   #DivLogeado input{
+       margin-top: 0px;
+       height: 20px;
+   }
+   #DivLogOut input{
+       margin-top: 0px;
+       height: 20px;
+   }
+   #inpLogin2{
+       position: absolute;
+       top: 78px;
+       right: 75px;
+       height: 20px;
+       margin-top: 0px;
+   }
+   #menu_cabecera {
+       padding-left: 0px;
+   }
+    #menu_cabecera ul #primerLi {
+        margin-left: 0px;
+    }  
+    #menu_cabecera ul a, #capitulos ul a {
+        font-size: 9px;
+    }
+}
