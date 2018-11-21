@@ -183,10 +183,10 @@
             <div>
                 <p>Si ha habido alguna confusión a la hora de
                     rellenar los datos, puede corregirlos, pulsando
-                    el boón<span> CORREGIR DATOS</span> lo que probocará
+                    el botón<span> CORREGIR DATOS</span> lo que probocará
                     la recarga de la página</p>
                 <form action='?' method='GET'>
-                    <input type='submit' value='CORREGIR DATOS'>
+                    <input id='impCorregir' type='submit' value='CORREGIR DATOS'>
                 </form>
                 <br>
                 <?php 
