@@ -4,7 +4,7 @@ if (isset($_GET['idAmod'])){
 	updateDeseo();
 }
 
-
+   
 
 /** 
 * Función get_Conexion()
