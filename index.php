@@ -1,6 +1,5 @@
 <?php
 	/**
-	* hola foc
 	*	index.php será la página que hará las veces de controlador.
 	*
 	*    Inclulle al principio del documento modelo.php
