@@ -139,7 +139,9 @@ function superSorteo(){
 	*/
 	//print_r($arraySorteo);
 	/* --- Fin Test ---*/
-	if (sorteoInsert($sorteoInsert)){
+	$msg='';
+	$msg=sorteoInsert($sorteoInsert);
+	if ($msg==''){
 		for ($i=0;$i<$hijos;$i++){
 			$inputAmigo=$_POST['input'.$arraySorteo[$i]];	//variable idAmigo
 			$usuarioSorteo=$_POST['input'.$i];				//variable idUsuario
@@ -155,19 +157,26 @@ function superSorteo(){
 			$idDes5=0;
 			$insertPadreUsuSor='INSERT INTO padreususor (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
 			('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
-			if (InsertPadreUsuSor($insertPadreUsuSor)){
+			$msg=InsertPadreUsuSor($insertPadreUsuSor);
+			if ($msg==''){
 				envioEmailSinDeseos($idUsu,$idAmi,$idSor);
+				$msg='<h3>El Sorteo se ha realizado correctamente.<br>
+					Se han enviado correos a los integrantes.<br>
+					NOTA: Se debe revisar el correo SPAM</h3>';
+				return $msg;
 			}else{
-				echo '<h2>Error al guardar el sorteo en la base de datos Sorteos. (Los datos no se han guardado)<br>
-				Si el error persiste, cambie de navegador web.</h2>';
+				$msg= '<h3>Error al guardar el sorteo en la base de datos PadreUsuSor. (Los datos no se han guardado)<br>
+				Si el error persiste, cambie de navegador web.</h3>';
+				return $msg;
 			}
 			/*-----------------FIN--------------------*/
 			
 	  }
 
 	}else{
-		echo '<h2>Error al guardar el sorteo en la base de datos Sorteos. (Los datos no se han guardado)<br>
-				Si el error persiste, cambie de navegador web.</h2>';
+		$msg= '<h3>Error al guardar el sorteo en la base de datos Sorteos. (Los datos no se han guardado)<br>
+				Si el error persiste, cambie de navegador web.</h3>';
+		return $msg;
 	}
 	
 
@@ -306,9 +315,13 @@ function InsertPadreUsuSor($insertPadreUsuSor){
 		if ($mysqli-> query($insertPadreUsuSor)){
 		}else{
 			echo "Error en la Insert InsertPadresUsuSor.";
+			$error='Error';
+			return $error;
 		}
 	}else{
 		echo "Error en conexion BBDD";
+		$error='Error';
+		return $error;
 	}
 }
 
@@ -323,11 +336,15 @@ function sorteoInsert($sorteoInsert){
 	if ($mysqli=get_Conexion()){
 		if ($mysqli-> query($sqlInsert)){
 		}else{
-			echo "Error en SorteoInsert.";
+			echo "Error en SorteoInsert. ";
 			echo $sqlInsert;
+			$error='Error';
+			return $error;
 		}
 	}else{
 		echo "Error en conexión con la base de datos.";
+		$error='Error';
+		return $error;
 	}
 }
 

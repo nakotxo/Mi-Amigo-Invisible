@@ -205,7 +205,7 @@
                             if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
                                 echo "<h3>No se puede realizar el sorteo ya que faltan datos del SORTEO</h3>";
                             }else{
-                                superSorteo();
+                                $mensaje=superSorteo();
                             }
                         }
                         ?>
