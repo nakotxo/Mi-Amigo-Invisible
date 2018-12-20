@@ -65,6 +65,7 @@ function getBrowser($user_agent){
 
 
 function superSorteo(){
+	$msg='';
 	$hijos=$_POST['hijos']; //recepción de variable de número de participantes
 	$numMax=$hijos-1;	//se resta la unidad para contarcon el 0 como los arrays
 	$NumRandom =0;
@@ -139,9 +140,8 @@ function superSorteo(){
 	*/
 	//print_r($arraySorteo);
 	/* --- Fin Test ---*/
-	$msg='';
 	$msg=sorteoInsert($sorteoInsert);
-	if ($msg==''){
+	if ($msg!='Error'){
 		for ($i=0;$i<$hijos;$i++){
 			$inputAmigo=$_POST['input'.$arraySorteo[$i]];	//variable idAmigo
 			$usuarioSorteo=$_POST['input'.$i];				//variable idUsuario
@@ -158,12 +158,14 @@ function superSorteo(){
 			$insertPadreUsuSor='INSERT INTO padreususor (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
 			('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
 			$msg=InsertPadreUsuSor($insertPadreUsuSor);
-			if ($msg==''){
+			if ($msg!='Error'){
 				envioEmailSinDeseos($idUsu,$idAmi,$idSor);
-				$msg='<h3>El Sorteo se ha realizado correctamente.<br>
+				if($i+1==$hijos){
+					$msg='<h3>El Sorteo se ha realizado correctamente.<br>
 					Se han enviado correos a los integrantes.<br>
 					NOTA: Se debe revisar el correo SPAM</h3>';
 				return $msg;
+				}
 			}else{
 				$msg= '<h3>Error al guardar el sorteo en la base de datos PadreUsuSor. (Los datos no se han guardado)<br>
 				Si el error persiste, cambie de navegador web.</h3>';
