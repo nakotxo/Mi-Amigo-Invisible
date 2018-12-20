@@ -39,7 +39,29 @@ function get_Conexion(){
 }
 
 */
+function getBrowser($user_agent){
 
+	if(strpos($user_agent, 'MSIE') !== FALSE)
+	   return 'Internet explorer';
+	 elseif(strpos($user_agent, 'Edge') !== FALSE) //Microsoft Edge
+	   return 'Microsoft Edge';
+	 elseif(strpos($user_agent, 'Trident') !== FALSE) //IE 11
+		return 'Internet explorer';
+	 elseif(strpos($user_agent, 'Opera Mini') !== FALSE)
+	   return "Opera Mini";
+	 elseif(strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR') !== FALSE)
+	   return "Opera";
+	 elseif(strpos($user_agent, 'Firefox') !== FALSE)
+	   return 'Mozilla Firefox';
+	 elseif(strpos($user_agent, 'Chrome') !== FALSE)
+	   return 'Google Chrome';
+	 elseif(strpos($user_agent, 'Safari') !== FALSE)
+	   return "Safari";
+	 else
+	   return 'No hemos podido detectar su navegador';
+	
+	
+}
 
 
 function superSorteo(){
@@ -117,27 +139,38 @@ function superSorteo(){
 	*/
 	//print_r($arraySorteo);
 	/* --- Fin Test ---*/
-	sorteoInsert($sorteoInsert);
-	
-   	for ($i=0;$i<$hijos;$i++){
-	  	$inputAmigo=$_POST['input'.$arraySorteo[$i]];	//variable idAmigo
-	  	$usuarioSorteo=$_POST['input'.$i];				//variable idUsuario
-		  
-		/* Insert para tabla relación PadreUsuSor */
-		$idUsu=$usuarioSorteo;
-		$idSor=$_POST['SorId'];
-		$idAmi=$inputAmigo;
-		$idDes1=0;
-		$idDes2=0;
-		$idDes3=0;
-		$idDes4=0;
-		$idDes5=0;
-		$insertPadreUsuSor='INSERT INTO padreususor (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
-		('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
-		InsertPadreUsuSor($insertPadreUsuSor);
-		/*-----------------FIN--------------------*/
-		envioEmailSinDeseos($idUsu,$idAmi,$idSor);
+	if (sorteoInsert($sorteoInsert)){
+		for ($i=0;$i<$hijos;$i++){
+			$inputAmigo=$_POST['input'.$arraySorteo[$i]];	//variable idAmigo
+			$usuarioSorteo=$_POST['input'.$i];				//variable idUsuario
+			
+			/* Insert para tabla relación PadreUsuSor */
+			$idUsu=$usuarioSorteo;
+			$idSor=$_POST['SorId'];
+			$idAmi=$inputAmigo;
+			$idDes1=0;
+			$idDes2=0;
+			$idDes3=0;
+			$idDes4=0;
+			$idDes5=0;
+			$insertPadreUsuSor='INSERT INTO padreususor (IdSor, IdUsu, IdAmi, IdDes1, IdDes2, IdDes3, IdDes4, IdDes5, IdAdmin) VALUES
+			('.$idSor.','.$idUsu.','.$idAmi.','.$idDes1.','.$idDes2.','.$idDes3.','.$idDes4.','.$idDes5.','.$idUsu.')';
+			if (InsertPadreUsuSor($insertPadreUsuSor)){
+				envioEmailSinDeseos($idUsu,$idAmi,$idSor);
+			}else{
+				echo '<h2>Error al guardar el sorteo en la base de datos Sorteos. (Los datos no se han guardado)<br>
+				Si el error persiste, cambie de navegador web.</h2>';
+			}
+			/*-----------------FIN--------------------*/
+			
+	  }
+
+	}else{
+		echo '<h2>Error al guardar el sorteo en la base de datos Sorteos. (Los datos no se han guardado)<br>
+				Si el error persiste, cambie de navegador web.</h2>';
 	}
+	
+
   
 }
 

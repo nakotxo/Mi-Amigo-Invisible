@@ -157,7 +157,7 @@
     </header>
     <?php 
         if (isset($_SESSION['Usuario'])&&($_SESSION['Usuario']!="")){
-    ?>  
+        ?>  
             <!--seccion de navegación lateral-->
             <div id="capitulos" class="mycontainer">
                 <form method="POST" action="?">
@@ -178,45 +178,61 @@
                 </form>
             </div>
 <!----------------------------------- FIN CABECERAS Y SECCIONES DE NAVEGACION ---------------------------- -->
-        <h1><?php echo $datos['titulo']; ?></h1><hr/>
-        <section>
-            <div>
-                <p>Si ha habido alguna confusión a la hora de
-                    rellenar los datos, puede corregirlos, pulsando
-                    el botón<span> CORREGIR DATOS</span> lo que probocará
-                    la recarga de la página</p>
-                <form action='?' method='GET'>
-                    <input id='impCorregir' type='submit' value='CORREGIR DATOS'>
-                </form>
-                <br>
-                <?php 
-                if (isset($_POST['Sorteo'])){
-                    if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
-                        echo "<h3>No se puede realizar el sorteo ya que faltan datos del SORTEO</h3>";
-                    }else{
-                        superSorteo();
-                    }
-                }
-                ?>
-            </div>
-            <?php $SorteoId=NuevoSorteo();?>
-            <form id="formularioSorteo" method="POST" action="?">
-                <div id="DivSorteo">
-                    <div id='divDatosSorteo'>  
-                      <input id="SorteoId" type="hidden" name="SorId" value="<?php echo $SorteoId ?>">    
-                      <label>Sorteo</label><input id="Sorteo" type="text" name="SorNom" placeholder="Nombre Sorteo">
-                      <label>Fecha</label><input id="Fecha" type="date" name="SorFec" placeholder="Fecha sorteo dd/mm/aaaa">
-                      <label>Presupuesto</label><input id="Presupuesto" type="text" name="SorPre" placeholder="75€">
-                    </div>  
-                    
-                    <?php 
-                        //SoloSorteo(); 
-                          Solousuarios(); 
+            <h1><?php echo $datos['titulo']; ?></h1><hr/>
+            <section>
+                <?php
+                $mensaje='';
+                $user_agent = $_SERVER['HTTP_USER_AGENT'];
+                $navegador = getBrowser($user_agent);
+            
+
+                if($navegador=='Safari'){
+                    echo "<h1>El navegador ".$navegador." todavía no es compatible con esta función.</h1>";
+                    echo '<h2>El programa esta optimizado para navegadores <span>Google Chrome</span> y <span>Firefox</span></h2>';
+                }else{
                     ?>
-                </div>
-            </form>
-        </section>
+                    <div>
+                        <p>Si ha habido alguna confusión a la hora de
+                            rellenar los datos, puede corregirlos, pulsando
+                            el botón<span> CORREGIR DATOS</span> lo que probocará
+                            la recarga de la página</p>
+                        <form action='?' method='GET'>
+                            <input id='impCorregir' type='submit' value='CORREGIR DATOS'>
+                        </form>
+                        <br>
+                        <?php 
+                        if (isset($_POST['Sorteo'])){
+                            if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
+                                echo "<h3>No se puede realizar el sorteo ya que faltan datos del SORTEO</h3>";
+                            }else{
+                                superSorteo();
+                            }
+                        }
+                        ?>
+                    </div>
+                    <?php $SorteoId=NuevoSorteo();?>
+                    <form id="formularioSorteo" method="POST" action="?">
+                        <div id="DivSorteo">
+                            <div id='divDatosSorteo'>  
+                                <input id="SorteoId" type="hidden" name="SorId" value="<?php echo $SorteoId ?>">    
+                                <label>Sorteo</label><input id="Sorteo" type="text" name="SorNom" placeholder="Nombre Sorteo">
+                                <label>Fecha</label><input id="Fecha" type="date" name="SorFec" placeholder="Fecha sorteo dd/mm/aaaa">
+                                <label>Presupuesto</label><input id="Presupuesto" type="text" name="SorPre" placeholder="75€">
+                            </div>  
+                            <?php 
+                            //SoloSorteo(); 
+                            Solousuarios(); 
+                            ?>
+                        </div>
+                    </form>
+                <?php
+                }
+                echo $mensaje;
+                ?>
+                
+            </section>
         <?php
+            
             }else{
                 ?>
                 <h1><?php echo $datos['titulo']; ?></h1><hr/>
