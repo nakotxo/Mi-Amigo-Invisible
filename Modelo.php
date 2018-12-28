@@ -200,13 +200,13 @@ function envioEmailSinDeseos($idUsu,$idAmi,$idSor){
 
 	$to=$usuEmail; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo en el que participas y estos son los datos:\n\n
+	$message=utf8_encode("Hola ".$usuNom." amigo invisible te escribe para decirte que se ha realizado un sorteo en el que participas y estos son los datos:\n\n
 	El Sorteo: ".$sorNom."\n
 	para el proximo día: ".$sorFec."\n
 	con presupuesto de: ".$sorPre."€\n\n
 	-----TU AMIGO INVISIBLE-----\n
 	---------".$amiNom."---------\n
-	----------------------------";
+	----------------------------");
 
 	/**
 	 * TEST Relleno de datos de prueba
@@ -270,7 +270,7 @@ function enviarInfoRegalador(){
 
 	$to=$emailRegalador; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Muy buenas ".$nomRegalador."\n
+	$message=utf8_encode("Muy buenas ".$nomRegalador."\n
 	Es un placer informarte, que tu amigo invisible ".$usuNom.",\n
 	ha modificado su lista de regalos para el sorteo ".$sorNom.", el cual te recuerdo tiene un presupuesto de ".$sorpre."€:\n\n
 	- ".$nomDeseos[0].", ".$carDeseos[0]."\n
@@ -279,7 +279,7 @@ function enviarInfoRegalador(){
 	- ".$nomDeseos[3].", ".$carDeseos[3]."\n
 	- ".$nomDeseos[4].", ".$carDeseos[4]."\n\n
 	Espero te ayude a decidir que regalarle.\n\n
-	ANIMO Y BUENA SUERTE!!!!";
+	ANIMO Y BUENA SUERTE!!!!");
 
 	//mail ($to , $subject , $message);
 	echo ("Hacemos envio email<br>");
@@ -294,14 +294,14 @@ function enviarPassword($datos_usuario){
 	$password=desencriptar($datos_usuario['contrasena']);
 	$to=$datos_usuario['email']; //Destinatario/s del correo.
 	$subject="Tu amigo Invisible";	//Título del correo electrónico a enviar.
-	$message="Hola ".$datos_usuario['usuario'].".\n
+	$message=utf8_encode("Hola ".$datos_usuario['usuario'].".\n
 	Te escribimos desde MI AMIGO INVISIBLE, para comunicarte que has sido registrado como usuario de esta página. ya puedes acceder a nuestra página:\n
 	http://".URLSERVIDOR."/index.php/Home, con:\n\n
 	Nombre usuario:".$datos_usuario['usuario']."\n
 	Contraseña:".$password."\n\n
 
 	Puede modificar sus datos una vez dentro y se identifique en nuestra página.\n
-	http://".URLSERVIDOR."/index.php/Mis_Datos";
+	http://".URLSERVIDOR."/index.php/Mis_Datos");
 	
 	//mail ($to , $subject , $message);
 	echo ("Hacemos envio email<br>");
