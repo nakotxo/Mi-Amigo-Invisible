@@ -890,7 +890,7 @@ function TratarDatosSorteos($MisDatos,$MisSorteos){
 								<form method='GET' action='?'>
 									<select id="LstDes" name="deseos[]">
 										<?php 
-										for ($p=0;$p<count($listaDeseos)-1;$p++){
+										for ($p=0;$p<count($listaDeseos);$p++){
 											echo "<option name='ModificarElId' value='".$listaDeseos[$p]['DesId']."'>".$listaDeseos[$p]['DesId']." - ".$listaDeseos[$p]['DesNom']."</option>";
 										} ?>
 									</select>
