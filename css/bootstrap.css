@@ -10076,6 +10076,16 @@ footer {
 
 
 
+
+
+
+
+
+
+
+
+
+
 /* css para el login */
 
 .form-signin {
@@ -10131,7 +10141,7 @@ footer {
 }
 
 /*___________________________________*/
-.container {
+.container-logeo {
   border-top: 2px solid #aaa;
   box-shadow:  0 2px 10px rgba(0,0,0,0.8);
   width:288px;
@@ -10145,7 +10155,7 @@ footer {
   perspective: 800px;
 }
 
-.container form {
+.container-logeo form {
   width:100%;
   height:100%;
   position:absolute;
@@ -10170,7 +10180,7 @@ footer {
 }
 
 
-.container.flipped .form-signin{
+.container-logeo.flipped .form-signin{
   
   opacity:0;
   
@@ -10184,7 +10194,7 @@ footer {
   transform:rotateY(-180deg);
 }
 
-.container.flipped #recover{
+.container-logeo.flipped #recover{
   
   opacity:1;
   
