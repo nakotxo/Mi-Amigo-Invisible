@@ -66,6 +66,12 @@ function controlador_index(){
 	require_once 'Home.php';
 }
 
+function controlador_index1(){	
+	$datos[]=array();
+	$datos['titulo']="Mi Amigo Invisible";
+	require_once 'Home1.php';
+}
+
 /**
 * Funcion controlador_login()
 */

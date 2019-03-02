@@ -105,17 +105,13 @@
               ?>
             </form>
           </div>
-        <div class="col-8 text-center">
-    <?php
-      }else{
-    ?>
-        <div class="col-12 text-center">
+        
     <?php
       }
     ?> 
     <!--------------------FIN Nav. Lateral-------------------------->
 
-      
+      <div class="col-8 text-center">
         <h1><?php echo $datos['titulo']; ?></h1><hr/>  
         <section id="homeSection">
             <h2>Bienvenidos a MI AMIGO INVISIBLE</h2>
