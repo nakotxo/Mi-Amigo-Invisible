@@ -3,7 +3,9 @@
 <html>
 
 	<!-- ---------- HEAD ----------- -->
-	<?php CabeceraDeArranque(); ?>
+	<head>
+		<?php CabeceraDeArranque(); ?>
+	</head>
 	<!-- -------FIN HEAD ----------- -->
 
 	<script>
@@ -23,7 +25,9 @@
 	<body>
     
 		<!-- ----- HEADER ------ -->
-		<?php Cabecera(); ?>
+		<header>
+			<?php Cabecera(); ?>
+		</header>
 		<!-- ---- FIN HEADER --- -->
     
 		<?php 
@@ -46,17 +50,27 @@
 					</form>
       </section>
 
-      	<?php
-    }else{
-			NegaciónAcceso($datos, $valor);
-		?>
-		<?php
-    }
-    ?>
-		</div>
-		</div>
+  <?php	}else{ ?>  <!-- Si el usuario NO esta LOGEADO -->
+	
+		<!-- Inicion ZONA Section NEGACION ACCESO -->
+		<div class="col-12 text-center"> 
+
+			<?php	NegaciónAcceso($datos, $valor); ?>
+
+		<?php } ?>	<!-- FIN  SI el usuario esta LOGEADO ó NO -->
+				
+		</div><br>
+		<!-- FIN Inicion ZONA Section -->
+		
 		<!-- ----- FOOTER ----- -->
-		<?php Footer(); ?>
+		<footer class="page-footer font-small mdb-color pt-4">
+			<?php Footer(); ?>
+		</footer>
 		<!-- --- FIN FOOTER --- -->
+		
+		<!-- funetes fin de footer -->
+		<?php FuentesFooter();?>
+		<!-- --FIN FUENFES FOOTER ---->
+		
 	</body>
 </html>

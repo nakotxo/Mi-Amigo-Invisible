@@ -1538,7 +1538,7 @@ function desencriptar($clave){
  */
 function CabeceraDeArranque(){
 	?>
-	<head>
+
 	  <!-- Required meta tags -->
 		<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1548,7 +1548,6 @@ function CabeceraDeArranque(){
     <!-- link para los iconos GALERIA: https://fontawesome.com/icons?d=gallery -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>Mi Amigo Invisible!</title>
-	</head>
 	<?php
 }
 
@@ -1559,7 +1558,7 @@ function CabeceraDeArranque(){
  */
 function Cabecera(){
 	?>
-	<header>
+
 		<div class="row">
 		
 			<div class="col-2">
@@ -1603,7 +1602,7 @@ function Cabecera(){
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-							<a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
+							<a class="nav-link" href='http://<?=URLSERVIDOR?>/index.php/Home'>HOME <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
 							<a class="nav-link" href='http://<?=URLSERVIDOR?>/index.php/Registro'>NUEVO USUARIO </a>
@@ -1628,7 +1627,7 @@ function Cabecera(){
 				</form>
 			</div>
 		</nav>
-	</header>
+
 	<?php
 }
 
@@ -1664,7 +1663,7 @@ function NegaciónAcceso($datos, $valor){
 	?>
 	<h1><?php echo $datos['titulo']; ?></h1><hr/>
 	<h2>Identificación de usuario necesaria</h2>
-	<h3>Para acceder a esta página, introduzca Nombre Usuario y Contrseña</h3>
+	<h3>Para acceder a esta página, introduzca Nombre Usuario y Contrseña</h3><br>
 	<section id="homeSection">
 			<?php
 			formularioLogin($valor);
@@ -1681,7 +1680,7 @@ function NegaciónAcceso($datos, $valor){
 function Footer(){
 	/* ------------------ Footer ---------------------- */
   ?>
-	<footer class="page-footer font-small mdb-color pt-4">
+	
 	<!-- Footer Links -->
   	<div class="container text-center text-md-left">
 			<!-- Footer links -->
@@ -1775,16 +1774,76 @@ function Footer(){
 			<!-- Grid row -->
 		</div>
 	<!-- Footer Links -->
-	</footer>
 	<!-------------------------------------FIN Footer ------------------------------------->
+<?php
+}
 
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src='http://<?=URLSERVIDOR?>/js/bootstrap.min.js' integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script type="text/javascript" src='http://<?=URLSERVIDOR?>/js/main.js'></script>
+function FuentesFooter(){
+	?>
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src='http://<?=URLSERVIDOR?>/js/bootstrap.min.js' integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script type="text/javascript" src='http://<?=URLSERVIDOR?>/js/main.js'></script>
 	<?php
 }
+
+
+/** Función SectionLogin
+ * encargada de la visualización de la section de la página LOGIN
+ * 
+ */
+function SectionLogin($valor, $datos){
+	?>
+	</section>
+      
+	<?php
+		if ($valor!=""){
+	?> 
+			<div class="row">
+				<div class="col-3"></div>
+				<div class="alert alert-danger col-6 " role="alert">
+					<h3><?php echo $valor?></h3>
+				</div>
+				<div class="col-3"></div>
+			</div>
+	<?php
+		}
+	?>    
+		<div class="container-logeo">
+			<h1><?php echo $datos['titulo'];?></h1><hr/>
+			<div class="row">
+				<div class="container" id="formContainer">
+					<form method="POST" action="?" class="form-signin" id="login" role="form">
+						<h3 class="form-signin-heading">Identifiquese, por favor.</h3>
+						<a href="#" id="flipToRecover" class="flipLink">
+							<div id="triangle-topright"></div>
+						</a>
+						<input class="form-control" id="usuario" type="text" name="usuario" placeholder="Usuario" required autofocus>
+						<input id="contrasena" class="form-control" type="password" name="contrasena" placeholder="Contraseña" required>
+						<br>
+						<input   class="btn btn-lg btn-primary btn-block" type="submit" name="Login" value="Log-In">
+					</form>
+					<br>
+					<form class="form-signin" id="recover" role="form">
+						<button class="btn btn-lg btn-primary btn-block" type="submit">Recover password</button>
+					</form>
+				</div> <!-- /formcontainer -->
+			</div>
+	<?php
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>
