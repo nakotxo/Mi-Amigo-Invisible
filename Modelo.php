@@ -1547,6 +1547,8 @@ function CabeceraDeArranque(){
     <link rel='stylesheet' href='http://<?=URLSERVIDOR?>/css/bootstrap.css'>
     <!-- link para los iconos GALERIA: https://fontawesome.com/icons?d=gallery -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<script src='http://<?=URLSERVIDOR?>/js/jquery3.3.1.js'></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <title>Mi Amigo Invisible!</title>
 	<?php
 }
