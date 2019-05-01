@@ -16,8 +16,8 @@ var liConDobleClick;
 		// 	alert("has hecho doble click en el option");
 		// });
 		
-		$("li").dblclick(function(){
-			//alert("hello");
+		$(".Usuarios,li").dblclick(function(){
+			alert("hello");
 			//debugger;
 			textoLi = $(this)[0].textContent;
 

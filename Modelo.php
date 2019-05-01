@@ -608,24 +608,54 @@ function SoloUsuarios(){
 
 function ListarUsuariosEnSelect($datosUsuarios){
 	?>
+
 	<!--Lista de usuarios para participar-->
 	<div id='divTotal'>
-	<div id='divUlUsu'>
-	<ul id="LstUsu">
-		<?php 
-		for ($i=0;$i<count($datosUsuarios)-1;$i++){
-			echo "<li value= '".$datosUsuarios[$i]['UsuId']."'title='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
-		} ?>
-	</ul>
+		<div id='divUlUsu'>
+			<ul id="LstUsu">
+				<?php 
+				for ($i=0;$i<count($datosUsuarios)-1;$i++){
+					echo "<li value= '".$datosUsuarios[$i]['UsuId']."'title='".$datosUsuarios[$i]['UsuNom']."'>".$datosUsuarios[$i]['UsuId']." - ".$datosUsuarios[$i]['UsuNom']."</li>";
+				} ?>
+			</ul>
+		</div>
+		<!--Lista definitiva de usuarios a participar-->
+		<div id='divUlUsuFin'>
+			<ul id="LstUsuFin" name="ListaUsuariosFinal">
+			</ul>
+		</div>
 	</div>
-	<!--Lista definitiva de usuarios a participar-->
-	<div id='divUlUsuFin'>
-		<ul id="LstUsuFin" name="ListaUsuariosFinal">
-	</ul>
-	</div>
+	
+
+	<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+  	<div class="card-header">Busca los Participantes</div>
+  	<div class="card-body">
+			<?php for ($i=0;$i<count($datosUsuarios)-1;$i++){ ?>
+				<p class="Usuarios" value="<?=$datosUsuarios[$i]['UsuId']?>" title="<?=$datosUsuarios[$i]['UsuNom']?>"><?=$datosUsuarios[$i]['UsuId']?> - <?=$datosUsuarios[$i]['UsuNom']?></p><hr>
+			<?php } ?>
+  	</div>
 	</div>
 	<?php
 }
+
+function ListarParticipantesDelSorteo(){
+	?>
+		<div class="card border-success mb-3" style="max-width: 18rem;">
+  		<div class="card-header">Header</div>
+  		<div class="card-body text-success">
+    		<h5 class="card-title">Participantes</h5>
+    		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><hr>
+  		</div>
+		</div>
+	<?php
+}
+
+
+
+
+
+
+
 
 function ListarDeseos($datosDeseos){
 	echo "<h1>".$datosDeseos['titulo']."</h1>";

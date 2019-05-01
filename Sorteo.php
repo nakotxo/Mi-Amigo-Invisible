@@ -70,20 +70,42 @@
                         ?>
                     </div>
                     <?php $SorteoId=NuevoSorteo();?>
-                    <form id="formularioSorteo" method="POST" action="?">
-                        <div id="DivSorteo">
-                            <div id='divDatosSorteo'>  
-                                <input id="SorteoId" type="hidden" name="SorId" value="<?php echo $SorteoId ?>">    
-                                <label>Sorteo</label><input id="Sorteo" type="text" name="SorNom" placeholder="Nombre Sorteo">
-                                <label>Fecha</label><input id="Fecha" type="date" name="SorFec" placeholder="Fecha sorteo dd/mm/aaaa">
-                                <label>Presupuesto</label><input id="Presupuesto" type="text" name="SorPre" placeholder="75€">
-                            </div>  
-                            <?php 
-                            //SoloSorteo(); 
-                            Solousuarios(); 
-                            ?>
-                        </div>
-                    </form>
+										<form id="formularioSorteo" method="POST" action="?">
+											<div class="form-row"  id="DivSorteo">
+
+												<div class="form-group col-md-7" id='divDatosSorteo'>											
+													<label for="Sorteo">Sorteo</label>
+													<input id="Sorteo" type="text" class="form-control" name="SorNom" placeholder="Nombre Sorteo">
+												</div>
+											
+												<div class="form-group col-md-3">
+													<label for="Fecha">Fecha</label>
+													<input name="SorFec"  type="date" class="form-control" id="Fecha" placeholder="Fecha sorteo dd/mm/aaaa">
+												</div>
+
+												<div class="form-group col-md-2">
+													<label for="Presupuesto">Presupuesto</label>
+													<input name="SorPre" type="text" class="form-control" id="Presupuesto" placeholder="75€">
+												</div>
+
+											</div>
+
+											<div class="row">
+												<div class="form-group col-md-5">
+													<?=Solousuarios();?>
+												</div>
+
+												<div class="form-group col-md-2">
+													<input id="SorteoId" type="hidden" name="SorId" value="<?php echo $SorteoId ?>">
+												</div>
+
+												<div class="form-group col-md-5">
+												<?=ListarParticipantesDelSorteo();?>
+												</div>
+											</div>
+
+										</form>
+
                 <?php
                 }
                 echo $mensaje;
