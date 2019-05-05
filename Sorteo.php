@@ -61,15 +61,18 @@
                         <br>
                         <?php 
                         if (isset($_POST['Sorteo'])){
-                            if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){
-                                echo "<h3>No se puede realizar el sorteo ya que faltan datos del SORTEO</h3>";
-                            }else{
+														if ((empty($_POST['SorNom']))||(empty($_POST['SorFec']))){?>
+															<div class="alert alert-danger" role="alert">
+																<h3>No se puede realizar el sorteo ya que faltan datos del <strong >SORTEO</strong ></h3>
+															</div>
+                            <?php }else{ 
                                 $mensaje=superSorteo();
                             }
                         }
                         ?>
                     </div>
-                    <?php $SorteoId=NuevoSorteo();?>
+										<?php $SorteoId=NuevoSorteo();?>
+										<div class="container">	
 										<form id="formularioSorteo" method="POST" action="?">
 											<div class="form-row"  id="DivSorteo">
 
@@ -90,12 +93,13 @@
 
 											</div>
 
+											
 											<div class="row">
 												<div class="form-group col-md-5">
 													<?=Solousuarios();?>
 												</div>
 
-												<div class="form-group col-md-2">
+												<div id="forSor" class="form-group col-md-2 align-self-center">
 													<input id="SorteoId" type="hidden" name="SorId" value="<?php echo $SorteoId ?>">
 												</div>
 
@@ -103,13 +107,17 @@
 												<?=ListarParticipantesDelSorteo();?>
 												</div>
 											</div>
+											
 
 										</form>
+										</div>
 
                 <?php
-                }
-                echo $mensaje;
-                ?>
+								} ?>
+								
+								<div class="alert" role="alert">
+									<?php echo $mensaje; ?>
+								</div>
                 
             </section>
 
